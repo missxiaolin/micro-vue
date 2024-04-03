@@ -13,6 +13,8 @@ const getters = {
     }
     return microApps;
   },
+  getIsMainService: state => state.micro.isMainService,
+  getCurrentService: state => state.micro.currentService,
 };
 
 export default getters;

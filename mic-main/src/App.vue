@@ -4,29 +4,55 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
-    <router-view/>
+    <template v-if="getIsMainService">
+      <router-view />
+    </template>
+    <div v-for="(item, index) in getmicroApps" :key="index">
+      <micro-app
+        :name="item.name"
+        :key="item.name"
+        :url="item.url"
+        :inline="item.inline"
+        :destroy="item.destroy"
+        :disableScopecss="item.disableScopecss"
+        :disableSandbox="item.disableSandbox"
+        :shadowDOM="item.shadowDOM"
+        :ssr="item.ssr"
+        @datachange="handleDataChange"
+      ></micro-app>
+    </div>
   </div>
 </template>
 
-<script>
-import { defineComponent } from '@vue/composition-api'
-import { onMounted } from 'vue'
+<script lang="ts">
+import { defineComponent, onMounted } from "vue";
+import { useStore, mapGetters } from "vuex";
+import microApps from "./utils/mock";
 
 export default defineComponent({
+  computed: {
+    ...mapGetters(["getmicroApps", "getCurrentService", "getIsMainService"]),
+  },
   setup() {
+    const store = useStore();
     function getMicroOnlineConfig() {
       // TOODO: 获取微服务配置
-      
+      store.commit("setmicroApps", microApps);
+    }
+
+    function handleDataChange(e) {
+      // TOODO:
+      console.log(e)
     }
 
     onMounted(() => {
-      getMicroOnlineConfig()
-    })
+      getMicroOnlineConfig();
+    });
+    return {
+      handleDataChange
+    };
   },
-})
+});
 </script>
 
-
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
