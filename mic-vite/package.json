@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@micro-zoe/micro-app": "1.0.0-beta.5",
     "vue": "^3.4.21"
   },
   "devDependencies": {
