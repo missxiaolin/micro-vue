@@ -10,7 +10,7 @@ import externalGlobals from "rollup-plugin-external-globals";
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   const isBuild = command === "build";
   return {
-    // 生产环境需要在域名基础上加上bea
+    // 生产环境需要在域名基础上加上vie
     base: isBuild ? "/vie" : "/",
     server: {
       // hmr: { overlay: false }, // 禁用或配置 HMR 连接 设置 server.hmr.overlay 为 false 可以禁用服务器错误遮罩层
