@@ -59,6 +59,32 @@ const VueRouterOpenBlank = () => {
 	}
 };
 
+export const subDispatchNewsToMain = (data = {}) => {
+	const { subRoutes = {}, subDispatch = {}, subName = 'vie', forceSend = false, customInfo = {} } = data;
+	console.log('skeletonSwitch--type--->', '子服务发送', { subRoutes, subDispatch, subName });
+	if (forceSend) {
+		window.microApp?.dispatch({ subRoutes, subDispatch, subName, sendTime: Date.now(), customInfo });
+	} else {
+		window.microApp?.dispatch({ subRoutes, subDispatch, subName, customInfo });
+	}
+};
+
+// 服务跳转 涉及跳转其他子服务 需要通知主服务
+/**
+ *
+ * @param {*} path: 页面路径
+ * @param {*} query: 页面参处
+ * @param {*} jump: 页面是否跳转 false: 主服务获取页面 标题 ，true: 获取标题 并 进行页面跳转用于 routerBack()、 /login
+ */
+export const serviceRouter = ({ fullPath = '/', jump = false, callBack = null }) => {
+	if (isSubMicro) {
+		// 发送数据至主服务 -->
+		subDispatchNewsToMain({ subRoutes: { fullPath, jump, callBack } });
+	} else {
+		router.push(fullPath);
+	}
+};
+
 /**
  * @param {*} router 
  */

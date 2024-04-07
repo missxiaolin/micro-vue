@@ -3,7 +3,7 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import router from '@/router';
-
+import '@/utils/permission';
 import { isSubMicro, handleMicroData } from '@/utils/subMicro';
 
 // createApp(App).use(router).mount('#vie-app')
@@ -14,7 +14,7 @@ function mount() {
     app.use(router)
     app.mount('#vie-app')
     if (isSubMicro) {
-        console.log('微前端环境下，=>', window);
+        // console.log('微前端环境下，=>', window);
         // 微前端环境下， 处理路由下发跳转
 		handleMicroData(router);
     }
