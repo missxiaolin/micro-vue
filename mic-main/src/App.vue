@@ -1,8 +1,9 @@
 <template>
   <div>
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Home</router-link> | 
+      <router-link to="/about">About</router-link> | 
+      <router-link to="/vie/index">跳转vie应用</router-link>
     </nav>
     <template v-if="getIsMainService">
       <router-view />
@@ -40,7 +41,7 @@ export default defineComponent({
       store.commit("setmicroApps", microApps);
     }
 
-    function handleDataChange(e) {
+    function handleDataChange(e: any) {
       // TOODO:
       console.log(e)
     }

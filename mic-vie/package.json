@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "@micro-zoe/micro-app": "1.0.0-beta.5",
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-external-globals": "^0.10.0",
     "vite": "^5.2.0"
   }
 }
