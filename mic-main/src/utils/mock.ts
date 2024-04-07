@@ -1,7 +1,7 @@
 const microApps = {
     'micro-vie': {
         "name": "micro-vie",
-        "url": "https://localhost:8091",
+        "url": "http://localhost:8091",
         "inline": false,
         "destroy": false,
         "disableScopecss": false,
@@ -14,7 +14,7 @@ const microApps = {
     }, 
     // 'micro-vue': {
     //     "name": "micro-vue",
-    //     "url": "https://localhost:8092",
+    //     "url": "http://localhost:8092",
     //     "inline": false,
     //     "destroy": false,
     //     "disableScopecss": false,
