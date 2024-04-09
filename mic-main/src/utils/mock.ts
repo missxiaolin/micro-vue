@@ -7,6 +7,7 @@ const microApps = {
         "disableScopecss": false,
         "disableSandbox": false,
         "shadowDOM": false,
+        "iframe": true,
         "systemCodes": [
             "vie"
         ],
@@ -20,6 +21,7 @@ const microApps = {
     //     "disableScopecss": false,
     //     "disableSandbox": false,
     //     "shadowDOM": false,
+    //     "iframe": true,
     //     "systemCodes": [
     //         "vue"
     //     ],

@@ -1,26 +1,25 @@
 <template>
   <div>
     <nav>
-      <router-link to="/">Home</router-link> | 
-      <router-link to="/about">About</router-link> | 
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> |
       <router-link to="/vie/index">跳转vie应用</router-link>
     </nav>
     <template v-if="getIsMainService">
       <router-view />
     </template>
     <div v-for="(item, index) in getmicroApps" :key="index">
-      <micro-app
-        :name="item.name"
-        :key="item.name"
-        :url="item.url"
-        :inline="item.inline"
-        :destroy="item.destroy"
-        :disableScopecss="item.disableScopecss"
-        :disableSandbox="item.disableSandbox"
-        :shadowDOM="item.shadowDOM"
-        :ssr="item.ssr"
-        @datachange="handleDataChange"
-      ></micro-app>
+      <div v-show="item.name == getCurrentService.name">
+        <micro-app
+          :name="item.name"
+          :key="item.name"
+          :url="item.url"
+          :baseroute="item.baseroute"
+          :iframe="item.iframe"
+          disable-memory-router
+          @datachange="handleDataChange"
+        ></micro-app>
+      </div>
     </div>
   </div>
 </template>
@@ -43,14 +42,14 @@ export default defineComponent({
 
     function handleDataChange(e: any) {
       // TOODO:
-      console.log(e)
+      console.log(e);
     }
 
     onMounted(() => {
       getMicroOnlineConfig();
     });
     return {
-      handleDataChange
+      handleDataChange,
     };
   },
 });

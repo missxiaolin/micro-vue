@@ -6,6 +6,7 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to, from) => {
+	const { fullPath } = to;
     if (isSubMicro) {
         subDispatchNewsToMain({ subDispatch: { fullPath, skeleton: false } });
     }

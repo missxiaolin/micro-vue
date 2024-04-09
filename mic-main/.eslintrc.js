@@ -17,5 +17,10 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'vue/no-v-for-template-key-on-child': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    'no-async-promise-executor': 'off',
+    'promise-executor': 'off',
+    'prefer-const': 'off'
   }
 }

@@ -22,3 +22,8 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### 框架文档
+
+https://micro-zoe.github.io/micro-app/0.x/#/zh-cn/deploy
