@@ -14,6 +14,11 @@ const micro = {
         port: 8091, // 必填项
         debugging: true, //是否开启开发验证模式
       },
+      "micro-vue": {
+        host: "", // 可选项
+        port: 8092, // 必填项
+        debugging: true, //是否开启开发验证模式
+      },
     },
   },
   mutations: {
@@ -61,6 +66,7 @@ const micro = {
           currentService.url = `${location.protocol}//${state.devService[serviceName].host || "localhost"}:${state.devService[serviceName].port}`;
           // currentService.inline = true;
         }
+        console.log('currentService', currentService)
         resolve({ isMainServe, currentService });
       })
     },

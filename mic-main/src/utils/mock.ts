@@ -13,20 +13,20 @@ const microApps = {
         ],
         "openBlank": false
     }, 
-    // 'micro-vue': {
-    //     "name": "micro-vue",
-    //     "url": "http://localhost:8092",
-    //     "inline": false,
-    //     "destroy": false,
-    //     "disableScopecss": false,
-    //     "disableSandbox": false,
-    //     "shadowDOM": false,
-    //     "iframe": true,
-    //     "systemCodes": [
-    //         "vue"
-    //     ],
-    //     "openBlank": false
-    // },
+    'micro-vue': {
+        "name": "micro-vue",
+        "url": "http://localhost:8092",
+        "inline": false,
+        "destroy": false,
+        "disableScopecss": false,
+        "disableSandbox": false,
+        "shadowDOM": false,
+        "iframe": true,
+        "systemCodes": [
+            "vue"
+        ],
+        "openBlank": false
+    },
 }
 
 export default microApps
