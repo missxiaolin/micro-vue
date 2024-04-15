@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 export const defaultRoute = [
-	{
-		path: '/',
-		name:'home',
-        redirect: '/vie/index'
-	},
+	// {
+	// 	path: '/',
+	// 	name:'home',
+    //     redirect: '/vie/index'
+	// },
 	{
 		path: '/vie/index',
 		name: '首页',

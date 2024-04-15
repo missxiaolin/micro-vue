@@ -3,7 +3,8 @@
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/vie/index">跳转vie应用</router-link>
+      <router-link to="/vie/index">跳转vie应用</router-link> | 
+      <router-link to="/vue/index">跳转vue webpacket应用</router-link>
     </nav>
     <template v-if="getIsMainService">
       <router-view />
