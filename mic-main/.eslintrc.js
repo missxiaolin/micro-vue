@@ -21,6 +21,8 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     'no-async-promise-executor': 'off',
     'promise-executor': 'off',
-    'prefer-const': 'off'
+    'prefer-const': 'off',
+    'vue/multi-word-component-names': 'off',
+    'eslint-plugin-vue': 'off'
   }
 }

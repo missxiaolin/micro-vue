@@ -1,13 +1,9 @@
 <template>
   <div>
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/vie/index">跳转vie应用</router-link> | 
-      <router-link to="/vue/index">跳转vue webpacket应用</router-link>
-    </nav>
     <template v-if="getIsMainService">
-      <router-view />
+      <a-config-provider :locale="lang">
+        <router-view />
+      </a-config-provider>
     </template>
     <div v-for="(item, index) in getmicroApps" :key="index">
       <div v-show="item.name == getCurrentService.name">
@@ -26,8 +22,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import { useStore, mapGetters } from "vuex";
+import cn from "@arco-design/web-vue/es/locale/lang/zh-cn";
+import en from "@arco-design/web-vue/es/locale/lang/en-us";
 import microApps from "./utils/mock";
 
 export default defineComponent({
@@ -36,6 +34,8 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    // const lang = ref(store.language === "zh_CN" ? cn : en);
+    const lang = ref(cn)
     function getMicroOnlineConfig() {
       // TOODO: 获取微服务配置
       store.commit("setmicroApps", microApps);
@@ -51,6 +51,7 @@ export default defineComponent({
     });
     return {
       handleDataChange,
+      lang
     };
   },
 });
