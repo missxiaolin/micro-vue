@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import { loadPlugins } from "@/plugins";
 
+import "@/assets/css/index.scss";
 import "normalize.css";
 import "element-plus/dist/index.css";
 import "element-plus/theme-chalk/dark/css-vars.css";
