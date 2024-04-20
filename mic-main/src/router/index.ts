@@ -1,12 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
-const Layouts = () => import("@/layouts/index.vue");
 
 /** 常驻路由 */
 export const constantRoutes: any = [
   {
     path: "/",
-    component: Layouts,
     redirect: "/dashboard",
     meta: {
       title: "首页",
@@ -15,7 +13,6 @@ export const constantRoutes: any = [
     children: [
       {
         path: "dashboard",
-        
         component: () => import("@/views/dashboard/index.vue"),
         hidden: false,
         meta: {
