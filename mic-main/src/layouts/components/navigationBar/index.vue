@@ -1,19 +1,19 @@
 <template>
   <div class="navigation-bar">
     <hamburger class="hamburger" :is-active="sidebar.opened" @toggle-click="toggleSidebar" />
-    <breadcrumb class="breadcrumb"></breadcrumb>
+    <!-- <breadcrumb class="breadcrumb"></breadcrumb> -->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import breadcrumb from "../breadcrumb/index.vue";
+// import breadcrumb from "../breadcrumb/index.vue";
 import hamburger from "../hamburger/index.vue";
 
 export default defineComponent({
   components: {
     hamburger,
-    breadcrumb
+    // breadcrumb
   },
   setup() {
     const toggleSidebar = () => {

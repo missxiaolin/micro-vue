@@ -64,8 +64,7 @@ export default defineComponent({
     /** 监听路由变化，更新面包屑导航信息 */
     watch(
       () => route.path,
-      (path) => {
-        if (path.startsWith("/redirect/")) return;
+      (path: any) => {
         getBreadcrumb();
       }
     );
