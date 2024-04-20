@@ -1,6 +1,6 @@
 <template>
-  <div class="has-logo">
-    <logo :collapse="isCollapse" />
+  <div :class="{ 'has-logo': isLogo }">
+    <logo v-if="isLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
@@ -34,6 +34,12 @@ import { getCssVariableValue } from "@/utils/index";
 import logo from "../logo/index.vue";
 import sidebarItem from "./sidebarItem.vue";
 export default defineComponent({
+  props: {
+    isLogo: {
+      type: Boolean,
+      default: true
+    }
+  },
   components: {
     logo,
     sidebarItem
