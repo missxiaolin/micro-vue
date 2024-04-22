@@ -1,9 +1,30 @@
 <template>
   <div class="navigation-bar">
-    <hamburger class="hamburger" :is-active="sidebar.opened" @toggle-click="toggleSidebar" />
+    <hamburger
+      class="hamburger"
+      :is-active="sidebar.opened"
+      @toggle-click="toggleSidebar"
+    />
     <breadcrumb class="breadcrumb"></breadcrumb>
     <div class="right-menu">
       <screenfull class="right-menu-item" />
+      <el-dropdown class="right-menu-item">
+        <div class="right-menu-avatar">
+          <el-avatar :icon="UserFilled" :size="30" />
+          <span>admin</span>
+        </div>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <!-- <router-link :to="{ path: '/info', query: { setid: 123456 } }">
+              <el-dropdown-item>个人信息</el-dropdown-item>
+            </router-link> -->
+            <!-- <el-dropdown-item divided @click="logout"></el-dropdown-item> -->
+            <el-dropdown-item @click="logout">
+              <span style="display: block">退出登录</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -13,25 +34,30 @@ import { defineComponent, computed } from "vue";
 import screenfull from "@/components/screenfull/index.vue";
 import breadcrumb from "../breadcrumb/index.vue";
 import hamburger from "../hamburger/index.vue";
+import { UserFilled } from "@element-plus/icons-vue";
 
 export default defineComponent({
   components: {
     hamburger,
     breadcrumb,
-    screenfull
+    screenfull,
   },
   setup() {
     const toggleSidebar = () => {
-        console.log('toggleSidebar')
-    }
+      console.log("toggleSidebar");
+    };
+
+    const logout = () => {}
 
     return {
-        toggleSidebar,
-        sidebar: {
-            opened: false
-        }
-    }
-  }
+      toggleSidebar,
+      UserFilled,
+      logout,
+      sidebar: {
+        opened: false,
+      },
+    };
+  },
 });
 </script>
 
