@@ -115,7 +115,7 @@ $transition-time: 0.35s;
 
 .hasTagsView {
   .app-main {
-    min-height: calc(100vh - var(--v3-header-height));
+    flex: 1;
   }
   .fixed-header + .app-main {
     padding-top: var(--v3-header-height);
