@@ -1,5 +1,8 @@
 <template>
-  <div :class="layoutClasses" class="app-wrapper">
+  <div :class="{
+    hideSidebar: getSidebarOpened,
+    openSidebar: !getSidebarOpened
+  }" class="app-wrapper">
      <!-- 左侧边栏 -->
      <sidebar class="sidebar-container" />
      <!-- 主容器 -->
@@ -15,24 +18,22 @@
 </template>
 
 <script lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { mapGetters } from "vuex";
 import { sidebar, navigationBar, appMain } from "./components"
 
 export default {
+  computed: {
+    ...mapGetters(["getSidebarOpened"]),
+  },
   components: {
     sidebar,
     navigationBar,
     appMain
   },
   setup() {
-    const layoutClasses = computed(() => {
-      return {
-      };
-    });
-
     return {
-      layoutClasses,
-      showTagsView: false,
+      showTagsView: true,
       fixedHeader: false
     };
   },

@@ -1,10 +1,10 @@
 <template>
   <div :class="{ 'has-logo': isLogo }">
-    <logo v-if="isLogo" :collapse="isCollapse" />
+    <logo v-if="isLogo" :collapse="getSidebarOpened" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
-        :collapse="isCollapse"
+        :collapse="getSidebarOpened"
         :background-color="backgroundColor"
         :text-color="textColor"
         :active-text-color="activeTextColor"
@@ -18,7 +18,7 @@
           :item="route"
           :hidden="route.hidden"
           :base-path="route.path"
-          :is-collapse="isCollapse"
+          :is-collapse="getSidebarOpened"
         />
       </el-menu>
     </el-scrollbar>
@@ -33,7 +33,12 @@ import childrenRoutes from '@/router/children'
 import { getCssVariableValue } from "@/utils/index";
 import logo from "../logo/index.vue";
 import sidebarItem from "./sidebarItem.vue";
+import { useStore, mapGetters } from "vuex";
+
 export default defineComponent({
+  computed: {
+    ...mapGetters(["getSidebarOpened"]),
+  },
   props: {
     isLogo: {
       type: Boolean,
@@ -46,6 +51,8 @@ export default defineComponent({
   },
   setup() {
     const isCollapse = ref(false);
+    const store = useStore();
+    isCollapse.value = store.state.setting.sidebarOpened
     const route = useRoute();
 
     const activeMenu = computed(() => {

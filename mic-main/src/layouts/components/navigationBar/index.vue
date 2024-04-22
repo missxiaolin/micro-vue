@@ -2,7 +2,7 @@
   <div class="navigation-bar">
     <hamburger
       class="hamburger"
-      :is-active="sidebar.opened"
+      :is-active="!getSidebarOpened"
       @toggle-click="toggleSidebar"
     />
     <breadcrumb class="breadcrumb"></breadcrumb>
@@ -35,16 +35,22 @@ import screenfull from "@/components/screenfull/index.vue";
 import breadcrumb from "../breadcrumb/index.vue";
 import hamburger from "../hamburger/index.vue";
 import { UserFilled } from "@element-plus/icons-vue";
+import { useStore, mapGetters } from "vuex";
 
 export default defineComponent({
+  computed: {
+    ...mapGetters(["getSidebarOpened"]),
+  },
   components: {
     hamburger,
     breadcrumb,
     screenfull,
   },
   setup() {
+    const store = useStore();
+
     const toggleSidebar = () => {
-      console.log("toggleSidebar");
+      store.commit('setSidebarOpened', !store.state.setting.sidebarOpened)
     };
 
     const logout = () => {}

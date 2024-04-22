@@ -1,4 +1,4 @@
-import { verifySwitch } from '@/utils/utils'
+import { verifySwitch } from "@/utils/utils";
 
 const getters = {
   getmicroApps: (state) => {
@@ -13,8 +13,9 @@ const getters = {
     }
     return microApps;
   },
-  getIsMainService: state => state.micro.isMainService,
-  getCurrentService: state => state.micro.currentService,
+  getIsMainService: (state) => state.micro.isMainService,
+  getCurrentService: (state) => state.micro.currentService,
+  getSidebarOpened: (state) => state.setting.sidebarOpened,
 };
 
 export default getters;
