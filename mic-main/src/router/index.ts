@@ -24,17 +24,6 @@ export const constantRoutes: any = [
       },
     ],
   },
-  {
-    path: "/home",
-    component: () => import("@/views/index.vue"),
-    hidden: false,
-    meta: {
-      title: "首页",
-      elIcon: "Operation",
-      keepAlive: false,
-      affix: true,
-    },
-  },
 ]
 
 const routes: Array<RouteRecordRaw> = [

@@ -1,13 +1,18 @@
 const { defineConfig } = require("@vue/cli-service");
+const path = require("path");
+
 module.exports = defineConfig({
   transpileDependencies: ["*"],
   chainWebpack: (config) => {
-    // svg rule loader
-    const svgRule = config.module.rule("svg"); // 找到svg-loader
-    svgRule.uses.clear(); // 清除已有的loader, 如果不这样做会添加在此loader之后
-    svgRule.exclude.add(/node_modules/); // 正则匹配排除node_modules目录
-    svgRule
+    // SVG 规则排除 icons 目录
+    config.module.rule("svg").exclude.add(path.resolve("src/assets/icons"));
+
+    // 添加 icons 目录的 SVG loader
+    config.module
+      .rule("icons")
       .test(/\.svg$/)
+      .include.add(path.resolve("src/assets/icons"))
+      .end()
       .use("svg-sprite-loader")
       .loader("svg-sprite-loader")
       .options({ symbolId: "icon-[name]" });

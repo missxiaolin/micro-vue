@@ -21,6 +21,8 @@
 import { computed, ref, watch } from "vue";
 import { mapGetters } from "vuex";
 import { sidebar, navigationBar, appMain } from "./components"
+import { useTheme } from "@/hooks/useTheme"
+
 
 export default {
   computed: {
@@ -32,6 +34,8 @@ export default {
     appMain
   },
   setup() {
+    useTheme()
+
     return {
       showTagsView: true,
       fixedHeader: false

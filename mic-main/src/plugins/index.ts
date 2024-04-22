@@ -12,7 +12,7 @@ export function loadPlugins(app: App) {
 
   // map传入一个函数，遍历数组中的每个对象，被webpack自动进行导入
   // eslint-disable-next-line
-  const req: any = require.context("../assets/svg", false, /\.svg$/);
+  const req: any = require.context("../assets/icons", false, /\.svg$/);
   /*
   第一个参数是:'./svg' => 需要检索的目录，
   第二个参数是：false => 是否检索子目录,
