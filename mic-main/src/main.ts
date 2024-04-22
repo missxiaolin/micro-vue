@@ -19,6 +19,7 @@ microStart()
 
 const app = createApp(App).use(store).use(router)
 
+/** 加载插件 */
 loadPlugins(app)
 
 app.mount('#app')
