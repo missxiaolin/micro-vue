@@ -8,12 +8,11 @@ export function loadPlugins(app: App) {
   loadElementPlusIcon(app);
   // 注册到全局
   app.component("svg-icon", SvgIcon);
-  const requireAll = (requireContext: any) =>
-    requireContext.keys().map(requireContext);
+  const requireAll = (requireContext: any) => requireContext.keys().map(requireContext)
 
   // map传入一个函数，遍历数组中的每个对象，被webpack自动进行导入
   // eslint-disable-next-line
-  const req = require.context("../assets/svg", false, /\.svg$/);
+  const req: any = require.context("../assets/svg", false, /\.svg$/);
   /*
   第一个参数是:'./svg' => 需要检索的目录，
   第二个参数是：false => 是否检索子目录,

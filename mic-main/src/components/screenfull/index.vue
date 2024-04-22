@@ -7,11 +7,14 @@
       :content="fullscreenTips"
       placement="bottom"
     >
-      <svg-icon :iconClass="fullscreenSvgName" @click="handleFullscreenClick" />
+      <svg-icon
+        :icon-class="fullscreenSvgName"
+        @click="handleFullscreenClick"
+      />
     </el-tooltip>
     <!-- 内容区 -->
     <el-dropdown v-else>
-      <svg-icon :iconClass="contentLargeSvgName" />
+      <svg-icon :icon-class="contentLargeSvgName" />
       <template #dropdown>
         <el-dropdown-menu>
           <!-- 内容区放大 -->
@@ -36,8 +39,7 @@ import { ElMessage } from "element-plus";
 import screenfull from "screenfull";
 
 export default defineComponent({
-  components: {
-  },
+  components: {},
   props: {
     element: {
       type: String,
