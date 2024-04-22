@@ -40,7 +40,6 @@ export default {
     }
     function handleDataChange(e: any) {
       // TOODO:
-      console.log(e);
     }
 
     const key = computed(() => {

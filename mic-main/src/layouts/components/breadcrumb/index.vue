@@ -28,7 +28,10 @@ import {
   onMounted,
 } from "vue";
 import { type RouteLocationMatched, useRoute, useRouter } from "vue-router";
+import { constantRoutes } from "@/router/index";
+import childrenRoutes from '@/router/children'
 import { compile } from "path-to-regexp";
+const rRoute = [...constantRoutes, ...childrenRoutes]
 
 export default defineComponent({
   setup() {
@@ -36,12 +39,29 @@ export default defineComponent({
     const router = useRouter();
     const { proxy }: any = getCurrentInstance();
     /** 定义响应式数据 breadcrumbs，用于存储面包屑导航信息 */
-    const breadcrumbs = ref<RouteLocationMatched[]>([]);
+    const breadcrumbs = ref<any>([]);
 
     /** 获取面包屑导航信息 */
     const getBreadcrumb = () => {
-      breadcrumbs.value = route.matched.filter(
-        (item) => item.meta?.title && item.meta?.breadcrumb !== false
+      let r: any = []
+      rRoute.forEach((item: any) => {
+        if (item.children && item.children.length > 0) {
+          item.children.forEach((v: any) => {
+            if (v.path.indexOf(route.path) > -1) {
+              r.push(v)
+              r.push(item)
+            }
+          })
+          return
+        } else {
+          if (item.path.indexOf(route.path) > -1) {
+            r.push(item)
+          }
+        }
+        
+      })
+      breadcrumbs.value = r.filter(
+        (item: any) => item.meta?.title && item.meta?.breadcrumb !== false
       );
     };
 

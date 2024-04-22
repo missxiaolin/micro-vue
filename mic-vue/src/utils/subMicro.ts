@@ -62,7 +62,6 @@ const VueRouterOpenBlank = () => {
 
 export const subDispatchNewsToMain = (data = {}) => {
 	const { subRoutes = {}, subDispatch = {}, subName = 'vie', forceSend = false, customInfo = {} } = data;
-	console.log('skeletonSwitch--type--->', '子服务发送', { subRoutes, subDispatch, subName });
 	if (forceSend) {
 		window.microApp?.dispatch({ subRoutes, subDispatch, subName, sendTime: Date.now(), customInfo });
 	} else {

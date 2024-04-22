@@ -36,7 +36,6 @@ const micro = {
     checkAscriptionService({ commit, state }, fullPath) {
       // 非主服务， 获取子服务细腻下
       const microApps = state.microApps;
-      console.log('microApps----', microApps, fullPath)
       if (validURL(fullPath)) {
         fullPath = fullPath.split(".com")[1];
       }
@@ -58,7 +57,6 @@ const micro = {
     // 存储当前路由匹配的服务相关信息
     checkService({ dispatch, state }, fullPath) {
       return new Promise(async (resolve) => {
-        console.log("state.microApps----", (state.microApps), micro);
         const { isMainServe, currentService } = await dispatch('checkAscriptionService', fullPath);
         const serviceName = currentService.name;
         // 服务是否开启 本地开发模式
@@ -66,7 +64,6 @@ const micro = {
           currentService.url = `${location.protocol}//${state.devService[serviceName].host || "localhost"}:${state.devService[serviceName].port}`;
           // currentService.inline = true;
         }
-        console.log('currentService', currentService)
         resolve({ isMainServe, currentService });
       })
     },

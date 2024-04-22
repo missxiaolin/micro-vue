@@ -12,7 +12,7 @@ export const constantRoutes: any = [
     },
     children: [
       {
-        path: "dashboard",
+        path: "/dashboard",
         component: () => import("@/views/dashboard/index.vue"),
         hidden: false,
         meta: {
@@ -25,7 +25,7 @@ export const constantRoutes: any = [
     ],
   },
   {
-    path: "/index",
+    path: "/home",
     component: () => import("@/views/index.vue"),
     hidden: false,
     meta: {
