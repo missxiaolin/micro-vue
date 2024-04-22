@@ -78,7 +78,9 @@ $transition-time: 0.35s;
 }
 
 .main-container {
-  min-height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   transition: margin-left $transition-time;
   margin-left: var(--v3-sidebar-width);
   position: relative;
@@ -99,9 +101,10 @@ $transition-time: 0.35s;
 
 .app-main {
   width: auto !important;
-  min-height: calc(100vh - var(--v3-navigationbar-height));
+  flex: 1;
+  height: auto;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .fixed-header + .app-main {

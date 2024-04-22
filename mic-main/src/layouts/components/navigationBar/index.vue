@@ -8,6 +8,7 @@
     <breadcrumb class="breadcrumb"></breadcrumb>
     <div class="right-menu">
       <screenfull class="right-menu-item" />
+      <themeSwitch class="right-menu-item" />
       <el-dropdown class="right-menu-item">
         <div class="right-menu-avatar">
           <el-avatar :icon="UserFilled" :size="30" />
@@ -34,6 +35,7 @@ import { defineComponent, computed } from "vue";
 import screenfull from "@/components/screenfull/index.vue";
 import breadcrumb from "../breadcrumb/index.vue";
 import hamburger from "../hamburger/index.vue";
+import themeSwitch from "@/components/themeSwitch/index.vue";
 import { UserFilled } from "@element-plus/icons-vue";
 import { useStore, mapGetters } from "vuex";
 
@@ -45,6 +47,7 @@ export default defineComponent({
     hamburger,
     breadcrumb,
     screenfull,
+    themeSwitch
   },
   setup() {
     const store = useStore();

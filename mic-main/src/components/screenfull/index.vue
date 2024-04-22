@@ -8,6 +8,7 @@
       placement="bottom"
     >
       <svg-icon
+        class="mt5"
         :icon-class="fullscreenSvgName"
         @click="handleFullscreenClick"
       />
