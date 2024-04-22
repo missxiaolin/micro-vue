@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from "vue";
+import { defineComponent, computed, ref, watchEffect } from "vue";
 import { ElMessage } from "element-plus";
 import screenfull from "screenfull";
 
@@ -75,6 +75,18 @@ export default defineComponent({
         ? screenfull.toggle(dom)
         : ElMessage.warning("您的浏览器无法工作");
     };
+    const handleFullscreenChange = () => {
+      isFullscreen.value = screenfull.isFullscreen;
+    };
+    watchEffect((onCleanup) => {
+      // 挂载组件时自动执行
+      screenfull.on("change", handleFullscreenChange);
+      // 卸载组件时自动执行
+      onCleanup(() => {
+        screenfull.isEnabled &&
+          screenfull.off("change", handleFullscreenChange);
+      });
+    });
     //#region 内容区
     const isContentLarge = ref<boolean>(false);
     const contentLargeSvgName = computed(() => {
