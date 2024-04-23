@@ -15,21 +15,17 @@
         <el-col :span="8">
           <search-label :labelName="'时间'">
             <el-date-picker
-        v-model="searchForm.time"
-        type="monthrange"
-        range-separator="To"
-        start-placeholder="开始时间"
-        end-placeholder="结束时间"
-      />
+              v-model="searchForm.time"
+              type="monthrange"
+              start-placeholder="开始时间"
+              end-placeholder="结束时间"
+            />
             <!-- <el-input v-model="searchForm.time" placeholder="请输入时间" /> -->
           </search-label>
         </el-col>
         <el-col :span="8">
           <search-label :labelName="'分类'">
-            <el-select
-              v-model="searchForm.value"
-              placeholder="请选择分类"
-            >
+            <el-select v-model="searchForm.value" placeholder="请选择分类">
               <el-option
                 v-for="item in searchForm.options"
                 :key="item.value"

@@ -1,9 +1,11 @@
 import { defineConfig } from "vite";
-import { resolve } from "path";
+import path, { resolve } from "path"
 import vue from "@vitejs/plugin-vue";
 import { VITE_PORT } from "./conifg/constant";
 import { configManualChunk } from "./conifg/vite/optimizer";
 import commonjs from "rollup-plugin-commonjs";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
+import svgLoader from "vite-svg-loader";
 import externalGlobals from "rollup-plugin-external-globals";
 
 // https://vitejs.dev/config/
@@ -34,15 +36,20 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
       extensions: [".js", ".ts", ".jsx", ".tsx", ".json", ".vue", ".mjs"],
     },
 
-    plugins: [vue()],
+    plugins: [
+      vue(),
+      /** 将 SVG 静态图转化为 Vue 组件 */
+      svgLoader({ defaultImport: "url" }),
+      /** SVG */
+      createSvgIconsPlugin({
+        iconDirs: [path.resolve(process.cwd(), "src/assets/icons")],
+        symbolId: "icon-[name]",
+      }),
+    ],
     build: {
       target: "es2015",
       rollupOptions: {
-        plugins: [
-          commonjs(),
-          externalGlobals({
-          }),
-        ],
+        plugins: [commonjs(), externalGlobals({})],
         output: {
           chunkFileNames: "static/js/[name]-[hash].js",
           entryFileNames: "static/js/[name]-[hash].js",
