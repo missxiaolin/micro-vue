@@ -1,10 +1,17 @@
 import { isObject, isArray, getRawComponentKey } from "./common";
 // @ts-ignore
 import presetAttribute from "../../libs/presetAttribute";
-// const cryptoRandomString = require("crypto-random-string");
-const cryptoRandomString = (obj: any) => {
+import cryptoRandomString from 'crypto-random-string'
+// import crypto from 'crypto-browserify'
 
-}
+// /**
+//  * @param length 
+//  * @returns 
+//  */
+// function cryptoRandomString({ length: number, type = 'base64' }: any) {
+//   const randomBytes = crypto.randomBytes(length);
+//   return randomBytes.toString(type);
+// }
 
 /**
  * 这里需要将o2作为o1的子值 这里使用回调方法而不是用Promise的原因为需要严格保证外部的调用时序

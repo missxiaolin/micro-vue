@@ -1,8 +1,15 @@
 import isEqual from "lodash/isEqual";
-// import cryptoRandomString from "crypto-random-string";
-const cryptoRandomString = (obj: any) => {
+import cryptoRandomString from 'crypto-random-string'
+// import crypto from 'crypto-browserify'
 
-}
+/**
+ * @param length 
+ * @returns 
+ */
+// function cryptoRandomString({ length: number, type = 'base64' }: any) {
+//   const randomBytes = crypto.randomBytes(length);
+//   return randomBytes.toString(type);
+// }
 
 /**
  * @param {*} __rawVueInfo__
