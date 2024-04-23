@@ -3,31 +3,19 @@
     <div class="mu-search-container pall10">
       <el-row>
         <el-col :span="8">
-          <div>1</div>
+          <search-label :labelName="'姓名'">
+            <el-input v-model="searchForm.name" placeholder="请输入姓名" />
+          </search-label>
         </el-col>
         <el-col :span="8">
-          <div>1</div>
+          <search-label :labelName="'手机号'">
+            <el-input v-model="searchForm.mobile" placeholder="请输入手机号" />
+          </search-label>
         </el-col>
         <el-col :span="8">
-          <div>1</div>
-        </el-col>
-        <el-col :span="8">
-          <div>1</div>
-        </el-col>
-        <el-col :span="8">
-          <div>1</div>
-        </el-col>
-        <el-col :span="8">
-          <div>1</div>
-        </el-col>
-        <el-col :span="8">
-          <div>1</div>
-        </el-col>
-        <el-col :span="8">
-          <div>1</div>
-        </el-col>
-        <el-col :span="8">
-          <div>1</div>
+          <search-label :labelName="'时间'">
+            <el-input v-model="searchForm.time" placeholder="请输入时间" />
+          </search-label>
         </el-col>
       </el-row>
       <div class="mu-search-form-button">
@@ -61,10 +49,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, reactive } from "vue";
 
 export default defineComponent({
   setup() {
+    const searchForm = reactive({
+      name: '',
+      mobile: '',
+      time: '',
+    })
     const tableData = ref([
       {
         date: "2016-05-03",
@@ -106,6 +99,7 @@ export default defineComponent({
 
     return {
       tableData,
+      searchForm
     };
   },
 });

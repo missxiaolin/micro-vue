@@ -2,12 +2,14 @@ import { type App } from "vue";
 import { loadElementPlus } from "./element-plus";
 import { loadElementPlusIcon } from "./element-plus-icon";
 import SvgIcon from "@/components/svgIcon/index.vue"; // svg组件
+import SearchLabel from "@/components/searchLabel/index.vue";
 
 export function loadPlugins(app: App) {
   loadElementPlus(app);
   loadElementPlusIcon(app);
   // 注册到全局
   app.component("svg-icon", SvgIcon);
+  app.component("search-label", SearchLabel);
   const requireAll = (requireContext: any) => requireContext.keys().map(requireContext)
 
   // map传入一个函数，遍历数组中的每个对象，被webpack自动进行导入
