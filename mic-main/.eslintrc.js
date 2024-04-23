@@ -25,6 +25,8 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     'eslint-plugin-vue': 'off',
     'vue/require-valid-default-prop': 'off',
-    'vue/no-setup-props-destructure': 'off'
+    'vue/no-setup-props-destructure': 'off',
+    'no-prototype-builtins': 'off',
+    '@typescript-eslint/no-var-requires': 'off'
   }
 }
