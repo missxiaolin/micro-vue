@@ -5,8 +5,6 @@ export default [
     meta: {
       title: "vie项目",
       elIcon: "Operation",
-      keepAlive: false,
-      affix: true,
     },
   }, {
     path: "/vue/index",
@@ -14,8 +12,6 @@ export default [
     meta: {
       title: "vue项目",
       elIcon: "Operation",
-      keepAlive: false,
-      affix: true,
     },
   },
 ];

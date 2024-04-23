@@ -90,7 +90,6 @@ export default defineComponent({
     const sidebarMenuHoverBgColor = computed(() => {
       return getCssVariableValue("--v3-sidebar-menu-hover-bg-color");
     });
-
     return {
       isCollapse,
       routes: [...constantRoutes, ...childrenRoutes],

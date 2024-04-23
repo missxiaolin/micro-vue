@@ -35,14 +35,15 @@
         <span v-if="item.meta?.title">{{ item.meta.title }}</span>
       </template>
       <template v-if="item.children">
-        <sidebar-item
-          v-for="child in item.children"
-          :key="child.path"
-          :item="child"
-          :is-collapse="isCollapse"
-          :is-first-level="false"
-          :base-path="resolvePath(child.path)"
-        />
+        <div v-for="child in item.children" :key="child.path">
+          <sidebar-item
+            v-if="!child.hidden"
+            :item="child"
+            :is-collapse="isCollapse"
+            :is-first-level="false"
+            :base-path="resolvePath(child.path)"
+          />
+        </div>
       </template>
     </el-sub-menu>
   </div>

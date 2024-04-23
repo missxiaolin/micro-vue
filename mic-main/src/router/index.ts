@@ -18,12 +18,36 @@ export const constantRoutes: any = [
         meta: {
           title: "应用概览",
           elIcon: "House",
-          keepAlive: false,
-          affix: true,
         },
       },
     ],
-  },
+  }, {
+    path: "/vcc",
+    redirect: "/index",
+    meta: {
+      title: "项目",
+      elIcon: "Operation",
+    },
+    children: [
+      {
+        path: "/vcc/index",
+        component: () => import("@/views/vcc/list.vue"),
+        hidden: false,
+        meta: {
+          title: "路由列表",
+          elIcon: "Operation",
+        },
+      }, {
+        path: "/vcc/detail",
+        component: () => import("@/views/vcc/detail.vue"),
+        hidden: true,
+        meta: {
+          title: "路由详情",
+          elIcon: "Operation",
+        },
+      },
+    ],
+  }
 ]
 
 const routes: Array<RouteRecordRaw> = [

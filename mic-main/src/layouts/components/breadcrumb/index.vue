@@ -10,9 +10,9 @@
         >
           {{ item.meta.title }}
         </span>
-        <a v-else @click.prevent="handleLink(item)">
+        <span v-else>
           {{ item.meta.title }}
-        </a>
+        </span>
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
@@ -48,8 +48,8 @@ export default defineComponent({
         if (item.children && item.children.length > 0) {
           item.children.forEach((v: any) => {
             if (v.path.indexOf(route.path) > -1) {
-              r.push(v)
               r.push(item)
+              r.push(v)
             }
           })
           return
@@ -103,7 +103,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .el-breadcrumb__inner,
-.el-breadcrumb__inner a {
+.el-breadcrumb__inner span {
   font-weight: 400 !important;
 }
 
