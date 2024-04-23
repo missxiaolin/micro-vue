@@ -47,7 +47,7 @@ export default defineComponent({
       rRoute.forEach((item: any) => {
         if (item.children && item.children.length > 0) {
           item.children.forEach((v: any) => {
-            if (v.path.indexOf(route.path) > -1) {
+            if (route.path.indexOf(v.path) > -1) {
               r.push(item)
               r.push(v)
             }
