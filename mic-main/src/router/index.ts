@@ -8,7 +8,7 @@ export const constantRoutes: any = [
     redirect: "/dashboard",
     meta: {
       title: "首页",
-      elIcon: "eleme",
+      elIcon: "House",
     },
     children: [
       {
@@ -17,7 +17,7 @@ export const constantRoutes: any = [
         hidden: false,
         meta: {
           title: "应用概览",
-          elIcon: "Operation",
+          elIcon: "House",
           keepAlive: false,
           affix: true,
         },

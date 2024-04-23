@@ -74,5 +74,7 @@ export default {
   flex: 1;
   overflow: auto;
   @include scrollbar;
+  padding: 15px;
+  box-sizing: border-box;
 }
 </style>

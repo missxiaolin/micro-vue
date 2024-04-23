@@ -32,6 +32,9 @@
   --v3-tagsview-tag-icon-hover-color: #ffffff;
   /** RightPanel 组件  */
   --v3-rightpanel-button-bg-color: #001428;
+  
+  /* search 全局 */
+  --search-bg-color: #fff;
 }
 
 /** 内容区放大时，将不需要的组件隐藏 */

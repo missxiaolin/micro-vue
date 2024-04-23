@@ -29,8 +29,7 @@ import { MagicStick } from "@element-plus/icons-vue";
 
 export default defineComponent({
   setup() {
-    const { themeList, activeThemeName, setTheme, initTheme } = useTheme();
-    initTheme()
+    const { themeList, activeThemeName, setTheme } = useTheme();
     return {
       themeList,
       activeThemeName,

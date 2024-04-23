@@ -33,6 +33,9 @@ html.dark-blue {
   --el-bg-color-overlay: #031e47;
   /** mask */
   --el-mask-color: rgba(0, 0, 0, 0.5);
+
+  /* search 全局 */
+  --search-bg-color: #031e47;
 }
 
 /** button */
