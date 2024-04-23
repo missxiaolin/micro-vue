@@ -5,7 +5,7 @@
  */
 
 html.dark {
-  --el-color-primary: #6C6E72;
+  --el-color-primary: #6C6E72 !important;
 
   --el-color-primary-light-3: #863e3e;
   --el-color-primary-dark-2: rgba(1, 167, 128, 0.7866666667);

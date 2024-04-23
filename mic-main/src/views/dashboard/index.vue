@@ -14,7 +14,30 @@
         </el-col>
         <el-col :span="8">
           <search-label :labelName="'时间'">
-            <el-input v-model="searchForm.time" placeholder="请输入时间" />
+            <el-date-picker
+        v-model="searchForm.time"
+        type="monthrange"
+        range-separator="To"
+        start-placeholder="开始时间"
+        end-placeholder="结束时间"
+      />
+            <!-- <el-input v-model="searchForm.time" placeholder="请输入时间" /> -->
+          </search-label>
+        </el-col>
+        <el-col :span="8">
+          <search-label :labelName="'分类'">
+            <el-select
+              v-model="searchForm.value"
+              placeholder="请选择分类"
+            >
+              <el-option
+                v-for="item in searchForm.options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+                :disabled="item.disabled"
+              />
+            </el-select>
           </search-label>
         </el-col>
       </el-row>
@@ -54,10 +77,34 @@ import { defineComponent, ref, reactive } from "vue";
 export default defineComponent({
   setup() {
     const searchForm = reactive({
-      name: '',
-      mobile: '',
-      time: '',
-    })
+      name: "",
+      mobile: "",
+      time: "",
+      value: "",
+      options: [
+        {
+          value: "Option1",
+          label: "Option1",
+        },
+        {
+          value: "Option2",
+          label: "Option2",
+          disabled: true,
+        },
+        {
+          value: "Option3",
+          label: "Option3",
+        },
+        {
+          value: "Option4",
+          label: "Option4",
+        },
+        {
+          value: "Option5",
+          label: "Option5",
+        },
+      ],
+    });
     const tableData = ref([
       {
         date: "2016-05-03",
@@ -99,7 +146,7 @@ export default defineComponent({
 
     return {
       tableData,
-      searchForm
+      searchForm,
     };
   },
 });

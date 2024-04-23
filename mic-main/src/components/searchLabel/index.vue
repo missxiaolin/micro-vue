@@ -17,32 +17,37 @@ export default defineComponent({
   },
   setup(props) {
     return {
-        props
-    }
+      props,
+    };
   },
 });
 </script>
 
-
 <style lang="scss" scoped>
 .search-l-b {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  padding: 8px;
+  
+  .label-name {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    padding: 0 3px;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--el-text-color-primary);
+    height: auto;
+    background-color: var(--search-bg-color) !important;
+    z-index: 2;
+    align-items: center !important;
+  }
+}
+.search-l-b {
+  ::v-deep .el-select {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    padding: 8px;
-    .label-name {
-        position: absolute;
-        top: 0px;
-        left: 20px;
-        padding: 0 3px;
-        font-size: 12px;
-        line-height: 16px;
-        color: var(--el-text-color-primary);
-        height: auto;
-        background-color: var(--search-bg-color) !important;
-        z-index: 2;
-        align-items: center !important;
-    }
+  }
 }
 </style>
