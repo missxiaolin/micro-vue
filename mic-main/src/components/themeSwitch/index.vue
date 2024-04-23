@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from "../../hooks/useTheme";
 import { MagicStick } from "@element-plus/icons-vue";
 
 export default defineComponent({

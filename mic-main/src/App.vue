@@ -18,7 +18,7 @@ import { defineComponent, onMounted, ref, computed } from "vue";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import { useRoute } from "vue-router";
 import layouts from "./layouts/index.vue";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from "./hooks/useTheme";
 
 export default defineComponent({
   components: {
