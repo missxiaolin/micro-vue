@@ -1,5 +1,6 @@
 // 视图分割工具
 import Split from 'split.js'
+console.log(Split)
 
 export function splitInit() {
     let sizes: any = localStorage.getItem('split-sizes')
@@ -17,7 +18,7 @@ export function splitInit() {
         sizeCodes = [70, 30] // default sizes
     }
 
-    Split(['.base-component-container', '.main-container'], {
+    Split(['.base-component-container', '.vcc-main-container'], {
         sizes: sizes,
         gutterSize: 4,
         minSize: [400, 375],
@@ -28,25 +29,9 @@ export function splitInit() {
                 gutter.style.cursor = 'col-resize';
             })
             return gutter
-        }, onDragEnd: function (sizes) {
+        },
+        onDragEnd: function (sizes) {
             localStorage.setItem('split-sizes', JSON.stringify(sizes))
         },
     })
-
-    // Split(['.preview-container', '.render-wrap'], {
-    //     sizes: sizeCodes,
-    //     gutterSize: 4,
-    //     direction: 'vertical',
-    //     minSize: [100, 100],
-    //     gutter: (index, direction) => {
-    //         const gutter = document.createElement('div')
-    //         gutter.className = `gutter gutter-${direction}`
-    //         gutter.addEventListener("mousemove", () => {
-    //             gutter.style.cursor = 'row-resize';
-    //         })
-    //         return gutter
-    //     }, onDragEnd: function (sizes) {
-    //         localStorage.setItem('split-sizes-code', JSON.stringify(sizes))
-    //     },
-    // })
 }

@@ -5,7 +5,7 @@
         <raw-components></raw-components>
       </nav>
 
-      <div class="main-container">
+      <div class="vcc-main-container">
         <!--顶部工具栏-->
 
         <!-- 内容区域 -->
@@ -24,7 +24,6 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import rawComponents from "../components/vcc/rawComponents.vue";
-// @ts-ignore
 import { splitInit } from "../libs/split-init";
 // 这个文件不可以进行懒加载，它会导致运行时不可点击的行为，具体原因未知
 // @ts-ignore
@@ -53,7 +52,7 @@ export default defineComponent({
     const init = () => {};
 
     const undo = () => {
-      mainPanelProvider.undo();
+      // mainPanelProvider.undo();
     }
     
     const initShortcut = () => {
@@ -91,7 +90,7 @@ export default defineComponent({
     border-radius: 0px;
   }
 }
-.main-container {
+.vcc-main-container {
   margin: 0px 0px 0 0;
   display: flex;
   flex-direction: column;
