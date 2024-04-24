@@ -7,6 +7,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import eFrom from "./form.vue";
+// @ts-ignore
 import { deepLCEle } from "../../utils/vcc/initRawComponent";
 
 export default defineComponent({

@@ -32,6 +32,8 @@ module.exports = {
     'no-undef': 'off',
     'no-extra-boolean-cast': 'off',
     '@typescript-eslint/adjacent-overload-signatures': 'off',
-    'no-dupe-class-members': 'off'
+    'no-dupe-class-members': 'off',
+    'no-empty': 'off',
+    'no-const-assign': 'off'
   }
 }
