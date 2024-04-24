@@ -20,6 +20,7 @@ import "element-plus/theme-chalk/dark/css-vars.css";
  */
 function loadTemplate(renderComponent: any, loadFinished: any) {
   const app = createApp(renderComponent);
+  loadFinished(app);
   return app;
 }
 
@@ -30,8 +31,8 @@ function loadTemplate(renderComponent: any, loadFinished: any) {
  */
 function createBaseAppAsync(renderComponent = {}) {
   return new Promise((resolve, reject) => {
-    loadTemplate(renderComponent, (a: any) => {
-      resolve(a);
+    loadTemplate(renderComponent, (app: any) => {
+      resolve(app);
     });
   });
 }

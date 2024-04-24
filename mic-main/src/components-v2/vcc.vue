@@ -49,6 +49,10 @@ export default defineComponent({
   },
   setup(props) {
     const mainPanelProvider = new MainPanelProvider();
+    const code = ref('')
+    const codeRawVueInfo = ref('')
+    const currentEditRawInfo: any = ref('')
+    const JSCode = ref('')
 
     /**
      * 初始化
@@ -60,25 +64,46 @@ export default defineComponent({
       });
     };
 
-    // 默认模版
+    // 通知父组件
+    const notifyParent = () => {
+      // this.$emit('updateCodeEntity', {
+      //   codeRawVueInfo: this.codeRawVueInfo,
+      //   JSCode: this.JSCode
+      // });
+    }
+
     const getFakeData = () => {
       return {
         template: {
           lc_id: "root",
-          __children: [
-            {
-              div: {
-                class: "container",
-                lc_id: "container",
-                style: "min-height: 100%; padding-bottom: 100px;",
-              },
-            },
-          ],
+          __children: [{
+            div: {
+              class: "container",
+              "lc_id": "container",
+              "style": "min-height: 100%; padding-bottom: 100px;",
+              __text__: "Hello，欢迎使用VCC编辑器，请往此区域拖拽组件",
+            }
+          }]
         },
-      };
-    };
+      }
+    }
+    
+    const convertLogicCode = (JsCode: any) => {
+      try {
+        const JSCodeInfo = eval(`(function(){return ${JsCode.replace(/\s+/g, "")}})()`);
+        // 保留JS代码
+        JSCode.value = JsCode;
+        // if (this.$refs.codeEditor) {
+        //   this.$refs.codeEditor.updateLogicCode(JSCode);
+        // }
+        return JSCodeInfo;
+      } catch (e) {
+        console.warn(`外部逻辑代码解析出错，解析的逻辑代码为: ${JsCode}, Error: ${e}`);
+      }
+    }
 
     const init = () => {
+      // 先订阅事件再渲染
       mainPanelProvider
         .onRootElementMounted((rootElement: any) => {
           document
@@ -95,6 +120,28 @@ export default defineComponent({
         .onMerged(() => {
           currentPointer(null, null);
         })
+        .onCodeCreated((c: any) => {
+          code.value = c;
+        })
+        .onCodeStructureUpdated((cRawVueInfo: any) => {
+          // if (this.$refs.codeStructure) {
+          //   this.$refs.codeStructure.updateCode(codeRawVueInfo);
+          // }
+          codeRawVueInfo.value = cRawVueInfo;
+
+          notifyParent();
+        })
+        .onNodeDeleted(() => {
+          currentEditRawInfo.value = null;
+        })
+        .onSelectElement((rawInfo: any) => {
+          currentEditRawInfo.value = rawInfo;
+        })
+        .saveJSCodeOnly(
+          convertLogicCode(
+            props.initCodeEntity.JSCode ? props.initCodeEntity.JSCode : ""
+          )
+        )
         .render(
           props.initCodeEntity.codeStructure
             ? props.initCodeEntity.codeStructure
@@ -114,7 +161,6 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      
       // @ts-ignore
       Promise.all([import("../map/load")]).then((res) => {
         init();
