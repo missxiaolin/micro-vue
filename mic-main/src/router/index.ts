@@ -35,7 +35,6 @@ export const constantRoutes: any = [
         hidden: false,
         meta: {
           title: "路由列表",
-          elIcon: "Operation",
         },
       }, {
         path: "/vcc/detail",
@@ -43,7 +42,6 @@ export const constantRoutes: any = [
         hidden: true,
         meta: {
           title: "路由详情",
-          elIcon: "Operation",
         },
       },
     ],

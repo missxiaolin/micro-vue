@@ -10,8 +10,8 @@
         :active-text-color="activeTextColor"
         :unique-opened="true"
         :collapse-transition="false"
-        :mode="'vertical'"
       >
+      
         <sidebarItem
           v-for="route in routes"
           :key="route.path"
@@ -21,6 +21,7 @@
           :is-collapse="getSidebarOpened"
         />
       </el-menu>
+      
     </el-scrollbar>
   </div>
 </template>

@@ -1,52 +1,44 @@
 <template>
   <div
-    v-if="!hidden"
-    :class="{
-      'simple-mode': isCollapse,
-      'first-level': isFirstLevel,
-    }"
+    v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children"
   >
-    <template
-      v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children"
+    <sidebarItemLink
+      v-if="theOnlyOneChild.meta"
+      :to="resolvePath(theOnlyOneChild.path)"
     >
-      <sidebarItemLink
-        v-if="theOnlyOneChild.meta"
-        :to="resolvePath(theOnlyOneChild.path)"
-      >
-        <el-menu-item :index="resolvePath(theOnlyOneChild.path)">
-          <component
-            v-if="theOnlyOneChild.meta.elIcon"
-            :is="theOnlyOneChild.meta.elIcon"
-            class="el-icon"
-          />
-          <template v-if="theOnlyOneChild.meta.title" #title>
-            {{ theOnlyOneChild.meta.title }}
-          </template>
-        </el-menu-item>
-      </sidebarItemLink>
-    </template>
-    <el-sub-menu v-else :index="resolvePath(item.path)" teleported>
-      <template #title>
+      <el-menu-item :index="resolvePath(theOnlyOneChild.path)">
         <component
-          v-if="item.meta?.elIcon"
-          :is="item.meta.elIcon"
+          v-if="theOnlyOneChild.meta.elIcon"
+          :is="theOnlyOneChild.meta.elIcon"
           class="el-icon"
         />
-        <span v-if="item.meta?.title">{{ item.meta.title }}</span>
-      </template>
-      <template v-if="item.children">
-        <div v-for="child in item.children" :key="child.path">
-          <sidebar-item
-            v-if="!child.hidden"
-            :item="child"
-            :is-collapse="isCollapse"
-            :is-first-level="false"
-            :base-path="resolvePath(child.path)"
-          />
-        </div>
-      </template>
-    </el-sub-menu>
+        <template v-if="theOnlyOneChild.meta.title" #title>
+          {{ theOnlyOneChild.meta.title }}
+        </template>
+      </el-menu-item>
+    </sidebarItemLink>
   </div>
+  <el-sub-menu v-else :index="resolvePath(item.path)" teleported>
+    <template #title>
+      <component
+        v-if="item.meta?.elIcon"
+        :is="item.meta.elIcon"
+        class="el-icon"
+      />
+      <span v-if="item.meta?.title">{{ item.meta.title }}</span>
+    </template>
+    <template v-if="item.children">
+      <div v-for="child in item.children" :key="child.path">
+        <sidebar-item
+          v-if="!child.hidden"
+          :item="child"
+          :is-collapse="isCollapse"
+          :is-first-level="false"
+          :base-path="resolvePath(child.path)"
+        />
+      </div>
+    </template>
+  </el-sub-menu>
 </template>
 
 <script lang="ts">
