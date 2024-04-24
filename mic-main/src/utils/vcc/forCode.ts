@@ -6,7 +6,7 @@ const cryptoRandomString = require("crypto-random-string");
 /**
  * 这里需要将o2作为o1的子值 这里使用回调方法而不是用Promise的原因为需要严格保证外部的调用时序
  */
-export function merge(o1, o2, currentPointPositionAfterIndex = -1, onFinish = () => { }) {
+export function merge(o1: any, o2: any, currentPointPositionAfterIndex = -1, onFinish: any) {
     if (o1 && o2) {
         if (!o1["__children"]) {
             o1["__children"] = [];
@@ -30,10 +30,10 @@ export function merge(o1, o2, currentPointPositionAfterIndex = -1, onFinish = ()
  * @param {*} html 
  * @returns 
  */
-export function replaceRowID(codeObj, html) {
+export function replaceRowID(codeObj: any, html: any) {
     // 生成一个唯一的ID，使Code和Dom一一对应，与原代码脱离关系
     let newHtml = html;
-    function deep(obj) {
+    function deep(obj: any) {
         if (isObject(obj)) {
             for (const key in obj) {
                 if (obj.hasOwnProperty(key)) {
@@ -49,7 +49,7 @@ export function replaceRowID(codeObj, html) {
                     } else if (isObject(element)) {
                         deep(element);
                     } else if (isArray(element)) {
-                        element.forEach((item) => deep(item));
+                        element.forEach((item: any) => deep(item));
                     }
                 }
             }
@@ -63,15 +63,16 @@ export function replaceRowID(codeObj, html) {
  * @param {*} target 
  * @returns 
  */
-export function generateRawInfo(target) {
+export function generateRawInfo(target: any) {
     if (target.attributes.lc_id) {
         // 获取源代码结构
+        // @ts-ignore
         const rowCode = window.templateSourceMap[target.attributes.lc_id.nodeValue];
         return rowCode;
     } else if (target.__vue__) {
         // 代表这是一个Vue组件组成的元素，这里的逻辑渐渐不再使用
-        const temp = findVueInfo(target.__vue__.$vnode);
-        return temp;
+        // const temp = findVueInfo(target.__vue__.$vnode);
+        return '';
     } else {
         // 这是一个普通的元素
         const temp = {
@@ -93,18 +94,21 @@ export function getSplitTag() {
  * 在这里维护一棵以ID为KEY的树
  * @param {*} codeObj 
  */
-export function updateLinkTree(codeObj) {
+export function updateLinkTree(codeObj: any) {
+    // @ts-ignore
     if (!window.tree) {
+        // @ts-ignore
         window.tree = {};
     }
-
+    // @ts-ignore
     if (!window.treeWithID) {
         const innerObj = {};
         Object.defineProperty(window, 'treeWithID', {
             get: function () {
                 return innerObj;
             },
-            set: function (newValue) {
+            set: function (newValue: any) {
+                // @ts-ignore
                 innerObj = newValue;
             }
         })
@@ -116,8 +120,8 @@ export function updateLinkTree(codeObj) {
 /**
  * @param {*} codeObj 
  */
-export function flatCodeObj(codeObj) {
-    function deep(object) {
+export function flatCodeObj(codeObj: any) {
+    function deep(object: any) {
         for (const key in object) {
             if (object.hasOwnProperty(key)) {
                 const element = object[key];
@@ -132,22 +136,24 @@ export function flatCodeObj(codeObj) {
 
                 if (key === "lc_id" && object.hasOwnProperty("__key__")) {
                     const outerKey = object["__key__"];
-                    const newObj = {
+                    const newObj: any = {
                         [outerKey]: object
                     };
 
                     // 这个关系也需要链接
                     newObj.__proto__ = object.__proto__;
                     delete object.__key__;
+                    // @ts-ignore
                     window.tree[element] = newObj;
 
                     // 这个备份用于生成兄弟组件时获取原始代码所用，需要保留ID的信息才可以实现DOM与代码对象的关联
                     const copy = Object.create(newObj.__proto__);
                     Object.assign(copy, JSON.parse(JSON.stringify(newObj)));
+                    // @ts-ignore
                     window.treeWithID[element] = copy;
 
                 } else if (key === "__children") {
-                    object.__children.forEach((child) => {
+                    object.__children.forEach((child: any) => {
                         child["__key__"] = key;
                         deep(child);
                     });
@@ -167,12 +173,15 @@ export function flatCodeObj(codeObj) {
  * @param {*} element 
  * @returns 
  */
-export function findRawVueInfo(element) {
+// @ts-ignore
+export function findRawVueInfo(element: any) {
     // 这里对于form这样的怪物来说会导致指向错乱的问题
     // if (element.__rawVueInfo__) {
     //   return element.__rawVueInfo__;
     // } else
+    // @ts-ignore
     if (window.tree[element.attributes.lc_id.nodeValue]) {
+        // @ts-ignore
         return window.tree[element.attributes.lc_id.nodeValue];
     } else {
         return findRawVueInfo(element.parentNode);
@@ -183,10 +192,11 @@ export function findRawVueInfo(element) {
  * 放入容器
  * @param {*} vueInfo 
  */
-export function insertPresetAttribute(vueInfo) {
+export function insertPresetAttribute(vueInfo: any) {
     const key = getRawComponentKey(vueInfo);
     const value = vueInfo[key];
     // 后续饿了么组件会有问题需要替换
+    // @ts-ignore
     const presetAttr = presetAttribute[key];
     if (presetAttr) {
         for (const key in presetAttr) {
@@ -204,7 +214,8 @@ export function insertPresetAttribute(vueInfo) {
  * @param {*} element 
  * @returns 
  */
-export function findCodeElemNode(element) {
+// @ts-ignore
+export function findCodeElemNode(element: any) {
     if (element.attributes && element.attributes.lc_id) {
         return element;
     } else if (element.parentNode) {
@@ -218,8 +229,8 @@ export function findCodeElemNode(element) {
  * 使生成的代码不携带ID属性
  * @param {*} codeObj 
  */
-export function removeAllID(codeObj) {
-    function deep(obj) {
+export function removeAllID(codeObj: any) {
+    function deep(obj: any) {
         if (isObject(obj)) {
             for (const key in obj) {
                 if (obj.hasOwnProperty(key)) {
@@ -229,7 +240,7 @@ export function removeAllID(codeObj) {
                     } else if (isObject(element)) {
                         deep(element);
                     } else if (isArray(element)) {
-                        element.forEach((item) => deep(item));
+                        element.forEach((item: any) => deep(item));
                     }
                 }
             }

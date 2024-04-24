@@ -2,9 +2,9 @@
 import { findCodeElemNode, findRawVueInfo } from "./forCode";
 import { getRawComponentContent } from "./common";
 
-let currentPostion = null,
-    currentTarget = null,
-    preSelectTarget = null; // 记录上一次鼠标所在位置
+let currentPostion: any = null,
+    currentTarget: any = null,
+    preSelectTarget: any = null; // 记录上一次鼠标所在位置
 
 const TOP = 1,
     MIDDLE = 2,
@@ -14,18 +14,19 @@ const TOP = 1,
  * @param {*} targetElement 
  * @param {*} _currentPointer 
  */
-export function initContainerForLine(targetElement, _currentPointer = () => { }) {
-    const crossX = document.querySelector(".x");
+export function initContainerForLine(targetElement: any, _currentPointer: any) {
+    const crossX: any = document.querySelector(".x");
+    // @ts-ignore
     const currentPointer = (...args) => {
         _currentPointer(...args);
     };
 
-    targetElement.addEventListener("dragover", (event) => {
+    targetElement.addEventListener("dragover", (event: any) => {
         event.preventDefault();
         drawLine(event);
     });
 
-    targetElement.addEventListener("dragleave", (event) => {
+    targetElement.addEventListener("dragleave", (event: any) => {
         if (event.target === targetElement) {
             targetElement.classList.remove("in-element");
             crossX.style = "display: none;";
@@ -39,7 +40,7 @@ export function initContainerForLine(targetElement, _currentPointer = () => { })
      * @param {*} element 
      * @returns 
      */
-    function findElementIndex(element) {
+    function findElementIndex(element: any) {
         // 根据代码结构查找
         const parentElementNode = findCodeElemNode(element.parentElement);
         const lc_id = element.getAttribute("lc_id");
@@ -51,7 +52,7 @@ export function initContainerForLine(targetElement, _currentPointer = () => { })
             if (attributes) {
                 const childrenArray = attributes.__children;
 
-                const index = childrenArray.findIndex((item) => {
+                const index = childrenArray.findIndex((item: any) => {
                     return getRawComponentContent(item).lc_id == lc_id;
                 });
                 return index;
@@ -72,7 +73,7 @@ export function initContainerForLine(targetElement, _currentPointer = () => { })
      * @param {*} event 
      * @returns 
      */
-    function drawLine(event) {
+    function drawLine(event: any) {
         const realTarget = event.target;
 
         // 新的逻辑是：只有上下定位辅助线，不再计算左右辅助线
@@ -126,7 +127,7 @@ export function initContainerForLine(targetElement, _currentPointer = () => { })
  * @param {*} y
  * @returns
  */
-function judgeTopOrBottom(e, x, y) {
+function judgeTopOrBottom(e: any, x: any, y: any) {
     const position = getElCoordinate(e);
 
     const cutDistance = Math.round((position.bottom - position.top) / 3);
@@ -143,7 +144,7 @@ function judgeTopOrBottom(e, x, y) {
  * @param {*} e 
  * @returns 
  */
-function getElCoordinate(e) {
+function getElCoordinate(e: any) {
     const rect = e.getBoundingClientRect();
     return rect;
 }

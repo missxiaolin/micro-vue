@@ -5,7 +5,7 @@ import cryptoRandomString from "crypto-random-string";
  * @param {*} __rawVueInfo__ 
  * @returns 
  */
-export function getRawComponentKey(__rawVueInfo__) {
+export function getRawComponentKey(__rawVueInfo__: any) {
     return Object.keys(__rawVueInfo__)[0];
 }
 
@@ -13,22 +13,22 @@ export function getRawComponentKey(__rawVueInfo__) {
  * @param {*} __rawVueInfo__ 
  * @returns 
  */
-export function getRawComponentContent(__rawVueInfo__) {
+export function getRawComponentContent(__rawVueInfo__: any) {
     return __rawVueInfo__[getRawComponentKey(__rawVueInfo__)];
 }
 
 /**
  * 比较两个对象是否完全相等
  */
-export function compareTwoObjectIsEqual(o1, o2) {
+export function compareTwoObjectIsEqual(o1: any, o2: any) {
     return isEqual(o1, o2);
 }
 
-export function isArray(arr) {
+export function isArray(arr: any) {
     return Object.prototype.toString.apply(arr) === "[object Array]";
 }
 
-export function isObject(obj) {
+export function isObject(obj: any) {
     return Object.prototype.toString.apply(obj) === "[object Object]";
 }
 
@@ -36,14 +36,14 @@ export function isObject(obj) {
  * 遍历对象，添加ID
  * @param {*} jsonObj 
  */
-export function ergodic(jsonObj) {
+export function ergodic(jsonObj: any) {
     if (jsonObj) {
         for (const key in jsonObj) {
             if (jsonObj.hasOwnProperty(key)) {
                 const element = jsonObj[key];
 
                 if (isArray(element)) {
-                    element.forEach((item) => {
+                    element.forEach((item: any) => {
                         if (isObject(item)) {
                             ergodic(item);
                             delete item.lc_id;
@@ -71,8 +71,8 @@ export function ergodic(jsonObj) {
  * @param {*} propertyName 
  * @returns 
  */
-export function findAObject(array, propertyName) {
-    const module = array.find(function (ele) {
+export function findAObject(array: any, propertyName: any) {
+    const module = array.find(function (ele: any) {
         return ele[propertyName];
     });
     return module || null;

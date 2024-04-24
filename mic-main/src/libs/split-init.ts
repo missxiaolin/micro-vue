@@ -2,8 +2,8 @@
 import Split from 'split.js'
 
 export function splitInit() {
-    let sizes = localStorage.getItem('split-sizes')
-    let sizeCodes = localStorage.getItem('split-sizes-code')
+    let sizes: any = localStorage.getItem('split-sizes')
+    let sizeCodes: any = localStorage.getItem('split-sizes-code')
 
     if (sizes) {
         sizes = JSON.parse(sizes)

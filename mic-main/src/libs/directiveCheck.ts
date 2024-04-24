@@ -1,4 +1,4 @@
-export function checkIsDataDirectives(key) {
+export function checkIsDataDirectives(key: any) {
     return [
         ':prop',
         'v-for',
@@ -15,7 +15,7 @@ export function checkIsDataDirectives(key) {
         ':file-list'].includes(key) || /^:+/g.test(key);
 }
 
-export function checkIsMethodDirectives(key) {
+export function checkIsMethodDirectives(key: any) {
     return [
         ':before-close',
         ':on-preview',

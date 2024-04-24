@@ -6,9 +6,9 @@ import { generateRawInfo, getSplitTag } from './forCode'
  * @param {*} rootElement 
  * @param {*} onCountIncrease 
  */
-export function deepLCEle(rootElement, onCountIncrease = () => { }) {
+export function deepLCEle(rootElement: any, onCountIncrease: any) {
     // 对dragParent下所有含有lc-mark属性的Element实现可拖拽能力
-    function deep(ele) {
+    function deep(ele: any) {
         if (ele.attributes["lc-mark"]) {
             // 统计标记组件数量
             onCountIncrease();
@@ -30,11 +30,11 @@ export function deepLCEle(rootElement, onCountIncrease = () => { }) {
  * 对组件初始化，使组件可以拖拽
  * @param {*} element 
  */
-export function initElement(element) {
+export function initElement(element: any) {
     element.draggable = true;
 
     // 给每个组件添加拖拽事件
-    element.addEventListener("dragstart", function (event) {
+    element.addEventListener("dragstart", function (event: any) {
         event.dataTransfer.effectAllowed = "copy";
         const raw = generateRawInfo(element);
         const str = `${element.localName}${getSplitTag()}${element.innerText
@@ -46,7 +46,7 @@ export function initElement(element) {
     });
 
     // 处理组件标记
-    element.addEventListener("mouseenter", (event) => {
+    element.addEventListener("mouseenter", (event: any) => {
         const parentClassList = element.parentElement.classList;
         if (parentClassList && parentClassList.contains("mark-element-unit")) {
             parentClassList.remove("mark-element-unit");
@@ -58,7 +58,7 @@ export function initElement(element) {
     });
 
     // 离开操作组件
-    element.addEventListener("mouseleave", (event) => {
+    element.addEventListener("mouseleave", (event: any) => {
         element.classList.remove("mark-element-unit");
         if (element.isRemoveParentStyle) {
             element.parentElement.classList.add("mark-element-unit");
