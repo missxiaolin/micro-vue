@@ -11,6 +11,31 @@ import "element-plus/theme-chalk/dark/css-vars.css";
 import { isSubMicro, handleMicroData } from '@/utils/subMicro';
 import { loadPlugins } from "@/plugins";
 
+/**
+ * 创建实例基础方法
+ * @param {*} renderComponent
+ * @param {*} loadFinished
+ * @returns
+ */
+function loadTemplate(renderComponent, loadFinished) {
+    const app = createApp(renderComponent);
+    loadFinished(app);
+    return app;
+  }
+  
+  /**
+   * 异步创建实例
+   * @param {*} renderComponent
+   * @returns
+   */
+  function createBaseAppAsync(renderComponent = {}) {
+    return new Promise((resolve, reject) => {
+      loadTemplate(renderComponent, (app) => {
+        resolve(app);
+      });
+    });
+  }
+
 let app = null;
 function mount() {
     app = createApp(App);
@@ -18,6 +43,7 @@ function mount() {
     app.mount('#vie-app')
     /** 加载插件 */
     loadPlugins(app)
+    window.createBaseAppAsync = createBaseAppAsync;
     if (isSubMicro) {
         // 微前端环境下， 处理路由下发跳转
 		handleMicroData(router);

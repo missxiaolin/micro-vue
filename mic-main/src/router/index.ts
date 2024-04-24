@@ -21,30 +21,6 @@ export const constantRoutes: any = [
         },
       },
     ],
-  }, {
-    path: "/vcc",
-    redirect: "/index",
-    meta: {
-      title: "项目",
-      elIcon: "Operation",
-    },
-    children: [
-      {
-        path: "/vcc/index",
-        component: () => import("@/views/vcc/list.vue"),
-        hidden: false,
-        meta: {
-          title: "路由列表",
-        },
-      }, {
-        path: "/vcc/detail",
-        component: () => import("@/views/vcc/detail.vue"),
-        hidden: true,
-        meta: {
-          title: "路由详情",
-        },
-      },
-    ],
   }
 ]
 

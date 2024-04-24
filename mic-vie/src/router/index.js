@@ -12,7 +12,18 @@ export const defaultRoute = [
       keepAlive: false,
       affix: true,
     },
-  },
+  }, {
+    path: "/vie/vcc/detail",
+    name: "首页",
+    component: () =>
+      import(/* webpackChunkName: "index" */ "@/views/vcc/detail.vue"),
+    meta: {
+      title: "vie项目",
+      elIcon: "Operation",
+      keepAlive: false,
+      affix: true,
+    },
+  }
 ];
 
 let prdRoutesList = [...defaultRoute];
