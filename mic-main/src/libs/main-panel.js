@@ -15,12 +15,12 @@ import {
   replaceRowID,
   findCodeElemNode,
   removeAllID,
-} from "../utils/forCode";
+} from "../utils/vcc/forCode";
 import {
   getRawComponentKey,
   getRawComponentContent,
   isObject,
-} from "../utils/common";
+} from "../utils/vcc/common";
 
 // 事件监听/订阅
 const EventEmitter = require("eventemitter3");

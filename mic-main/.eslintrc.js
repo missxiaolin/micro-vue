@@ -27,6 +27,11 @@ module.exports = {
     'vue/require-valid-default-prop': 'off',
     'vue/no-setup-props-destructure': 'off',
     'no-prototype-builtins': 'off',
-    '@typescript-eslint/no-var-requires': 'off'
+    '@typescript-eslint/no-var-requires': 'off',
+    'no-useless-escape': 'off',
+    'no-undef': 'off',
+    'no-extra-boolean-cast': 'off',
+    '@typescript-eslint/adjacent-overload-signatures': 'off',
+    'no-dupe-class-members': 'off'
   }
 }

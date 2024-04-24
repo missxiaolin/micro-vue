@@ -67,7 +67,7 @@ export default {
 }
 
 .app-scrollbar {
-  height: 100%;
+  min-height: 100%;
   overflow: auto;
   @include scrollbar;
   padding: 15px;

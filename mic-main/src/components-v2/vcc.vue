@@ -1,6 +1,6 @@
 <template>
   <div class="vcc-box">
-    <div class="main-main">
+    <div class="vcc-main">
       <nav class="base-component-container">
         <raw-components></raw-components>
       </nav>
@@ -22,14 +22,56 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import rawComponents from "../components/vcc/rawComponents.vue";
+// @ts-ignore
+import { splitInit } from "../libs/split-init";
+// 这个文件不可以进行懒加载，它会导致运行时不可点击的行为，具体原因未知
+// @ts-ignore
+import { MainPanelProvider } from "../libs/main-panel";
+import { getCssVariableValue } from "../utils";
+// 快捷键
+// @ts-ignore
+const keymaster = require("keymaster");
 
 export default defineComponent({
+  name: "VCC-V2",
+  props: {
+    initCodeEntity: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
   components: {
     rawComponents,
   },
-  setup() {
+  setup(props) {
+    const mainPanelProvider = new MainPanelProvider();
+
+    const init = () => {};
+
+    const undo = () => {
+      mainPanelProvider.undo();
+    }
+    
+    const initShortcut = () => {
+      keymaster("⌘+z, ctrl+z", () => {
+        undo();
+        return false;
+      });
+    }
+
+    onMounted(() => {
+      // @ts-ignore
+      Promise.all([import("../map/load")]).then((res) => {
+        init();
+      });
+      splitInit()
+      initShortcut()
+    });
+
     return {};
   },
 });
@@ -38,12 +80,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 .vcc-box {
   display: flex;
-  flex: 1;
-  min-height: 100vh;
+  height: calc(100vh - 80px);
 }
-.main-main {
+.vcc-main {
   width: 100%;
-  height: 100%;
+  height: auto;
+  overflow: hidden;
   display: flex;
   .base-component-container {
     border-radius: 0px;
@@ -71,7 +113,8 @@ export default defineComponent({
     border-radius: 5px;
   }
 
-  [lc_id] {}
+  [lc_id] {
+  }
 
   &::after {
     content: "编辑区域";
