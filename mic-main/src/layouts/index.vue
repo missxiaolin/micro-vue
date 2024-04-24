@@ -1,18 +1,25 @@
 <template>
-  <div :class="{
-    hideSidebar: getSidebarOpened,
-    openSidebar: !getSidebarOpened
-  }" class="app-wrapper">
-     <!-- 左侧边栏 -->
-     <sidebar class="sidebar-container" />
-     <!-- 主容器 -->
+  <div
+    :class="{
+      hideSidebar: getSidebarOpened,
+      openSidebar: !getSidebarOpened,
+      mainContent: true,
+    }"
+    class="app-wrapper"
+  >
+    <!-- 左侧边栏 -->
+    <sidebar class="sidebar-container" />
+    
+    <!-- 主容器 -->
     <div :class="{ hasTagsView: showTagsView }" class="main-container">
       <!-- 头部导航栏和标签栏 -->
       <div :class="{ 'fixed-header': fixedHeader }" class="layout-header">
         <navigation-bar />
       </div>
-      <!-- 页面主体内容 -->
-      <appMain class="app-main" />
+      <el-scrollbar :height="h">
+        <!-- 页面主体内容 -->
+        <appMain class="app-main" />
+      </el-scrollbar>
     </div>
   </div>
 </template>
@@ -20,9 +27,8 @@
 <script lang="ts">
 import { computed, ref, watch } from "vue";
 import { mapGetters } from "vuex";
-import { sidebar, navigationBar, appMain } from "./components"
-import { useTheme } from "../hooks/useTheme"
-
+import { sidebar, navigationBar, appMain } from "./components";
+import { useTheme } from "../hooks/useTheme";
 
 export default {
   computed: {
@@ -31,14 +37,17 @@ export default {
   components: {
     sidebar,
     navigationBar,
-    appMain
+    appMain,
   },
   setup() {
-    useTheme()
-
+    const h = ref('100vh')
+    useTheme();
+    const innerHeight = window.innerHeight;
+    h.value = `${innerHeight - 50}px`
     return {
+      h,
       showTagsView: true,
-      fixedHeader: false
+      fixedHeader: false,
     };
   },
 };
@@ -48,10 +57,17 @@ export default {
 @import "@/assets/css/mixins.scss";
 $transition-time: 0.35s;
 
+.main-content {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
 .app-wrapper {
   @include clearfix;
   position: relative;
   width: 100%;
+  min-height: 100vh;
 }
 
 .drawer-bg {
@@ -100,22 +116,21 @@ $transition-time: 0.35s;
 }
 
 .app-main {
-  width: auto !important;
-  flex: 1;
-  height: auto;
+  width: 100% !important;
+  min-height: calc(100vh - var(--v3-navigationbar-height));
   position: relative;
-  overflow: auto;
+  overflow: auto !important;
 }
 
 .fixed-header + .app-main {
   padding-top: var(--v3-navigationbar-height);
-  height: 100vh;
+  height: auto !important;
   overflow: auto;
 }
 
 .hasTagsView {
   .app-main {
-    flex: 1;
+    height: auto;
   }
   .fixed-header + .app-main {
     padding-top: var(--v3-header-height);

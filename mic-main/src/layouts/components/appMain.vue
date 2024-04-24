@@ -62,16 +62,12 @@ export default {
 
 .app-main {
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  height: auto !important;
   background-color: var(--v3-body-bg-color);
 }
 
 .app-scrollbar {
-  width: 100%;
   height: 100%;
-  flex: 1;
   overflow: auto;
   @include scrollbar;
   padding: 15px;

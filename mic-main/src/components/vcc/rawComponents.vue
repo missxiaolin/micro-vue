@@ -12,7 +12,7 @@
         <svg-icon :icon-class="item.icon" class="icon" />
       </div>
     </nav> -->
-    <div style="overflow: auto; padding: 0 10px; width: 100%">
+    <div class="z">
       <keep-alive>
         <component
           :is="currentSelectBrand.componentName"
@@ -96,5 +96,10 @@ nav {
   flex-direction: column;
   align-items: center;
   border-right: 1px solid #f0f0f0;
+}
+.z {
+  overflow: auto;
+  padding: 0 10px;
+  width: 100%;
 }
 </style>
