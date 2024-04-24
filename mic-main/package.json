@@ -8,7 +8,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "css-scoped": "^1.0.0",
     "@element-plus/icons-vue": "2.1.0",
     "@micro-zoe/micro-app": "1.0.0-beta.5",
     "axios": "1.4.0",
@@ -16,7 +15,9 @@
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
     "crypto-random-string": "^3.3.1",
+    "css-scoped": "^1.0.0",
     "element-plus": "2.3.8",
+    "eventemitter3": "^5.0.1",
     "htmlparser2": "^9.1.0",
     "keymaster": "^1.6.2",
     "normalize.css": "8.0.1",
@@ -26,12 +27,12 @@
     "prettier": "^2.5.1",
     "save": "^2.9.0",
     "screenfull": "^6.0.2",
+    "split.js": "^1.6.4",
     "stringify-object": "^3.3.0",
     "unocss": "^0.53.6",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0",
-    "split.js": "^1.6.4",
     "vxe-table": "4.4.1",
     "vxe-table-plugin-element": "3.0.7"
   },

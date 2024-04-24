@@ -28,6 +28,7 @@ import { splitInit } from "../libs/split-init";
 // 这个文件不可以进行懒加载，它会导致运行时不可点击的行为，具体原因未知
 // @ts-ignore
 import { MainPanelProvider } from "../libs/main-panel";
+import { initContainerForLine } from "../utils/vcc/lineHelper";
 import { getCssVariableValue } from "../utils";
 // 快捷键
 // @ts-ignore
@@ -49,26 +50,77 @@ export default defineComponent({
   setup(props) {
     const mainPanelProvider = new MainPanelProvider();
 
-    const init = () => {};
+    /**
+     * 初始化
+     */
+    const currentPointer = (ele: any, index: any) => {
+      mainPanelProvider.setDropInfo({
+        target: ele,
+        index,
+      });
+    };
+
+    // 默认模版
+    const getFakeData = () => {
+      return {
+        template: {
+          lc_id: "root",
+          __children: [
+            {
+              div: {
+                class: "container",
+                lc_id: "container",
+                style: "min-height: 100%; padding-bottom: 100px;",
+              },
+            },
+          ],
+        },
+      };
+    };
+
+    const init = () => {
+      mainPanelProvider
+        .onRootElementMounted((rootElement: any) => {
+          document
+            .getElementsByTagName("body")[0]
+            .addEventListener("click", () => {
+              mainPanelProvider.clearElementSelect();
+            });
+
+          // 只针对根div做事件监听
+          initContainerForLine(rootElement.firstChild, currentPointer);
+          // @ts-ignore
+          document.querySelector(".x").style = "display:none;";
+        })
+        .onMerged(() => {
+          currentPointer(null, null);
+        })
+        .render(
+          props.initCodeEntity.codeStructure
+            ? props.initCodeEntity.codeStructure
+            : getFakeData()
+        );
+    };
 
     const undo = () => {
-      // mainPanelProvider.undo();
-    }
-    
+      mainPanelProvider.undo();
+    };
+
     const initShortcut = () => {
       keymaster("⌘+z, ctrl+z", () => {
         undo();
         return false;
       });
-    }
+    };
 
     onMounted(() => {
+      
       // @ts-ignore
       Promise.all([import("../map/load")]).then((res) => {
         init();
       });
-      splitInit()
-      initShortcut()
+      splitInit();
+      initShortcut();
     });
 
     return {};

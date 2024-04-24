@@ -2,7 +2,7 @@
 const setting = {
   state: {
     // 侧边栏是否折叠
-    sidebarOpened: false,
+    sidebarOpened: true,
   },
   mutations: {
     setSidebarOpened(state, sidebarOpened) {

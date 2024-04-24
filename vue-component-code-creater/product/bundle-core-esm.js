@@ -456,13 +456,8 @@ const { merge, cloneDeep } = _;
 
 const rawAdd = Set.prototype.add;
 Set.prototype.add = function (value) {
-  if (typeof value === "string" && checkKeyword(value))
-    rawAdd.apply(this, arguments);
+  rawAdd.apply(this, arguments);
 };
-
-function checkKeyword(value) {
-  return value != "true" && value != "false";
-}
 
 /**
  * @param {*} template

@@ -34,6 +34,8 @@ module.exports = {
     '@typescript-eslint/adjacent-overload-signatures': 'off',
     'no-dupe-class-members': 'off',
     'no-empty': 'off',
-    'no-const-assign': 'off'
+    'no-const-assign': 'off',
+    'prefer-rest-params': 'off',
+    'no-var': 'off'
   }
 }

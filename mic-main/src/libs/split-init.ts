@@ -1,6 +1,5 @@
 // 视图分割工具
 import Split from 'split.js'
-console.log(Split)
 
 export function splitInit() {
     let sizes: any = localStorage.getItem('split-sizes')

@@ -24,14 +24,14 @@ function buildOptions(options, defaultOptions, props) {
 }
 
 const defaultOptions = {
-  attributeNamePrefix: "@_",
+  attributeNamePrefix: '@_',
   attrNodeName: false,
-  textNodeName: "#text",
+  textNodeName: '#text',
   ignoreAttributes: true,
   cdataTagName: false,
-  cdataPositionChar: "\\c",
+  cdataPositionChar: '\\c',
   format: true,
-  indentBy: "  ",
+  indentBy: '  ',
   supressEmptyNode: false,
   tagValueProcessor: function (a) {
     return a;
@@ -40,23 +40,23 @@ const defaultOptions = {
     return a;
   },
   singleTags: [],
-  attributeProtectArray: [], // 哪些属性的值为''但需要渲染出来，默认：如果value为''就不生成key=value，只生成key
+  attributeProtectArray: [] // 哪些属性的值为''但需要渲染出来，默认：如果value为''就不生成key=value，只生成key
 };
 
 const props = [
-  "attributeNamePrefix",
-  "attrNodeName",
-  "textNodeName",
-  "ignoreAttributes",
-  "cdataTagName",
-  "cdataPositionChar",
-  "format",
-  "indentBy",
-  "supressEmptyNode",
-  "tagValueProcessor",
-  "attrValueProcessor",
-  "singleTags",
-  "attributeProtectArray",
+  'attributeNamePrefix',
+  'attrNodeName',
+  'textNodeName',
+  'ignoreAttributes',
+  'cdataTagName',
+  'cdataPositionChar',
+  'format',
+  'indentBy',
+  'supressEmptyNode',
+  'tagValueProcessor',
+  'attrValueProcessor',
+  'singleTags',
+  'attributeProtectArray'
 ];
 
 function Parser(options) {
@@ -81,14 +81,14 @@ function Parser(options) {
 
   if (this.options.format) {
     this.indentate = indentate;
-    this.tagEndChar = ">\n";
-    this.newLine = "\n";
+    this.tagEndChar = '>\n';
+    this.newLine = '\n';
   } else {
     this.indentate = function () {
-      return "";
+      return '';
     };
-    this.tagEndChar = ">";
-    this.newLine = "";
+    this.tagEndChar = '>';
+    this.newLine = '';
   }
 
   if (this.options.supressEmptyNode) {
@@ -108,35 +108,37 @@ Parser.prototype.parse = function (jObj) {
 };
 
 Parser.prototype.j2x = function (jObj, level) {
-  let attrStr = "";
-  let val = "";
+  let attrStr = '';
+  let val = '';
   const keys = Object.keys(jObj);
   const len = keys.length;
   for (let i = 0; i < len; i++) {
     const key = keys[i];
-    if (typeof jObj[key] === "undefined") ; else if (jObj[key] === null) {
-      val += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
+    if (typeof jObj[key] === 'undefined') ; else if (jObj[key] === null) {
+      val += this.indentate(level) + '<' + key + '/' + this.tagEndChar;
     } else if (jObj[key] instanceof Date) {
-      val += this.buildTextNode(jObj[key], key, "", level);
-    } else if (key === "__children") {
-      // 生成子节点
+      val += this.buildTextNode(jObj[key], key, '', level);
+    } else if (key === '__children') { // 生成子节点
       const item = jObj[key];
 
       if (item instanceof Array) {
-        item.forEach((i) => {
+        item.forEach(i => {
           const result = this.j2x(i, level + 1);
           val += result.val;
         });
-      } else if (typeof item === "object") {
-        console.info(`不应该出现的意外`);
-      } else {
-        val += this.buildTextNode(item, key, "", level);
-      }
-    } else if (typeof jObj[key] !== "object") {
+      } else
+        if (typeof item === 'object') {
+          console.info(`不应该出现的意外`);
+        } else {
+          val += this.buildTextNode(item, key, '', level);
+        }
+    }
+
+    else if (typeof jObj[key] !== 'object') {
       //premitive type
       const attr = this.isAttribute(key);
 
-      if (key === "__text__") {
+      if (key === '__text__') {
         val = jObj[key] + val; // 2020年12月14日19:35:54 文本内容通常在子节点之前
         continue;
       }
@@ -144,62 +146,52 @@ Parser.prototype.j2x = function (jObj, level) {
       if (attr) {
         if (typeof jObj[key] === "boolean" && jObj[key]) {
           attrStr += ` ${key} `;
-        } else if (
-          jObj[key] ||
-          this.options.attributeProtectArray.includes(key)
-        ) {
-          attrStr +=
-            " " +
-            key +
-            '="' +
-            this.options.attrValueProcessor("" + jObj[key]) +
-            '"';
+        } else if (jObj[key] || this.options.attributeProtectArray.includes(key)) {
+          attrStr += ' ' + key + '="' + this.options.attrValueProcessor('' + jObj[key]) + '"';
         } else {
-          attrStr += " " + key;
+          attrStr += ' ' + key;
         }
+
       } else if (this.isCDATA(key)) {
         if (jObj[this.options.textNodeName]) {
-          val += this.replaceCDATAstr(
-            jObj[this.options.textNodeName],
-            jObj[key]
-          );
+          val += this.replaceCDATAstr(jObj[this.options.textNodeName], jObj[key]);
         } else {
-          val += this.replaceCDATAstr("", jObj[key]);
+          val += this.replaceCDATAstr('', jObj[key]);
         }
       } else {
         //tag value
         if (key === this.options.textNodeName) {
           if (jObj[this.options.cdataTagName]) ; else {
-            val += this.options.tagValueProcessor("" + jObj[key]);
+            val += this.options.tagValueProcessor('' + jObj[key]);
           }
         } else {
-          val += this.buildTextNode(jObj[key], key, "", level);
+          val += this.buildTextNode(jObj[key], key, '', level);
         }
       }
-    } else if (Array.isArray(jObj[key])) {
+    }
+
+
+    else if (Array.isArray(jObj[key])) {
       //repeated nodes
       if (this.isCDATA(key)) {
         val += this.indentate(level);
         if (jObj[this.options.textNodeName]) {
-          val += this.replaceCDATAarr(
-            jObj[this.options.textNodeName],
-            jObj[key]
-          );
+          val += this.replaceCDATAarr(jObj[this.options.textNodeName], jObj[key]);
         } else {
-          val += this.replaceCDATAarr("", jObj[key]);
+          val += this.replaceCDATAarr('', jObj[key]);
         }
       } else {
         //nested nodes
         const arrLen = jObj[key].length;
         for (let j = 0; j < arrLen; j++) {
           const item = jObj[key][j];
-          if (typeof item === "undefined") ; else if (item === null) {
-            val += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
-          } else if (typeof item === "object") {
+          if (typeof item === 'undefined') ; else if (item === null) {
+            val += this.indentate(level) + '<' + key + '/' + this.tagEndChar;
+          } else if (typeof item === 'object') {
             const result = this.j2x(item, level + 1);
             val += this.buildObjNode(result.val, key, result.attrStr, level);
           } else {
-            val += this.buildTextNode(item, key, "", level);
+            val += this.buildTextNode(item, key, '', level);
           }
         }
       }
@@ -209,12 +201,7 @@ Parser.prototype.j2x = function (jObj, level) {
         const Ks = Object.keys(jObj[key]);
         const L = Ks.length;
         for (let j = 0; j < L; j++) {
-          attrStr +=
-            " " +
-            Ks[j] +
-            '="' +
-            this.options.attrValueProcessor("" + jObj[key][Ks[j]]) +
-            '"';
+          attrStr += ' ' + Ks[j] + '="' + this.options.attrValueProcessor('' + jObj[key][Ks[j]]) + '"';
         }
       } else {
         const result = this.j2x(jObj[key], level + 1);
@@ -226,69 +213,57 @@ Parser.prototype.j2x = function (jObj, level) {
 };
 
 function replaceCDATAstr(str, cdata) {
-  str = this.options.tagValueProcessor("" + str);
-  if (this.options.cdataPositionChar === "" || str === "") {
-    return str + "<![CDATA[" + cdata + "]]" + this.tagEndChar;
+  str = this.options.tagValueProcessor('' + str);
+  if (this.options.cdataPositionChar === '' || str === '') {
+    return str + '<![CDATA[' + cdata + ']]' + this.tagEndChar;
   } else {
-    return str.replace(
-      this.options.cdataPositionChar,
-      "<![CDATA[" + cdata + "]]" + this.tagEndChar
-    );
+    return str.replace(this.options.cdataPositionChar, '<![CDATA[' + cdata + ']]' + this.tagEndChar);
   }
 }
 
 function replaceCDATAarr(str, cdata) {
-  str = this.options.tagValueProcessor("" + str);
-  if (this.options.cdataPositionChar === "" || str === "") {
-    return (
-      str + "<![CDATA[" + cdata.join("]]><![CDATA[") + "]]" + this.tagEndChar
-    );
+  str = this.options.tagValueProcessor('' + str);
+  if (this.options.cdataPositionChar === '' || str === '') {
+    return str + '<![CDATA[' + cdata.join(']]><![CDATA[') + ']]' + this.tagEndChar;
   } else {
     for (let v in cdata) {
-      str = str.replace(
-        this.options.cdataPositionChar,
-        "<![CDATA[" + cdata[v] + "]]>"
-      );
+      str = str.replace(this.options.cdataPositionChar, '<![CDATA[' + cdata[v] + ']]>');
     }
     return str + this.newLine;
   }
 }
 
 function buildObjectNode(val, key, attrStr, level) {
-  if (attrStr && !val.includes("<")) {
-    if (
-      key === "img" ||
-      key === "a-icon" ||
-      key === "input" ||
-      (this.options.singleTags && this.options.singleTags.includes(key))
-    ) {
-      return this.indentate(level) + "<" + key + attrStr + "/>";
+  if (attrStr && !val.includes('<')) {
+
+    if (key === "img" || key === "a-icon" || key === "input" || (this.options.singleTags && this.options.singleTags.includes(key))) {
+      return (this.indentate(level) + '<' + key + attrStr + '/>');
     }
 
     return (
       this.indentate(level) +
-      "<" +
+      '<' +
       key +
       attrStr +
-      ">" +
+      '>' +
       val +
       //+ this.newLine
       // + this.indentate(level)
-      "</" +
+      '</' +
       key +
       this.tagEndChar
     );
   } else {
     return (
       this.indentate(level) +
-      "<" +
+      '<' +
       key +
       attrStr +
       this.tagEndChar +
       val +
       //+ this.newLine
       this.indentate(level) +
-      "</" +
+      '</' +
       key +
       this.tagEndChar
     );
@@ -296,10 +271,10 @@ function buildObjectNode(val, key, attrStr, level) {
 }
 
 function buildEmptyObjNode(val, key, attrStr, level) {
-  if (val !== "") {
+  if (val !== '') {
     return this.buildObjectNode(val, key, attrStr, level);
   } else {
-    return this.indentate(level) + "<" + key + attrStr + "/" + this.tagEndChar;
+    return this.indentate(level) + '<' + key + attrStr + '/' + this.tagEndChar;
     //+ this.newLine
   }
 }
@@ -307,22 +282,22 @@ function buildEmptyObjNode(val, key, attrStr, level) {
 function buildTextValNode(val, key, attrStr, level) {
   return (
     this.indentate(level) +
-    "<" +
+    '<' +
     key +
     attrStr +
-    ">" +
+    '>' +
     this.options.tagValueProcessor(val) +
-    "</" +
+    '</' +
     key +
     this.tagEndChar
   );
 }
 
 function buildEmptyTextNode(val, key, attrStr, level) {
-  if (val !== "") {
+  if (val !== '') {
     return this.buildTextValNode(val, key, attrStr, level);
   } else {
-    return this.indentate(level) + "<" + key + attrStr + "/" + this.tagEndChar;
+    return this.indentate(level) + '<' + key + attrStr + '/' + this.tagEndChar;
   }
 }
 

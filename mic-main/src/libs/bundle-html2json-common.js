@@ -24,56 +24,55 @@ function getNodeContent(node) {
 }*/
 function generateNewNode(tagName, attributes = {}) {
   // 构建新节点
+  const newNode = {};
+  newNode[tagName] = attributes;
   attributes.__children = [];
-  const newNode = {
-    [tagName]: attributes,
-  };
   return newNode;
 }
 
 function parseHtml(htmlData) {
   return new Promise((resolve, reject) => {
     // 根节点
-    const root = generateNewNode("root");
+    const root = generateNewNode('root');
     // 当前访问的节点
     let currentAccessObject = root;
     // 之前访问的节点数组
     let lastAccessStack = [root];
 
     // options docment: https://github.com/fb55/htmlparser2/wiki/Parser-options
-    const parser = new htmlparser2.Parser(
-      {
-        onopentag(tagname, attributes) {
-          const newNode = generateNewNode(tagname, attributes);
-          lastAccessStack.push(newNode);
-          getNodeContent(currentAccessObject).__children.push(newNode);
-          currentAccessObject = newNode;
-        },
-        ontext(text) {
-          if (text.trim()) {
-            getNodeContent(currentAccessObject).__text__ = text.trim();
-          }
-        },
-        onclosetag(tagname) {
-          lastAccessStack.pop();
-          currentAccessObject = lastAccessStack[lastAccessStack.length - 1];
-        },
-        onend() {
-          resolve(root);
-        },
-
-        onerror(error) {
-          reject(error);
-        },
+    const parser = new htmlparser2.Parser({
+      onopentag(tagname, attributes) {
+        const newNode = generateNewNode(tagname, attributes);
+        lastAccessStack.push(newNode);
+        getNodeContent(currentAccessObject).__children.push(newNode);
+        currentAccessObject = newNode;
       },
-      {
-        lowerCaseAttributeNames: false,
-        lowerCaseTags: false,
+      ontext(text) {
+        if (text.trim()) {
+          getNodeContent(currentAccessObject).__text__ = text.trim();
+        }
+      },
+      onclosetag(tagname) {
+        lastAccessStack.pop();
+        currentAccessObject = lastAccessStack[lastAccessStack.length - 1];
+      },
+      onend() {
+        resolve(root);
+      },
+
+      onerror(error) {
+        reject(error);
       }
+    }, {
+      lowerCaseAttributeNames: false,
+      lowerCaseTags: false,
+    });
+    parser.write(
+      htmlData
     );
-    parser.write(htmlData);
+
     parser.end();
-  });
+  })
 }
 
 async function html2Json(htmlData) {
