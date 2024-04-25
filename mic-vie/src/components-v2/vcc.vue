@@ -545,7 +545,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     font-weight: 600;
-    font-size: 40px;
+    font-size: 20px;
     color: #d6d6d6;
     pointer-events: none;
   }

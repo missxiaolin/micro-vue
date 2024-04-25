@@ -1,5 +1,6 @@
 <template>
   <div class="element-class">
+    <htmlRow />
     <eFrom />
   </div>
 </template>
@@ -7,11 +8,13 @@
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import eFrom from "./form.vue";
+import htmlRow from '../html/index.vue'
 import { deepLCEle } from "../../utils/initRawComponent";
 
 export default {
   components: {
     eFrom,
+    htmlRow
   },
   data() {
     return {};

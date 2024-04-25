@@ -1,6 +1,5 @@
 export default {
   "el-button": {
-    "@click": "onButtonClick",
     size: "small",
   },
   "el-radio-group": {

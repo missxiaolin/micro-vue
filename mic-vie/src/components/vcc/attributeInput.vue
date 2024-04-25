@@ -35,7 +35,7 @@
               style="flex-grow: 4"
               :autosize="{ minRows: 2, maxRows: 4 }"
             ></el-input>
-            <el-icon style="margin-left: 5px;" @click="deleteItem(index)"><SemiSelect /></el-icon>
+            <el-icon style="margin-left: 5px;" @click="deleteItem(index)"><Remove /></el-icon>
           </div>
 
           <div class="quick-add-root">
@@ -107,7 +107,7 @@
         placement="bottom"
       >
         <el-button type="success" class="center" @click="save" circle>
-          <el-icon><circle-plus /></el-icon>
+          <el-icon><Refresh /></el-icon>
         </el-button>
       </el-tooltip>
       <el-tooltip

@@ -2,7 +2,7 @@
   <div lc_id="Wys3+gAG6o">
     <div class="demonstration-element" lc_id="QOAgJcuNgl">form组件</div>
     <el-button lc-mark lc_id="CsCNd5VsAG">默认按钮</el-button>
-    <el-button lc-mark type="primary" lc_id="86aZgUKBRW">主要按钮</el-button>
+    <el-button lc-mark type="primary" lc_id="86aZgUKBRW" @click="btnClick">主要按钮</el-button>
   </div>
 </template>
 
@@ -13,6 +13,11 @@ export default {
     return {
     };
   },
+  methods: {
+    btnClick() {
+      console.log(1)
+    }
+  }
 };
 </script>
 
