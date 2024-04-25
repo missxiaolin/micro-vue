@@ -9,8 +9,7 @@ export default {
   "el-radio": {
     ":label": 0,
   },
-  "el-checkbox-group": {
-  },
+  "el-checkbox-group": {},
   "el-link": {
     "@click": "onClickLink",
   },

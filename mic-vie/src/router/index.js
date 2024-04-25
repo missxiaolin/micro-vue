@@ -12,7 +12,8 @@ export const defaultRoute = [
       keepAlive: false,
       affix: true,
     },
-  }, {
+  },
+  {
     path: "/vie/vcc/detail",
     name: "首页",
     component: () =>
@@ -23,7 +24,7 @@ export const defaultRoute = [
       keepAlive: false,
       affix: true,
     },
-  }
+  },
 ];
 
 let prdRoutesList = [...defaultRoute];

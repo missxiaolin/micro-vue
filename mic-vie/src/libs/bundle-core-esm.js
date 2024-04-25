@@ -1,13 +1,13 @@
 //该文件会遍历Object，获取关键的class,事件,data, 最终拼装为一个完整的SFC文件
-import stringifyObject from '@/libs/stringify-object'
-import merge from 'lodash-es/merge';
-import cloneDeep from 'lodash-es/cloneDeep';
-import prettier from 'prettier/standalone.js';
-import parserBabel from 'prettier/parser-babel.js';
+import stringifyObject from "@/libs/stringify-object";
+import merge from "lodash-es/merge";
+import cloneDeep from "lodash-es/cloneDeep";
+import prettier from "prettier/standalone.js";
+import parserBabel from "prettier/parser-babel.js";
 
 // 导出组件模板文件
 
-function vueTemplate () {
+function vueTemplate() {
   return `<template> 
 <!--在此自动生成--> 
 </template>
@@ -49,14 +49,14 @@ function convertMethods(set, options) {
 
 // 合成style集
 function convertStyles(set, options) {
-  let result = '';
+  let result = "";
   // 因为set的结果不好解析，所以优先由业务处解析，再交给默认处理方式。不过业务处需要将已处理的值从set中删除，否则会有两条样式
   if (options.preConvertStyleResult) {
     result = options.preConvertStyleResult(set);
   }
 
   const classStr = [...set].map(generateClass);
-  return classStr.join("\n") + '\n' + result;
+  return classStr.join("\n") + "\n" + result;
 }
 
 // 合成data集
@@ -76,7 +76,10 @@ function replaceMethods(template, set, options) {
 
 // 从模板中替换样式
 function replaceStyles(template, set, options) {
-  return template.replace("/** $stylesTemplate */", convertStyles(set, options));
+  return template.replace(
+    "/** $stylesTemplate */",
+    convertStyles(set, options)
+  );
 }
 
 // 从模板中替换样式
@@ -105,14 +108,14 @@ function buildOptions(options, defaultOptions, props) {
 }
 
 const defaultOptions = {
-  attributeNamePrefix: '@_',
+  attributeNamePrefix: "@_",
   attrNodeName: false,
-  textNodeName: '#text',
+  textNodeName: "#text",
   ignoreAttributes: true,
   cdataTagName: false,
-  cdataPositionChar: '\\c',
+  cdataPositionChar: "\\c",
   format: true,
-  indentBy: '  ',
+  indentBy: "  ",
   supressEmptyNode: false,
   tagValueProcessor: function (a) {
     return a;
@@ -121,23 +124,23 @@ const defaultOptions = {
     return a;
   },
   singleTags: [],
-  attributeProtectArray: [] // 哪些属性的值为''但需要渲染出来，默认：如果value为''就不生成key=value，只生成key
+  attributeProtectArray: [], // 哪些属性的值为''但需要渲染出来，默认：如果value为''就不生成key=value，只生成key
 };
 
 const props = [
-  'attributeNamePrefix',
-  'attrNodeName',
-  'textNodeName',
-  'ignoreAttributes',
-  'cdataTagName',
-  'cdataPositionChar',
-  'format',
-  'indentBy',
-  'supressEmptyNode',
-  'tagValueProcessor',
-  'attrValueProcessor',
-  'singleTags',
-  'attributeProtectArray'
+  "attributeNamePrefix",
+  "attrNodeName",
+  "textNodeName",
+  "ignoreAttributes",
+  "cdataTagName",
+  "cdataPositionChar",
+  "format",
+  "indentBy",
+  "supressEmptyNode",
+  "tagValueProcessor",
+  "attrValueProcessor",
+  "singleTags",
+  "attributeProtectArray",
 ];
 
 function Parser(options) {
@@ -162,14 +165,14 @@ function Parser(options) {
 
   if (this.options.format) {
     this.indentate = indentate;
-    this.tagEndChar = '>\n';
-    this.newLine = '\n';
+    this.tagEndChar = ">\n";
+    this.newLine = "\n";
   } else {
     this.indentate = function () {
-      return '';
+      return "";
     };
-    this.tagEndChar = '>';
-    this.newLine = '';
+    this.tagEndChar = ">";
+    this.newLine = "";
   }
 
   if (this.options.supressEmptyNode) {
@@ -189,37 +192,36 @@ Parser.prototype.parse = function (jObj) {
 };
 
 Parser.prototype.j2x = function (jObj, level) {
-  let attrStr = '';
-  let val = '';
+  let attrStr = "";
+  let val = "";
   const keys = Object.keys(jObj);
   const len = keys.length;
   for (let i = 0; i < len; i++) {
     const key = keys[i];
-    if (typeof jObj[key] === 'undefined') ; else if (jObj[key] === null) {
-      val += this.indentate(level) + '<' + key + '/' + this.tagEndChar;
+    if (typeof jObj[key] === "undefined");
+    else if (jObj[key] === null) {
+      val += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
     } else if (jObj[key] instanceof Date) {
-      val += this.buildTextNode(jObj[key], key, '', level);
-    } else if (key === '__children') { // 生成子节点
+      val += this.buildTextNode(jObj[key], key, "", level);
+    } else if (key === "__children") {
+      // 生成子节点
       const item = jObj[key];
 
       if (item instanceof Array) {
-        item.forEach(i => {
+        item.forEach((i) => {
           const result = this.j2x(i, level + 1);
           val += result.val;
         });
-      } else
-        if (typeof item === 'object') {
-          console.info(`不应该出现的意外`);
-        } else {
-          val += this.buildTextNode(item, key, '', level);
-        }
-    }
-
-    else if (typeof jObj[key] !== 'object') {
+      } else if (typeof item === "object") {
+        console.info(`不应该出现的意外`);
+      } else {
+        val += this.buildTextNode(item, key, "", level);
+      }
+    } else if (typeof jObj[key] !== "object") {
       //premitive type
       const attr = this.isAttribute(key);
 
-      if (key === '__text__') {
+      if (key === "__text__") {
         val = jObj[key] + val; // 2020年12月14日19:35:54 文本内容通常在子节点之前
         continue;
       }
@@ -227,52 +229,64 @@ Parser.prototype.j2x = function (jObj, level) {
       if (attr) {
         if (typeof jObj[key] === "boolean" && jObj[key]) {
           attrStr += ` ${key} `;
-        } else if (jObj[key] || this.options.attributeProtectArray.includes(key)) {
-          attrStr += ' ' + key + '="' + this.options.attrValueProcessor('' + jObj[key]) + '"';
+        } else if (
+          jObj[key] ||
+          this.options.attributeProtectArray.includes(key)
+        ) {
+          attrStr +=
+            " " +
+            key +
+            '="' +
+            this.options.attrValueProcessor("" + jObj[key]) +
+            '"';
         } else {
-          attrStr += ' ' + key;
+          attrStr += " " + key;
         }
-
       } else if (this.isCDATA(key)) {
         if (jObj[this.options.textNodeName]) {
-          val += this.replaceCDATAstr(jObj[this.options.textNodeName], jObj[key]);
+          val += this.replaceCDATAstr(
+            jObj[this.options.textNodeName],
+            jObj[key]
+          );
         } else {
-          val += this.replaceCDATAstr('', jObj[key]);
+          val += this.replaceCDATAstr("", jObj[key]);
         }
       } else {
         //tag value
         if (key === this.options.textNodeName) {
-          if (jObj[this.options.cdataTagName]) ; else {
-            val += this.options.tagValueProcessor('' + jObj[key]);
+          if (jObj[this.options.cdataTagName]);
+          else {
+            val += this.options.tagValueProcessor("" + jObj[key]);
           }
         } else {
-          val += this.buildTextNode(jObj[key], key, '', level);
+          val += this.buildTextNode(jObj[key], key, "", level);
         }
       }
-    }
-
-
-    else if (Array.isArray(jObj[key])) {
+    } else if (Array.isArray(jObj[key])) {
       //repeated nodes
       if (this.isCDATA(key)) {
         val += this.indentate(level);
         if (jObj[this.options.textNodeName]) {
-          val += this.replaceCDATAarr(jObj[this.options.textNodeName], jObj[key]);
+          val += this.replaceCDATAarr(
+            jObj[this.options.textNodeName],
+            jObj[key]
+          );
         } else {
-          val += this.replaceCDATAarr('', jObj[key]);
+          val += this.replaceCDATAarr("", jObj[key]);
         }
       } else {
         //nested nodes
         const arrLen = jObj[key].length;
         for (let j = 0; j < arrLen; j++) {
           const item = jObj[key][j];
-          if (typeof item === 'undefined') ; else if (item === null) {
-            val += this.indentate(level) + '<' + key + '/' + this.tagEndChar;
-          } else if (typeof item === 'object') {
+          if (typeof item === "undefined");
+          else if (item === null) {
+            val += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
+          } else if (typeof item === "object") {
             const result = this.j2x(item, level + 1);
             val += this.buildObjNode(result.val, key, result.attrStr, level);
           } else {
-            val += this.buildTextNode(item, key, '', level);
+            val += this.buildTextNode(item, key, "", level);
           }
         }
       }
@@ -282,7 +296,12 @@ Parser.prototype.j2x = function (jObj, level) {
         const Ks = Object.keys(jObj[key]);
         const L = Ks.length;
         for (let j = 0; j < L; j++) {
-          attrStr += ' ' + Ks[j] + '="' + this.options.attrValueProcessor('' + jObj[key][Ks[j]]) + '"';
+          attrStr +=
+            " " +
+            Ks[j] +
+            '="' +
+            this.options.attrValueProcessor("" + jObj[key][Ks[j]]) +
+            '"';
         }
       } else {
         const result = this.j2x(jObj[key], level + 1);
@@ -294,57 +313,69 @@ Parser.prototype.j2x = function (jObj, level) {
 };
 
 function replaceCDATAstr(str, cdata) {
-  str = this.options.tagValueProcessor('' + str);
-  if (this.options.cdataPositionChar === '' || str === '') {
-    return str + '<![CDATA[' + cdata + ']]' + this.tagEndChar;
+  str = this.options.tagValueProcessor("" + str);
+  if (this.options.cdataPositionChar === "" || str === "") {
+    return str + "<![CDATA[" + cdata + "]]" + this.tagEndChar;
   } else {
-    return str.replace(this.options.cdataPositionChar, '<![CDATA[' + cdata + ']]' + this.tagEndChar);
+    return str.replace(
+      this.options.cdataPositionChar,
+      "<![CDATA[" + cdata + "]]" + this.tagEndChar
+    );
   }
 }
 
 function replaceCDATAarr(str, cdata) {
-  str = this.options.tagValueProcessor('' + str);
-  if (this.options.cdataPositionChar === '' || str === '') {
-    return str + '<![CDATA[' + cdata.join(']]><![CDATA[') + ']]' + this.tagEndChar;
+  str = this.options.tagValueProcessor("" + str);
+  if (this.options.cdataPositionChar === "" || str === "") {
+    return (
+      str + "<![CDATA[" + cdata.join("]]><![CDATA[") + "]]" + this.tagEndChar
+    );
   } else {
     for (let v in cdata) {
-      str = str.replace(this.options.cdataPositionChar, '<![CDATA[' + cdata[v] + ']]>');
+      str = str.replace(
+        this.options.cdataPositionChar,
+        "<![CDATA[" + cdata[v] + "]]>"
+      );
     }
     return str + this.newLine;
   }
 }
 
 function buildObjectNode(val, key, attrStr, level) {
-  if (attrStr && !val.includes('<')) {
-
-    if (key === "img" || key === "a-icon" || key === "input" || (this.options.singleTags && this.options.singleTags.includes(key))) {
-      return (this.indentate(level) + '<' + key + attrStr + '/>');
+  if (attrStr && !val.includes("<")) {
+    if (
+      key === "img" ||
+      key === "a-icon" ||
+      key === "input" ||
+      (this.options.singleTags && this.options.singleTags.includes(key))
+    ) {
+      return this.indentate(level) + "<" + key + attrStr + "/>";
     }
 
     return (
       this.indentate(level) +
-      '<' +
+      "<" +
       key +
       attrStr +
-      '>' +
+      ">" +
       val +
       //+ this.newLine
       // + this.indentate(level)
-      '</' +
+      "</" +
       key +
       this.tagEndChar
     );
   } else {
     return (
       this.indentate(level) +
-      '<' +
+      "<" +
       key +
       attrStr +
       this.tagEndChar +
       val +
       //+ this.newLine
       this.indentate(level) +
-      '</' +
+      "</" +
       key +
       this.tagEndChar
     );
@@ -352,10 +383,10 @@ function buildObjectNode(val, key, attrStr, level) {
 }
 
 function buildEmptyObjNode(val, key, attrStr, level) {
-  if (val !== '') {
+  if (val !== "") {
     return this.buildObjectNode(val, key, attrStr, level);
   } else {
-    return this.indentate(level) + '<' + key + attrStr + '/' + this.tagEndChar;
+    return this.indentate(level) + "<" + key + attrStr + "/" + this.tagEndChar;
     //+ this.newLine
   }
 }
@@ -363,22 +394,22 @@ function buildEmptyObjNode(val, key, attrStr, level) {
 function buildTextValNode(val, key, attrStr, level) {
   return (
     this.indentate(level) +
-    '<' +
+    "<" +
     key +
     attrStr +
-    '>' +
+    ">" +
     this.options.tagValueProcessor(val) +
-    '</' +
+    "</" +
     key +
     this.tagEndChar
   );
 }
 
 function buildEmptyTextNode(val, key, attrStr, level) {
-  if (val !== '') {
+  if (val !== "") {
     return this.buildTextValNode(val, key, attrStr, level);
   } else {
-    return this.indentate(level) + '<' + key + attrStr + '/' + this.tagEndChar;
+    return this.indentate(level) + "<" + key + attrStr + "/" + this.tagEndChar;
   }
 }
 
@@ -442,7 +473,7 @@ function replaceHtmlTemplate(template, jsonObj) {
     format: true,
     indentBy: "  ",
     supressEmptyNode: false,
-    attributeProtectArray: [] // 哪些属性的值为''但需要渲染出来，默认：如果value为''就不生成key=value，只生成key
+    attributeProtectArray: [], // 哪些属性的值为''但需要渲染出来，默认：如果value为''就不生成key=value，只生成key
   };
 
   const parser = new Parser(defaultOptions);
@@ -451,7 +482,6 @@ function replaceHtmlTemplate(template, jsonObj) {
 
   return template.replace("<!--在此自动生成-->", xml);
 }
-
 
 function getVueTemplate() {
   return vueTemplate();
@@ -465,10 +495,12 @@ function getVarName(value) {
   let result = null;
   if (/^[_a-z]{1}[_0-9a-zA-Z]*$/g.test(value)) {
     result = value;
-  } else if (value.indexOf('.') > 0 && getVarName(value.split('.')[0])) { //这个case用于处理xxx.yy的情况，需提取出xxx
-    result = value.split('.')[0];
-  } else if (value.indexOf('in') > 0) { // 匹配v-for="xx in yy", 提取yy
-    const temp = value.split(' in ');// 防止匹配到index这样容易混淆的变量
+  } else if (value.indexOf(".") > 0 && getVarName(value.split(".")[0])) {
+    //这个case用于处理xxx.yy的情况，需提取出xxx
+    result = value.split(".")[0];
+  } else if (value.indexOf("in") > 0) {
+    // 匹配v-for="xx in yy", 提取yy
+    const temp = value.split(" in "); // 防止匹配到index这样容易混淆的变量
     if (temp.length === 2) {
       result = getVarName(temp[1].trim());
     }
@@ -493,7 +525,6 @@ function findVarFormExpression(expression) {
 }
 
 export class CodeGenerator {
-
   constructor(options = {}) {
     this.options = options;
     // 解析后的Json对象
@@ -514,19 +545,18 @@ export class CodeGenerator {
     this.dataSet.clear();
   }
 
-
   /**
    * 设置外部编辑代码
-   * @param {*} code 
+   * @param {*} code
    */
   setExternalJS(JSCodeInfo) {
     this.externalJS = cloneDeep(JSCodeInfo);
   }
 
   /**
-    * 直接输入Json文本
-    * @param {*} json
-    */
+   * 直接输入Json文本
+   * @param {*} json
+   */
   outputVueCode(json) {
     this.jsonObj = JSON.parse(json);
     return this.outputVueCodeWithJsonObj(this.jsonObj);
@@ -551,7 +581,6 @@ export class CodeGenerator {
     return this.generateResult();
   }
 
-
   // 将所有需要替换的内容通过装饰器逐步替换
   replaceKeyInfo() {
     // 将对象转换为html并替换
@@ -560,7 +589,11 @@ export class CodeGenerator {
     // ==================== 生成脚本 ====================
 
     // 生成方法
-    const methodTemp = replaceMethods(scriptTemplate, this.methodSet, this.options);
+    const methodTemp = replaceMethods(
+      scriptTemplate,
+      this.methodSet,
+      this.options
+    );
     // 生成data
     const dataTemp = replaceDatas(methodTemp, this.dataSet, this.options);
 
@@ -570,7 +603,7 @@ export class CodeGenerator {
     // 合并外部脚本对象
     let externalData = {};
 
-    if (this.externalJS && typeof this.externalJS.data === 'function') {
+    if (this.externalJS && typeof this.externalJS.data === "function") {
       externalData = this.externalJS.data();
       // 防止在后面的生成污染新的对象
       delete this.externalJS.data;
@@ -594,21 +627,32 @@ export class CodeGenerator {
     // 序列化为脚本代码
     const finalJSCode = stringifyObject(mergedJSObject, {
       transform: (object, property, originalResult) => {
-        if (!originalResult.match(/^\([^\(]+/g) && !originalResult.match(/^\{/g)) { // 不对以(/{ 开头的情况做处理，只对包含有方法名的情况做处理
-          const after = originalResult.replace(/[^\(]+?\(([\w,\s]*)\)/, '\($1\)=>');
+        if (
+          !originalResult.match(/^\([^\(]+/g) &&
+          !originalResult.match(/^\{/g)
+        ) {
+          // 不对以(/{ 开头的情况做处理，只对包含有方法名的情况做处理
+          const after = originalResult.replace(
+            /[^\(]+?\(([\w,\s]*)\)/,
+            "($1)=>"
+          );
           return after;
         }
 
         return originalResult;
-      }
+      },
     });
 
     // ==================== 生成脚本 ====================
 
-    const beautiful = prettier.format(`export default ` + finalJSCode, { semi: false, parser: "babel", plugins: [parserBabel], });
-    const excludeUnuseal = beautiful.replace('export default ', '');
+    const beautiful = prettier.format(`export default ` + finalJSCode, {
+      semi: false,
+      parser: "babel",
+      plugins: [parserBabel],
+    });
+    const excludeUnuseal = beautiful.replace("export default ", "");
     // 插入到最终模板
-    const JSTemp = templateTemp.replace('// $script', excludeUnuseal);
+    const JSTemp = templateTemp.replace("// $script", excludeUnuseal);
 
     // 生成class
     const styleTemp = replaceStyles(JSTemp, this.classSet, this.options);
@@ -631,17 +675,23 @@ export class CodeGenerator {
       }
     } else if (/^v-/g.test(key) || /^:+/g.test(key)) {
       // 优先使Method消费，因为有的:也是method
-      if (this.options.checkIsMethodDirectives && this.options.checkIsMethodDirectives(key)) {
+      if (
+        this.options.checkIsMethodDirectives &&
+        this.options.checkIsMethodDirectives(key)
+      ) {
         value = getVarName(value);
         value && this.methodSet.addeee(value);
-      } else
-        // 业务侧可能会全部消费/^:+/g.test(key)
-        if (this.options.checkIsDataDirectives && this.options.checkIsDataDirectives(key)) {
-          value = getVarName(value);
-          value && this.dataSet.addeee(value);
-        } else {
-          this.options.unSupportedKey && this.options.unSupportedKey(key, value);
-        }
+      }
+      // 业务侧可能会全部消费/^:+/g.test(key)
+      else if (
+        this.options.checkIsDataDirectives &&
+        this.options.checkIsDataDirectives(key)
+      ) {
+        value = getVarName(value);
+        value && this.dataSet.addeee(value);
+      } else {
+        this.options.unSupportedKey && this.options.unSupportedKey(key, value);
+      }
     } else if (key === "__text__") {
       // 匹配v-text,{{}}
       if (/[{]{2}.+[}]{2}/g.test(value)) {
@@ -657,7 +707,6 @@ export class CodeGenerator {
     }
   }
 
-
   generateResult() {
     // 需要输出的结果有：
     // 1.html template
@@ -667,7 +716,6 @@ export class CodeGenerator {
     // 返回一个格式化后的字符串
     return this.replaceKeyInfo();
   }
-
 
   // 递归解析Json
   parseJson(json) {
@@ -685,7 +733,6 @@ export class CodeGenerator {
     }
   }
 }
-
 
 const rawAdd = Set.prototype.add;
 try {

@@ -3,7 +3,6 @@ import ejs from "ejs";
 
 const outputVueTemplate = `
 <!DOCTYPE html>
-<!-- 此页面通过VCC进行搭建: https://vcc3.sahadev.tech/ -->
 <html>
 <head>
   <meta charset="UTF-8">
@@ -38,7 +37,9 @@ const libAddressMap = {
     css: "",
   },
   ele: {
-    js: ["https://cdn.bootcdn.net/ajax/libs/element-plus/2.1.0/index.full.min.js"],
+    js: [
+      "https://cdn.bootcdn.net/ajax/libs/element-plus/2.1.0/index.full.min.js",
+    ],
     css: "https://cdn.bootcdn.net/ajax/libs/element-plus/2.1.0/theme-chalk/index.min.css",
     libName: "ElementPlus",
   },
@@ -63,12 +64,14 @@ export default function (vueCode, dependenciesLibs, vue3 = true) {
   let newScript = script.content.replace(/\s*export default\s*/, "");
 
   const tempDependenciesLibs = dependenciesLibs.slice();
-  const tempLibAddressMap = vue3 ? libAddressMap: libAddressMapForVue2
+  const tempLibAddressMap = vue3 ? libAddressMap : libAddressMapForVue2;
 
   tempDependenciesLibs.unshift("vue");
 
   const output = ejs.render(outputVueTemplate, {
-    cssLibs: tempDependenciesLibs.map((item) => tempLibAddressMap[item].css).filter((item) => !!item),
+    cssLibs: tempDependenciesLibs
+      .map((item) => tempLibAddressMap[item].css)
+      .filter((item) => !!item),
     scriptLibs: tempDependenciesLibs
       .map((item) => tempLibAddressMap[item].js)
       .flat()

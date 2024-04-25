@@ -9,7 +9,7 @@ const process = require("process");
 const cryptoRandomString = require("crypto-random-string");
 const espree = require("espree");
 const escodegen = require("escodegen");
-const css = require('css');
+const css = require("css");
 
 const templateStructureMap = {};
 const scriptDataMap = {};
@@ -82,7 +82,11 @@ function convert2Map(jsonObj) {
         } else {
         }
 
-        if (key === "lc_id" && isObject(jsonObj) && jsonObj.hasOwnProperty("__key__")) {
+        if (
+          key === "lc_id" &&
+          isObject(jsonObj) &&
+          jsonObj.hasOwnProperty("__key__")
+        ) {
           const outerKey = jsonObj["__key__"];
           const newObj = {};
           newObj[outerKey] = jsonObj;
@@ -96,40 +100,43 @@ function convert2Map(jsonObj) {
 }
 
 function findProperty(properties, findWhoStructure) {
-  return properties.find(item=>{
-    if(item.key.name === findWhoStructure){
+  return properties.find((item) => {
+    if (item.key.name === findWhoStructure) {
       return true;
     }
-  })
+  });
 }
 
 // 对JS代码进行编译
-function compileJsCode(code, onEncounterDuplicateDeclared = () => { }) {
+function compileJsCode(code, onEncounterDuplicateDeclared = () => {}) {
   const ast = espree.parse(code, { ecmaVersion: 6, sourceType: "module" });
   // 提取data中返回的对象结构, 如果文件引入了其它文件, 则body[0]为import语句。
   if (ast.body[0].declaration) {
     const properties = ast.body[0].declaration.properties;
-    const dataProperty = findProperty(properties, 'data');
+    const dataProperty = findProperty(properties, "data");
     const dataAst = dataProperty.value.body.body[0].argument;
     const newCode = escodegen.generate(dataAst);
 
     // 这里编译的组件内部应当只包含data和method，不应该包含其它属性
     if (ast.body[0].declaration.properties.length > 1) {
       const methodsAst = ast.body[0].declaration.properties[1].value.properties;
-      methodsAst && methodsAst.forEach(methodAst => {
+      methodsAst &&
+        methodsAst.forEach((methodAst) => {
+          let declaration = methodAst.key.name;
 
-        let declaration = methodAst.key.name;
+          if (scriptMethodMap[declaration]) {
+            console.warn(`已定义方法${declaration}，请避免重复!`);
 
-        if (scriptMethodMap[declaration]) {
-          console.warn(`已定义方法${declaration}，请避免重复!`);
-
-          declaration = generateNewDeclaration(declaration, onEncounterDuplicateDeclared);
-        }
-        scriptMethodMap[declaration] = escodegen.generate(methodAst.value);
-      })
+            declaration = generateNewDeclaration(
+              declaration,
+              onEncounterDuplicateDeclared
+            );
+          }
+          scriptMethodMap[declaration] = escodegen.generate(methodAst.value);
+        });
     }
 
-    const object = eval(`(function(){return ${newCode}})()`)
+    const object = eval(`(function(){return ${newCode}})()`);
     for (let key in object) {
       if (object.hasOwnProperty(key)) {
         const element = object[key];
@@ -139,7 +146,10 @@ function compileJsCode(code, onEncounterDuplicateDeclared = () => { }) {
         if (scriptDataMap[declaration]) {
           console.warn(`已定义data声明${declaration}，请避免重复!`);
 
-          declaration = generateNewDeclaration(declaration, onEncounterDuplicateDeclared);
+          declaration = generateNewDeclaration(
+            declaration,
+            onEncounterDuplicateDeclared
+          );
         }
         scriptDataMap[declaration] = element;
       }
@@ -150,7 +160,7 @@ function compileJsCode(code, onEncounterDuplicateDeclared = () => { }) {
 
 /**
  * 生成一个新的声明
- * @param {*} declaration 
+ * @param {*} declaration
  */
 function generateNewDeclaration(declaration, onEncounterDuplicateDeclared) {
   const newDeclaration = `${declaration}${repeatCounter++}`;
@@ -162,22 +172,28 @@ function generateNewDeclaration(declaration, onEncounterDuplicateDeclared) {
 
 // 将样式声明转换为css字符串
 function mapStyleDecalaration(item) {
-  return `${item.property}: ${item.value};`
+  return `${item.property}: ${item.value};`;
 }
 
-function compileStyleCode(style, onEncounterDuplicateDeclared = () => { }) {
+function compileStyleCode(style, onEncounterDuplicateDeclared = () => {}) {
   const obj = css.parse(style);
   if (obj && obj.stylesheet) {
     const rules = obj.stylesheet.rules;
-    rules && rules.forEach(rule => {
-      rule.selectors.forEach(selector => {
-        if (styleSourceMap[selector]) {
-          console.warn(`已定义选择器${selector}，请避免重复!`);
-          selector = generateNewDeclaration(selector, onEncounterDuplicateDeclared);
-        }
-        styleSourceMap[selector] = rule.declarations.map(mapStyleDecalaration).join(' ');
-      })
-    })
+    rules &&
+      rules.forEach((rule) => {
+        rule.selectors.forEach((selector) => {
+          if (styleSourceMap[selector]) {
+            console.warn(`已定义选择器${selector}，请避免重复!`);
+            selector = generateNewDeclaration(
+              selector,
+              onEncounterDuplicateDeclared
+            );
+          }
+          styleSourceMap[selector] = rule.declarations
+            .map(mapStyleDecalaration)
+            .join(" ");
+        });
+      });
   }
 }
 
@@ -198,32 +214,32 @@ async function compiler(path) {
     const obj = await html2Json(xmlData);
 
     // 对模板进行处理
-    ergodic(findAObject(obj.root.__children, 'template'));
+    ergodic(findAObject(obj.root.__children, "template"));
 
     // 被重复声明的data、method、css
     const repeatDecalations = [];
 
     // 解析默认Data
-    const script = findAObject(obj.root.__children, 'script');
+    const script = findAObject(obj.root.__children, "script");
     if (script) {
-      compileJsCode(script['__text__'], (oldD, newD) => {
+      compileJsCode(script["__text__"], (oldD, newD) => {
         repeatDecalations.push({
           oldD,
-          newD
-        })
+          newD,
+        });
       });
     } else {
       console.warn(`以下文件没有Script内容:${path}`);
     }
 
     // 解析CSS
-    const style = findAObject(obj.root.__children, 'style');
-    if (style && style['__text__']) {
-      compileStyleCode(style['__text__'], (oldD, newD) => {
+    const style = findAObject(obj.root.__children, "style");
+    if (style && style["__text__"]) {
+      compileStyleCode(style["__text__"], (oldD, newD) => {
         repeatDecalations.push({
           oldD,
-          newD
-        })
+          newD,
+        });
       });
     } else {
       console.warn(`以下文件没有Style内容:${path}`);
@@ -239,27 +255,32 @@ async function compiler(path) {
       format: true,
       indentBy: "  ",
       supressEmptyNode: false,
-      singleTags: ['br']
+      singleTags: ["br"],
     };
 
     const parser = new Parser(defaultOptions);
     let newVueContent = parser.parse(obj.root);
 
     // 对此文件做一次替换，替换那些已经重复声明过的属性
-    repeatDecalations.forEach(repeatDecalation => {
-      const regEx = new RegExp(`\\b${repeatDecalation.oldD}\\b`, 'gm');
+    repeatDecalations.forEach((repeatDecalation) => {
+      const regEx = new RegExp(`\\b${repeatDecalation.oldD}\\b`, "gm");
 
       // 先将含有 '-word' 这类的替换为别的，等正常替换为别的之后再替换回来。这是为了解决\bxxx\b匹配到-xxx的问题
-      const regExWithMiddle = new RegExp(`-\\b${repeatDecalation.oldD}\\b`, 'gm');
+      const regExWithMiddle = new RegExp(
+        `-\\b${repeatDecalation.oldD}\\b`,
+        "gm"
+      );
       const copyResult = `_${repeatDecalation.oldD}_`;
       newVueContent = newVueContent.replace(regExWithMiddle, copyResult);
 
       newVueContent = newVueContent.replace(regEx, `${repeatDecalation.newD}`);
 
       // 还原'_word_'为'-word'
-      newVueContent = newVueContent.replace(new RegExp(`_${repeatDecalation.oldD}_`, 'gm'), `-${repeatDecalation.oldD}`);
+      newVueContent = newVueContent.replace(
+        new RegExp(`_${repeatDecalation.oldD}_`, "gm"),
+        `-${repeatDecalation.oldD}`
+      );
     });
-
 
     // 将代码转换，再输出至原始文件
     const rawCodeOutputPath = path;
@@ -272,25 +293,28 @@ async function compiler(path) {
     outputToFile(templateStructureMap, "src/map/template.index.js");
 
     // data.index.js文件中
-    outputToFile(scriptDataMap, "src/map/data.index.js")
+    outputToFile(scriptDataMap, "src/map/data.index.js");
 
     // method.index.js文件中
-    outputToFile(scriptMethodMap, "src/map/method.index.js")
+    outputToFile(scriptMethodMap, "src/map/method.index.js");
 
     // style.index.js文件中
-    outputToFile(styleSourceMap, "src/map/style.index.js")
+    outputToFile(styleSourceMap, "src/map/style.index.js");
   } else {
     console.info(`路径不存在:${path}`);
   }
-};
+}
 
 function outputToFile(sourceObject, path) {
   const outputPath = _path.join(process.cwd(), path);
   fse.ensureFileSync(outputPath);
-  fs.writeFileSync(outputPath, `export default ${JSON.stringify(sourceObject)}`);
+  fs.writeFileSync(
+    outputPath,
+    `export default ${JSON.stringify(sourceObject)}`
+  );
 }
 
 module.exports = {
   compiler,
-  ergodic
-}
+  ergodic,
+};

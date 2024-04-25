@@ -1,10 +1,9 @@
 <template>
-  <div style="diplay: flex; height: 100%">
+  <div class="vcc-box">
     <div class="main-main">
       <nav class="base-component-container">
         <raw-components></raw-components>
       </nav>
-
       <div class="vcc-main-container">
         <!--顶部工具栏-->
 
@@ -15,7 +14,6 @@
         </div>
       </div>
     </div>
-
     <!-- 辅助定位线 -->
     <div class="cross-flag">
       <div class="x"></div>
@@ -64,13 +62,13 @@ export default {
   },
   watch: {
     currentEditRawInfo(newValue) {
-      // const attributeContainter = document.querySelector(".attribute");
+      const attributeContainter = document.querySelector(".attribute");
       if (newValue) {
-        // attributeContainter.style = "right:10px;";
-        // this.$refs["attributeInput"].onShow();
+        attributeContainter.style = "right:10px;";
+        this.$refs["attributeInput"].onShow();
       } else {
-        // attributeContainter.style = "right: var(--init-right)";
-        // this.$refs["attributeInput"].onHide();
+        attributeContainter.style = "right: var(--init-right)";
+        this.$refs["attributeInput"].onHide();
       }
     },
     initCodeEntity(newVal) {
@@ -207,8 +205,8 @@ export default {
               div: {
                 class: "container",
                 lc_id: "container",
-                style: "min-height: 100%; padding-bottom: 100px;",
-                __text__: "Hello，欢迎使用VCC编辑器，请往此区域拖拽组件",
+                style: "min-height: 100%;",
+                __text__: "Hello，欢迎使用vcc编辑器，请往此区域拖拽组件",
               },
             },
           ],
@@ -281,7 +279,7 @@ export default {
     },
 
     help() {
-      window.open("https://vcc3-docs.surge.sh/#/");
+      // window.open("");
     },
   },
   fillter: {},
@@ -290,17 +288,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-/* =============== 以下结果追加于: 2020/3/23 上午10:03:02 =============== */
+.vcc-box {
+  display: flex;
+  height: calc(100vh - 90px);
+}
+
 .main-main {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
-  background-color: #f0f0f0;
+  background-color: var(--search-bg-color);
 }
 
 .base-component-container {
   border-radius: 0px;
-  background-color: white;
+  background-color: var(--search-bg-color);
 }
 
 .vcc-main-container {
@@ -333,7 +335,8 @@ export default {
   border-radius: 0px;
   overflow: scroll;
   box-sizing: border-box;
-  background-color: white;
+  background-color: var(--search-bg-color);
+  border: 1px solid var(--el-border-color-light);
   transition: width 1s;
   padding: 10px;
 }

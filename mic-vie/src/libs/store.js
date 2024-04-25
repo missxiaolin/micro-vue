@@ -1,11 +1,11 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
 
 export const store = createStore({
   state() {
     return {
       currentEditComp: null,
-      renderCount: 0
-    }
+      renderCount: 0,
+    };
   },
   mutations: {
     storeCurrentEditComp(state, newComp) {
@@ -13,6 +13,6 @@ export const store = createStore({
     },
     onDragEnd(state) {
       state.renderCount++;
-    }
-  }
-})
+    },
+  },
+});
