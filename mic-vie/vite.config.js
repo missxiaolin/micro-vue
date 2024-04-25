@@ -1,10 +1,10 @@
 import { defineConfig } from "vite";
-import path, { resolve } from "path"
+import path, { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
 import { VITE_PORT } from "./conifg/constant";
 import { configManualChunk } from "./conifg/vite/optimizer";
 import commonjs from "rollup-plugin-commonjs";
-import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import svgLoader from "vite-svg-loader";
 import externalGlobals from "rollup-plugin-external-globals";
 
@@ -15,6 +15,10 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
     // 生产环境需要在域名基础上加上vie
     base: isBuild ? "/vie" : "/",
     server: {
+      fs: {
+        // 可以为项目根目录的上一级提供服务
+        allow: [".."],
+      },
       // hmr: { overlay: false }, // 禁用或配置 HMR 连接 设置 server.hmr.overlay 为 false 可以禁用服务器错误遮罩层
       // 服务配置
       port: VITE_PORT, // 类型： number 指定服务器端口;
@@ -32,8 +36,12 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
       alias: [
         { find: "~", replacement: resolve(__dirname, "./") },
         { find: "@", replacement: resolve(__dirname, "./src") },
+        {
+          find: "vue",
+          replacement: "vue/dist/vue.esm-bundler.js",
+        },
       ],
-      extensions: [".js", ".ts", ".jsx", ".tsx", ".json", ".vue", ".mjs"],
+      extensions: [".vue", ".js"],
     },
 
     plugins: [

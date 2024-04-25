@@ -72,7 +72,6 @@ export class MainPanelProvider {
             // 渲染当前代码
             const readyForMoutedElement = this.createMountedElement();
             window.createBaseAppAsync(componentOptions).then(app => {
-                console.log(app, readyForMoutedElement)
                 app.mount(readyForMoutedElement)
                 // 开启编辑模式，这个方式会导致正常渲染的事件被中断， 例如EChart的加载渲染。
                 this.enableEditMode();

@@ -19,6 +19,8 @@ import { loadPlugins } from "@/plugins";
  */
 function loadTemplate(renderComponent, loadFinished) {
     const app = createApp(renderComponent);
+    /** 加载插件 */
+    loadPlugins(app)
     loadFinished(app);
     return app;
   }
@@ -46,7 +48,7 @@ function mount() {
     window.createBaseAppAsync = createBaseAppAsync;
     if (isSubMicro) {
         // 微前端环境下， 处理路由下发跳转
-		handleMicroData(router);
+		  handleMicroData(router);
     }
 }
 

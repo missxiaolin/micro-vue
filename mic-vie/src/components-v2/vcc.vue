@@ -1,5 +1,5 @@
 <template>
-  <div style="diplay:flex;height:100%;">
+  <div style="diplay: flex; height: 100%">
     <div class="main-main">
       <nav class="base-component-container">
         <raw-components></raw-components>
@@ -13,7 +13,6 @@
             <!--这里不能放任何东西，执行时会被清空-->
           </div>
         </div>
-        
       </div>
     </div>
 
@@ -25,12 +24,12 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent } from "vue";
 import { splitInit } from "../libs/split-init";
 // // 这个文件不可以进行懒加载，它会导致运行时不可点击的行为，具体原因未知
 import { MainPanelProvider } from "../libs/main-panel";
 import { initContainerForLine } from "@/utils/lineHelper";
-import keymaster from "keymaster"
+import keymaster from "keymaster";
 
 export default {
   name: "vcc",
@@ -39,18 +38,14 @@ export default {
       type: Object,
       default: () => {
         return {};
-      }
-    }
+      },
+    },
   },
-  emits: ['updateCodeEntity', 'onLoadFinish'],
+  emits: ["updateCodeEntity", "onLoadFinish"],
   components: {
-    RawComponents: defineAsyncComponent(() => import("../components/vcc/rawComponents.vue")),
-    // ToolsBar: defineAsyncComponent(() => import("./ToolsBar")),
-    // AttributeInput: defineAsyncComponent(() => import("../components/AttributeInput")),
-    // CodeStructure: defineAsyncComponent(() => import("../components/CodeStructure")),
-    // "lc-code": defineAsyncComponent(() => import("../components/Code")),
-    // CodeEditor: defineAsyncComponent(() => import('../components/JSCodeEditorDialog.vue')),
-    // VueEditor: defineAsyncComponent(() => import('../components/VueCodeParseDialog.vue'))
+    RawComponents: defineAsyncComponent(() =>
+      import("../components/vcc/rawComponents.vue")
+    ),
   },
   data() {
     return {
@@ -60,60 +55,59 @@ export default {
       structureVisible: false,
       jsDialogVisible: false,
       vueDialogVisible: false,
-      iconCode: ("https://static.imonkey.xueersi.com/download/vcc-resource/icon/code-working-outline.svg"),
-      iconClear: ("https://static.imonkey.xueersi.com/download/vcc-resource/icon/trash-outline.svg"),
 
       editMode: true,
 
       codeRawVueInfo: null,
-      JSCode: ""
+      JSCode: "",
     };
   },
   watch: {
     currentEditRawInfo(newValue) {
-      const attributeContainter = document.querySelector(".attribute");
+      // const attributeContainter = document.querySelector(".attribute");
       if (newValue) {
-        attributeContainter.style = "right:10px;";
-        this.$refs['attributeInput'].onShow();
+        // attributeContainter.style = "right:10px;";
+        // this.$refs["attributeInput"].onShow();
       } else {
-        attributeContainter.style = "right: var(--init-right)";
-        this.$refs['attributeInput'].onHide();
+        // attributeContainter.style = "right: var(--init-right)";
+        // this.$refs["attributeInput"].onHide();
       }
     },
     initCodeEntity(newVal) {
       if (newVal.JSCode) {
-        this.mainPanelProvider.saveJSCodeOnly(this.convertLogicCode(newVal.JSCode));
+        this.mainPanelProvider.saveJSCodeOnly(
+          this.convertLogicCode(newVal.JSCode)
+        );
       }
 
       if (newVal.codeStructure) {
         this.mainPanelProvider.render(newVal.codeStructure);
       }
-    }
+    },
   },
-  computed: {
-  },
-  beforeCreate() {
-  },
+  computed: {},
+  beforeCreate() {},
   created() {
     this.mainPanelProvider = new MainPanelProvider();
   },
-  beforeMount() { },
+  beforeMount() {},
   mounted() {
-    Promise.all([import("../map/load")])
-      .then(res => {
-        this.$emit("onLoadFinish");
-        this.init();
-      });
+    Promise.all([import("../map/load")]).then((res) => {
+      this.$emit("onLoadFinish");
+      this.init();
+    });
     splitInit();
     this.initShortcut();
   },
-  beforeUpdate() { },
-  updated() { },
-  destroyed() { },
+  beforeUpdate() {},
+  updated() {},
+  destroyed() {},
   methods: {
     convertLogicCode(JSCode) {
       try {
-        const JSCodeInfo = eval(`(function(){return ${JSCode.replace(/\s+/g, "")}})()`);
+        const JSCodeInfo = eval(
+          `(function(){return ${JSCode.replace(/\s+/g, "")}})()`
+        );
         // 保留JS代码
         this.JSCode = JSCode;
         if (this.$refs.codeEditor) {
@@ -121,60 +115,77 @@ export default {
         }
         return JSCodeInfo;
       } catch (e) {
-        console.warn(`外部逻辑代码解析出错，解析的逻辑代码为: ${JSCode}, Error: ${e}`);
+        console.warn(
+          `外部逻辑代码解析出错，解析的逻辑代码为: ${JSCode}, Error: ${e}`
+        );
       }
     },
 
     initShortcut() {
-      keymaster('⌘+z, ctrl+z', () => {
+      keymaster("⌘+z, ctrl+z", () => {
         this.undo();
-        return false
+        return false;
       });
 
-
-      keymaster('esc', () => {
+      keymaster("esc", () => {
         this.editMode = true;
         this.mainPanelProvider.setEditMode(true);
-        return false
+        return false;
       });
     },
 
     init() {
       // 先订阅事件再渲染
-      this.mainPanelProvider.onRootElementMounted(rootElement => {
-        document.getElementsByTagName('body')[0].addEventListener("click", () => {
-          this.mainPanelProvider.clearElementSelect();
+      this.mainPanelProvider
+        .onRootElementMounted((rootElement) => {
+          document
+            .getElementsByTagName("body")[0]
+            .addEventListener("click", () => {
+              this.mainPanelProvider.clearElementSelect();
+            });
+
+          // 只针对根div做事件监听
+          initContainerForLine(rootElement.firstChild, this.currentPointer);
+
+          document.querySelector(".x").style = "display:none;";
         })
+        .onMerged(() => {
+          this.currentPointer(null);
+        })
+        .onCodeCreated((code) => {
+          this.code = code;
+        })
+        .onCodeStructureUpdated((codeRawVueInfo) => {
+          if (this.$refs.codeStructure) {
+            this.$refs.codeStructure.updateCode(codeRawVueInfo);
+          }
+          this.codeRawVueInfo = codeRawVueInfo;
 
-        // 只针对根div做事件监听
-        initContainerForLine(rootElement.firstChild, this.currentPointer);
-
-        document.querySelector(".x").style = "display:none;";
-
-      }).onMerged(() => {
-        this.currentPointer(null);
-      }).onCodeCreated(code => {
-        this.code = code;
-      }).onCodeStructureUpdated(codeRawVueInfo => {
-        if (this.$refs.codeStructure) {
-          this.$refs.codeStructure.updateCode(codeRawVueInfo);
-        }
-        this.codeRawVueInfo = codeRawVueInfo;
-
-        this.notifyParent();
-      }).onNodeDeleted(() => {
-        this.currentEditRawInfo = null;
-      }).onSelectElement(rawInfo => {
-        this.currentEditRawInfo = rawInfo;
-      }).saveJSCodeOnly(this.convertLogicCode(this.initCodeEntity.JSCode ? this.initCodeEntity.JSCode : ''))
-        .render(this.initCodeEntity.codeStructure ? this.initCodeEntity.codeStructure : this.getFakeData());
+          this.notifyParent();
+        })
+        .onNodeDeleted(() => {
+          this.currentEditRawInfo = null;
+        })
+        .onSelectElement((rawInfo) => {
+          this.currentEditRawInfo = rawInfo;
+        })
+        .saveJSCodeOnly(
+          this.convertLogicCode(
+            this.initCodeEntity.JSCode ? this.initCodeEntity.JSCode : ""
+          )
+        )
+        .render(
+          this.initCodeEntity.codeStructure
+            ? this.initCodeEntity.codeStructure
+            : this.getFakeData()
+        );
     },
 
     // 通知父组件
     notifyParent() {
-      this.$emit('updateCodeEntity', {
+      this.$emit("updateCodeEntity", {
         codeRawVueInfo: this.codeRawVueInfo,
-        JSCode: this.JSCode
+        JSCode: this.JSCode,
       });
     },
 
@@ -191,17 +202,18 @@ export default {
       return {
         template: {
           lc_id: "root",
-          __children: [{
-            div: {
-              class: "container",
-              "lc_id": "container",
-              "style": "min-height: 100%; padding-bottom: 100px;",
-              __text__: "Hello，欢迎使用VCC编辑器，请往此区域拖拽组件",
-            }
-          }]
+          __children: [
+            {
+              div: {
+                class: "container",
+                lc_id: "container",
+                style: "min-height: 100%; padding-bottom: 100px;",
+                __text__: "Hello，欢迎使用VCC编辑器，请往此区域拖拽组件",
+              },
+            },
+          ],
         },
-      }
-
+      };
     },
 
     onPreviewModeChange(newValue) {
@@ -217,8 +229,11 @@ export default {
       this.editMode = newValue;
 
       this.$nextTick(() => {
-        this.mainPanelProvider.setEditMode(newValue, document.querySelector("#mountedEle"));
-      })
+        this.mainPanelProvider.setEditMode(
+          newValue,
+          document.querySelector("#mountedEle")
+        );
+      });
     },
 
     renderCode() {
@@ -266,8 +281,8 @@ export default {
     },
 
     help() {
-      window.open('https://vcc3-docs.surge.sh/#/')
-    }
+      window.open("https://vcc3-docs.surge.sh/#/");
+    },
   },
   fillter: {},
 };
@@ -296,13 +311,12 @@ export default {
 }
 
 .attribute {
-
-  --init-right:calc(-500px - 20px);
+  --init-right: calc(-500px - 20px);
   width: 400px;
   border-radius: 10px;
   margin-left: 10px;
   position: absolute;
-  right:var(--init-right) ;
+  right: var(--init-right);
   top: 10px;
   background: white;
   max-height: calc(80% - 20px);
