@@ -42,8 +42,17 @@ export default {
   setup() {
     const h = ref('100vh')
     useTheme();
-    const innerHeight = window.innerHeight;
-    h.value = `${innerHeight - 50}px`
+    
+
+    const handleWindowResize = () => {
+      const innerHeight = window.innerHeight;
+      h.value = `${innerHeight - 50}px`
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    handleWindowResize()
+
     return {
       h,
       showTagsView: true,

@@ -6,7 +6,7 @@
       </nav>
       <div class="vcc-main-container">
         <!--顶部工具栏-->
-
+        <tools-bar></tools-bar>
         <div class="preview-container">
           <div id="render-control-panel">
             <!--这里不能放任何东西，执行时会被清空-->
@@ -41,9 +41,10 @@ export default {
   },
   emits: ["updateCodeEntity", "onLoadFinish"],
   components: {
-    RawComponents: defineAsyncComponent(() =>
+    rawComponents: defineAsyncComponent(() =>
       import("../components/vcc/rawComponents.vue")
     ),
+    toolsBar: defineAsyncComponent(() => import("./toolsBar")),
   },
   data() {
     return {
@@ -293,7 +294,6 @@ export default {
   min-height: calc(100vh - 90px);
   height: auto;
   overflow: hidden;
-  
 }
 
 .main-main {
