@@ -290,13 +290,17 @@ export default {
 <style scoped lang="scss">
 .vcc-box {
   display: flex;
-  height: calc(100vh - 90px);
+  min-height: calc(100vh - 90px);
+  height: auto;
+  overflow: hidden;
+  
 }
 
 .main-main {
   width: 100%;
-  height: 100%;
+  min-height: calc(100vh - 90px);
   display: flex;
+  flex: 1;
   background-color: var(--search-bg-color);
 }
 

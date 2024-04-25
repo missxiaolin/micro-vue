@@ -14,16 +14,32 @@ export const defaultRoute = [
     },
   },
   {
-    path: "/vie/vcc/detail",
-    name: "首页",
-    component: () =>
-      import(/* webpackChunkName: "index" */ "@/views/vcc/detail.vue"),
+    path: "/vie/vcc",
+    redirect: "/vie/vcc/index",
     meta: {
-      title: "vie项目",
+      title: "项目",
       elIcon: "Operation",
-      keepAlive: false,
-      affix: true,
     },
+    children: [
+      {
+        path: "/vie/vcc/index",
+        component: () =>
+          import(/* webpackChunkName: "vcc" */ "@/views/vcc/index.vue"),
+        hidden: false,
+        meta: {
+          title: "路由列表",
+        },
+      },
+      {
+        path: "/vie/vcc/detail",
+        component: () =>
+          import(/* webpackChunkName: "vcc" */ "@/views/vcc/detail.vue"),
+        hidden: true,
+        meta: {
+          title: "路由详情",
+        },
+      },
+    ],
   },
 ];
 

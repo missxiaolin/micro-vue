@@ -42,7 +42,10 @@
         <el-button type="primary">查询</el-button>
       </div>
     </div>
-    <div class="content-body mt20">
+    <div class="mu-handle-content">
+      <el-button type="primary">添加</el-button>
+    </div>
+    <div class="content-body">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column fixed prop="date" label="Date" width="150" />
         <el-table-column prop="name" label="Name" width="120" />
