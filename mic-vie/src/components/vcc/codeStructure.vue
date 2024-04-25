@@ -47,8 +47,8 @@ export default {
   props: ["visible", "initStructure"],
   emits: ["onLevelChange", "remove", "save", "update:visible", "reRender"],
   components: {
-    AttributeInput: defineAsyncComponent(() =>
-      import("@/components/AttributeInput.vue")
+    attributeInput: defineAsyncComponent(() =>
+      import("./attributeInput.vue")
     ),
     nestedDraggable,
   },

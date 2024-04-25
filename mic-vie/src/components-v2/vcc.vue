@@ -27,6 +27,8 @@
     </div>
 
     <div>
+      <!-- <lc-code :rawCode="code" v-model:codeDialogVisible="codeDialogVisible">
+      </lc-code> -->
       <code-structure @save="onSaveAttr" @remove="onRemove" ref="codeStructure" v-model="structureVisible"
         @reRender="render" :initStructure="codeRawVueInfo">
       </code-structure>
@@ -69,7 +71,8 @@ export default {
     ),
     toolsBar: defineAsyncComponent(() => import("./toolsBar")),
     attributeInput: defineAsyncComponent(() => import("../components/vcc/attributeInput")),
-    CodeStructure: defineAsyncComponent(() => import("../components/vcc/codeStructure")),
+    lcCode: defineAsyncComponent(() => import("../components/vcc/code")),
+    codeStructure: defineAsyncComponent(() => import("../components/vcc/codeStructure")),
   },
   data() {
     return {
