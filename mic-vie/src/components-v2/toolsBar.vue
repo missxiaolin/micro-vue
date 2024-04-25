@@ -13,18 +13,79 @@
               type="primary"
               @click="$emit('undo')"
               style="margin-right: 3px"
-              >撤销</el-link
+              >undo</el-link
             >
           </el-tooltip>
-          <el-link type="primary" @click="$emit('redo')">重做</el-link>
+          <el-link type="primary" @click="$emit('redo')">redo</el-link>
         </div>
+      </el-col>
+      <el-col :span="3">
+        <el-link type="primary" @click="onPreviewModeChange"
+          >{{ previewMode ? "PC" : "Mobile" }}</el-link
+        >
+      </el-col>
+      <el-col :span="3">
+        <div style="display: inline-block">
+          <el-link
+            :type="editMode ? 'primary' : 'danger'"
+            @click="onEditModeChange"
+            >{{ editMode ? "视图" : "编辑" }}</el-link
+          >
+        </div>
+      </el-col>
+      <el-col :span="10">
+        <el-link type="primary" @click="$emit('structureVisible')"
+          >结构树</el-link
+        >
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: [],
+  components: {},
+  data() {
+    return {
+      previewMode: false,
+      editMode: true,
+    };
+  },
+  watch: {},
+  computed: {},
+  beforeCreate() {},
+  created() {},
+  beforeMount() {},
+  mounted() {},
+  beforeUpdate() {},
+  updated() {},
+  destroyed() {},
+  methods: {
+    // 在此自动生成
+    request() {
+      // 网络请求，可选
+    },
+    logout() {
+      window.ssoLogin.logout();
+    },
+
+    onPreviewModeChange() {
+      this.previewMode = !this.previewMode;
+      this.$emit("onPreviewModeChange", this.previewMode);
+    },
+
+    onEditModeChange() {
+      this.editMode = !this.editMode;
+      this.$emit("onEditModeChange", this.editMode);
+
+      setTimeout(() => {
+        this.editMode = true;
+      }, 500);
+    },
+  },
+  fillter: {},
+};
 </script>
 
 <style lang="scss" scoped>

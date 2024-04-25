@@ -6,17 +6,40 @@
       </nav>
       <div class="vcc-main-container">
         <!--顶部工具栏-->
-        <tools-bar></tools-bar>
+        <tools-bar
+          @onPreviewModeChange="onPreviewModeChange"
+          @onEditModeChange="onEditModeChange"
+          @redo="redo"
+          @undo="undo"
+          @structureVisible="structureVisible = true"
+        ></tools-bar>
+        <!-- 内容区域 -->
         <div class="preview-container">
           <div id="render-control-panel">
             <!--这里不能放任何东西，执行时会被清空-->
           </div>
         </div>
+        <!-- 属性设置 -->
+        <attribute-input :enableRemoveButton="true" class="attribute" @save="onSaveAttr" @remove="onRemove"
+          ref="attributeInput" shortcutInitMode="hand" :__rawVueInfo__="currentEditRawInfo">
+        </attribute-input>
       </div>
     </div>
+
+    <template>
+      <!-- <code-structure @save="onSaveAttr" @remove="onRemove" ref="codeStructure" v-model="structureVisible"
+        @reRender="render" :initStructure="codeRawVueInfo">
+      </code-structure> -->
+    </template>
     <!-- 辅助定位线 -->
     <div class="cross-flag">
       <div class="x"></div>
+    </div>
+
+    <!-- 视图 -->
+    <div id="fullScreen" v-if="!editMode">
+      <div style="margin: 20px; font-weight: bold;">按下ESC退出预览模式</div>
+      <div id="mountedEle"></div>
     </div>
   </div>
 </template>
@@ -45,6 +68,7 @@ export default {
       import("../components/vcc/rawComponents.vue")
     ),
     toolsBar: defineAsyncComponent(() => import("./toolsBar")),
+    attributeInput: defineAsyncComponent(() => import("../components/vcc/attributeInput")),
   },
   data() {
     return {
@@ -324,12 +348,11 @@ export default {
   position: absolute;
   right: var(--init-right);
   top: 10px;
-  background: white;
   max-height: calc(80% - 20px);
   transition-property: right;
   transition-duration: 300ms;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-  overflow: scroll;
+  overflow: auto;
   z-index: 2;
 }
 
@@ -342,7 +365,7 @@ export default {
   background-color: var(--search-bg-color);
   border: 1px solid var(--el-border-color-light);
   transition: width 1s;
-  padding: 10px;
+  padding: 20px;
 }
 
 .preview-container {
@@ -350,7 +373,7 @@ export default {
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  background-color: #f0f0f0;
+  background-color: var(--search-bg-color);
 }
 
 .copy {
@@ -419,8 +442,10 @@ export default {
   position: fixed;
   z-index: 3;
   top: 0;
-  background: white;
+  background-color: var(--search-bg-color);
+  border: 1px solid var(--el-border-color-light);
   overflow: scroll;
+  z-index: 444;
 }
 
 #mountedEle {

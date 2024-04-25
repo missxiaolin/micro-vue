@@ -68,84 +68,79 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive } from "vue";
-
-export default defineComponent({
-  setup() {
-    const searchForm = reactive({
-      name: "",
-      mobile: "",
-      time: "",
-      value: "",
-      options: [
+export default {
+  data() {
+    return {
+      searchForm: {
+        name: "",
+        mobile: "",
+        time: "",
+        value: "",
+        options: [
+          {
+            value: "Option1",
+            label: "Option1",
+          },
+          {
+            value: "Option2",
+            label: "Option2",
+            disabled: true,
+          },
+          {
+            value: "Option3",
+            label: "Option3",
+          },
+          {
+            value: "Option4",
+            label: "Option4",
+          },
+          {
+            value: "Option5",
+            label: "Option5",
+          },
+        ],
+      },
+      tableData: [
         {
-          value: "Option1",
-          label: "Option1",
+          date: "2016-05-03",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
+          tag: "Home",
         },
         {
-          value: "Option2",
-          label: "Option2",
-          disabled: true,
+          date: "2016-05-02",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
+          tag: "Office",
         },
         {
-          value: "Option3",
-          label: "Option3",
+          date: "2016-05-04",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
+          tag: "Home",
         },
         {
-          value: "Option4",
-          label: "Option4",
-        },
-        {
-          value: "Option5",
-          label: "Option5",
+          date: "2016-05-01",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
+          tag: "Office",
         },
       ],
-    });
-    const tableData = ref([
-      {
-        date: "2016-05-03",
-        name: "Tom",
-        state: "California",
-        city: "Los Angeles",
-        address: "No. 189, Grove St, Los Angeles",
-        zip: "CA 90036",
-        tag: "Home",
-      },
-      {
-        date: "2016-05-02",
-        name: "Tom",
-        state: "California",
-        city: "Los Angeles",
-        address: "No. 189, Grove St, Los Angeles",
-        zip: "CA 90036",
-        tag: "Office",
-      },
-      {
-        date: "2016-05-04",
-        name: "Tom",
-        state: "California",
-        city: "Los Angeles",
-        address: "No. 189, Grove St, Los Angeles",
-        zip: "CA 90036",
-        tag: "Home",
-      },
-      {
-        date: "2016-05-01",
-        name: "Tom",
-        state: "California",
-        city: "Los Angeles",
-        address: "No. 189, Grove St, Los Angeles",
-        zip: "CA 90036",
-        tag: "Office",
-      },
-    ]);
-
-    return {
-      tableData,
-      searchForm,
     };
   },
-});
+};
 </script>
 
 <style lang="scss" scoped>
