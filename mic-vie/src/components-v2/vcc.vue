@@ -90,6 +90,8 @@
         :initStructure="codeRawVueInfo"
       >
       </code-structure>
+      <codeEditor v-model:codeDialogVisible="jsDialogVisible" @saveJSCode="saveJSCode" ref="codeEditor"></codeEditor>
+      <vueEditor v-model:vueDialogVisible="vueDialogVisible" @codeParseSucess="codeParseSucess"></vueEditor>
     </div>
     <!-- 辅助定位线 -->
     <div class="cross-flag">
@@ -135,6 +137,8 @@ export default {
     codeStructure: defineAsyncComponent(() =>
       import("../components/vcc/codeStructure")
     ),
+    codeEditor: defineAsyncComponent(() => import('../components/vcc/jSCodeEditorDialog.vue')),
+    vueEditor: defineAsyncComponent(() => import('../components/vcc/vueCodeParseDialog.vue'))
   },
   data() {
     return {
