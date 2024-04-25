@@ -1,5 +1,5 @@
 <template>
-  <svg :class="svgClass" aria-hidden="true">
+  <svg :class="svgClass" aria-hidden="true" :style="svgStyle">
     <use :xlink:href="iconName"></use>
   </svg>
 </template>
@@ -17,6 +17,10 @@ export default defineComponent({
     className: {
       type: String,
     },
+    svgStyle: {
+      type: String,
+      default: ''
+    }
   },
   setup(props) {
     const iconName = computed(() => {

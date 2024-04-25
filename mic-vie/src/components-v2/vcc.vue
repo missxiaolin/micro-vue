@@ -20,17 +20,75 @@
           </div>
         </div>
         <!-- 属性设置 -->
-        <attribute-input :enableRemoveButton="true" class="attribute" @save="onSaveAttr" @remove="onRemove"
-          ref="attributeInput" shortcutInitMode="hand" :__rawVueInfo__="currentEditRawInfo">
+        <attribute-input
+          :enableRemoveButton="true"
+          class="attribute"
+          @save="onSaveAttr"
+          @remove="onRemove"
+          ref="attributeInput"
+          shortcutInitMode="hand"
+          :__rawVueInfo__="currentEditRawInfo"
+        >
         </attribute-input>
       </div>
+    </div>
+
+    <div class="copy">
+      <el-tooltip effect="dark" content="二次编辑" placement="top-start">
+        <div
+          class="round-icon icon-vue"
+          alt=""
+          @click="vueDialogVisible = true"
+        >
+          Vue
+        </div>
+      </el-tooltip>
+      <el-tooltip effect="dark" content="编辑JS逻辑" placement="top-start">
+        <div class="round-icon icon-js" alt="" @click="jsDialogVisible = true">
+          JS
+        </div>
+      </el-tooltip>
+
+      <el-tooltip effect="dark" content="查看实时代码" placement="top-start">
+        <div
+          class="round-icon icon-js"
+          alt=""
+          @click="codeDialogVisible = true"
+          style="padding: 5px"
+        >
+          <svg-icon
+            class="mt5"
+            :icon-class="'working-outline'"
+            :svgStyle="'width: 1.5em;height:1.5em;'"
+          />
+        </div>
+      </el-tooltip>
+      <el-popconfirm
+        confirmButtonText="确认"
+        cancelButtonText="点错了"
+        iconColor="red"
+        title="点我将清空所有编辑的内容, 确认吗?"
+        @confirm="clear"
+      >
+        <template #reference>
+          <div class="round-icon icon-js" style="padding-top: 12px">
+            <el-icon size="14"><Delete /></el-icon>
+          </div>
+        </template>
+      </el-popconfirm>
     </div>
 
     <div>
       <!-- <lc-code :rawCode="code" v-model:codeDialogVisible="codeDialogVisible">
       </lc-code> -->
-      <code-structure @save="onSaveAttr" @remove="onRemove" ref="codeStructure" v-model="structureVisible"
-        @reRender="render" :initStructure="codeRawVueInfo">
+      <code-structure
+        @save="onSaveAttr"
+        @remove="onRemove"
+        ref="codeStructure"
+        v-model="structureVisible"
+        @reRender="render"
+        :initStructure="codeRawVueInfo"
+      >
       </code-structure>
     </div>
     <!-- 辅助定位线 -->
@@ -40,7 +98,7 @@
 
     <!-- 视图 -->
     <div id="fullScreen" v-if="!editMode">
-      <div style="margin: 20px; font-weight: bold;">按下ESC退出预览模式</div>
+      <div style="margin: 20px; font-weight: bold">按下ESC退出预览模式</div>
       <div id="mountedEle"></div>
     </div>
   </div>
@@ -70,9 +128,13 @@ export default {
       import("../components/vcc/rawComponents.vue")
     ),
     toolsBar: defineAsyncComponent(() => import("./toolsBar")),
-    attributeInput: defineAsyncComponent(() => import("../components/vcc/attributeInput")),
-    lcCode: defineAsyncComponent(() => import("../components/vcc/code")),
-    codeStructure: defineAsyncComponent(() => import("../components/vcc/codeStructure")),
+    attributeInput: defineAsyncComponent(() =>
+      import("../components/vcc/attributeInput")
+    ),
+    'lc-code': defineAsyncComponent(() => import("../components/vcc/code")),
+    codeStructure: defineAsyncComponent(() =>
+      import("../components/vcc/codeStructure")
+    ),
   },
   data() {
     return {
@@ -448,7 +510,7 @@ export default {
   top: 0;
   background-color: var(--search-bg-color);
   border: 1px solid var(--el-border-color-light);
-  overflow: scroll;
+  overflow: auto;
   z-index: 444;
 }
 

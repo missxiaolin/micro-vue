@@ -10,11 +10,9 @@
       <el-row :gutter="20" style="height: 0px; flex-grow: 1">
         <el-col :span="16" style="height: 100%">
           <div
+            class="container-left"
             style="
-              overflow: scroll;
-              height: 100%;
-              margin: 0 20px;
-              padding: 10px;
+              
             "
           >
             <nested-draggable :data="treeData" />
@@ -143,5 +141,12 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+.container-left {
+  overflow: auto;
+  height: 100%;
+  margin: 0 20px;
+  padding: 10px;
+  border: 1px solid var(--el-border-color-light);
 }
 </style>
