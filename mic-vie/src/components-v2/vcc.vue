@@ -26,11 +26,11 @@
       </div>
     </div>
 
-    <template>
-      <!-- <code-structure @save="onSaveAttr" @remove="onRemove" ref="codeStructure" v-model="structureVisible"
+    <div>
+      <code-structure @save="onSaveAttr" @remove="onRemove" ref="codeStructure" v-model="structureVisible"
         @reRender="render" :initStructure="codeRawVueInfo">
-      </code-structure> -->
-    </template>
+      </code-structure>
+    </div>
     <!-- 辅助定位线 -->
     <div class="cross-flag">
       <div class="x"></div>
@@ -69,6 +69,7 @@ export default {
     ),
     toolsBar: defineAsyncComponent(() => import("./toolsBar")),
     attributeInput: defineAsyncComponent(() => import("../components/vcc/attributeInput")),
+    CodeStructure: defineAsyncComponent(() => import("../components/vcc/codeStructure")),
   },
   data() {
     return {
@@ -360,7 +361,7 @@ export default {
   height: 100%;
   width: 100%;
   border-radius: 0px;
-  overflow: scroll;
+  overflow: auto;
   box-sizing: border-box;
   background-color: var(--search-bg-color);
   border: 1px solid var(--el-border-color-light);
