@@ -31,6 +31,7 @@
     "vuedraggable": "^4.1.0",
     "lodash-es": "^4.17.21",
     "glob": "^7.1.6",
+    "file-saver": "^2.0.2",
     "codemirror-editor-vue3": "^0.2.4",
     "copy-to-clipboard": "^3.3.1",
     "crypto-random-string": "^3.3.1",
@@ -39,6 +40,7 @@
     "css-scoped": "^1.0.0",
     "is-obj": "^3.0.0",
     "is-regexp": "^3.0.0",
+    "ejs": "^3.1.6",
     "vxe-table-plugin-element": "3.0.7"
   },
   "devDependencies": {

@@ -38,8 +38,8 @@
             style="display: flex; flex-direction: column"
           >
             <el-checkbox label="ele">Element UI</el-checkbox>
-            <el-checkbox label="antd">Ant Design</el-checkbox>
-            <el-checkbox label="vant">Vant</el-checkbox>
+            <!-- <el-checkbox label="antd">Ant Design</el-checkbox> -->
+            <!-- <el-checkbox label="vant">Vant</el-checkbox> -->
           </el-checkbox-group>
         </el-col>
         <el-col :span="4" v-if="outputMode === 'html'">
@@ -52,27 +52,32 @@
             <el-radio label="3">Vue 3</el-radio>
           </el-radio-group>
         </el-col>
-        <el-col :span="10" style="display: flex; flex-direction: column">
+        <el-col :span="10" style="display: flex; flex-direction: column;">
           代码获取方式：
-          <div style="margin-top: 10px">
+          <div style="margin-top: 10px;display: flex; flex-direction: row;">
             <el-tooltip effect="dark" content="拷贝" placement="left">
-              <img
-                class="round-icon"
-                :src="iconCopy"
+              <div
+                class="round-icon icon-js"
                 alt=""
-                @click="copyCheck"
-              />
+              >
+                <el-icon size="15" @click="copyCheck">
+                  <CopyDocument />
+                </el-icon>
+              </div>
             </el-tooltip>
             <el-tooltip effect="dark" content="下载" placement="right">
-              <img
-                class="round-icon"
-                :src="iconDownload"
+              <div
+                class="round-icon icon-js"
                 alt=""
-                @click="download"
-              />
+                @click="codeDialogVisible = true"
+              >
+                <el-icon size="15" @click="download">
+                  <Download />
+                </el-icon>
+              </div>
             </el-tooltip>
           </div>
-          <div style="margin-top: 10px" v-if="outputMode === 'html'">
+          <!-- <div style="margin-top: 10px" v-if="outputMode === 'html'">
             <el-input
               v-model="fileName"
               placeholder="部署文件名"
@@ -91,7 +96,7 @@
             <div v-if="accessUrl">
               部署成功：<a :href="accessUrl" target="_blank">{{ accessUrl }}</a>
             </div>
-          </div>
+          </div> -->
         </el-col>
       </el-row>
     </div>
@@ -105,9 +110,9 @@ import parserHtml from "prettier/parser-html";
 import copy from "copy-to-clipboard";
 import { saveAs } from "file-saver";
 
-import codeEditor from "./CodeEditor.vue";
-import singleIndexOutput from "../libs/singleIndexOutput.js";
-import { createUniqueId } from "@/utils/common";
+import codeEditor from "./codeEditor.vue";
+import singleIndexOutput from "../../libs/singleIndexOutput.js";
+import { createUniqueId } from "../../utils/common";
 
 export default {
   props: ["rawCode", "codeDialogVisible"],
@@ -119,10 +124,6 @@ export default {
     return {
       // 在此自动生成
       outputMode: "vue",
-      iconCopy:
-        "https://static.imonkey.xueersi.com/download/vcc-resource/icon/copy-outline.svg",
-      iconDownload:
-        "https://static.imonkey.xueersi.com/download/vcc-resource/icon/code-download-outline.svg",
       loading: false,
       accessUrl: "",
       fileName: "",
@@ -139,20 +140,20 @@ export default {
   destroyed() {},
   methods: {
     release() {
-      this.loading = true;
-      axios
-        .post("https://apis.sahadev.tech/v1/file/upload", {
-          id: `index${this.fileName ? this.fileName : createUniqueId()}`,
-          content: this.singleIndex,
-        })
-        .then((res) => {
-          this.accessUrl = res.data.data;
-          this.loading = false;
-        })
-        .catch((err) => {
-          this.loading = false;
-          this.$message.error("发布失败，可能服务暂时不可用.");
-        });
+      // this.loading = true;
+      // axios
+      //   .post("https://xxxx.com", {
+      //     id: `index${this.fileName ? this.fileName : createUniqueId()}`,
+      //     content: this.singleIndex,
+      //   })
+      //   .then((res) => {
+      //     this.accessUrl = res.data.data;
+      //     this.loading = false;
+      //   })
+      //   .catch((err) => {
+      //     this.loading = false;
+      //     this.$message.error("发布失败，可能服务暂时不可用.");
+      //   });
     },
     handleClose() {
       this.$emit("update:codeDialogVisible", false);
@@ -248,8 +249,11 @@ export default {
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  padding: 10px;
+  padding: 10px 0;
   margin-left: 10px;
+  border: 0px;
   box-sizing: border-box;
+  cursor: pointer;
+  padding-left: 12px;
 }
 </style>

@@ -79,8 +79,8 @@
     </div>
 
     <div>
-      <!-- <lc-code :rawCode="code" v-model:codeDialogVisible="codeDialogVisible">
-      </lc-code> -->
+      <lc-code :rawCode="code" v-model:codeDialogVisible="codeDialogVisible">
+      </lc-code>
       <code-structure
         @save="onSaveAttr"
         @remove="onRemove"
@@ -297,7 +297,6 @@ export default {
                 class: "container",
                 lc_id: "container",
                 style: "min-height: 100%;",
-                __text__: "Hello，欢迎使用vcc编辑器，请往此区域拖拽组件",
               },
             },
           ],
