@@ -1,15 +1,13 @@
-// 本文件主要用于对原始组件文件进行预编译，生成新的源组件文件，与与之匹配的Json对象
-
-const fse = require("fs-extra");
-const fs = require("fs");
-const { html2Json } = require("../libs/bundle-html2json-common.js");
-const { Parser } = require("../libs/bundle-json2html-common.js");
-const _path = require("path");
-const process = require("process");
-const cryptoRandomString = require("crypto-random-string");
-const espree = require("espree");
-const escodegen = require("escodegen");
-const css = require("css");
+import fse from 'fs-extra'
+import fs from "fs";
+import { html2Json } from '../libs/bundle-html2json-common.js';
+import { Parser } from '../libs/bundle-json2html-common.js';
+import _path from 'path';
+import process from 'process';
+import cryptoRandomString from 'crypto-random-string';
+import espree from 'espree';
+import escodegen from 'escodegen';
+import css from 'css';
 
 const templateStructureMap = {};
 const scriptDataMap = {};
@@ -314,7 +312,7 @@ function outputToFile(sourceObject, path) {
   );
 }
 
-module.exports = {
+export {
   compiler,
   ergodic,
-};
+}

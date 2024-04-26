@@ -1,12 +1,21 @@
-const { compiler } = require("./compileComponent.js");
+// const { compiler } = require("./compileComponent.js");
 
-const glob = require("glob");
-const path = require("path");
-const process = require("process");
+// const glob = require("glob");
+// const path = require("path");
+// const process = require("process");
+
+// const componentsPath = path.join(process.cwd(), "src/rawComponents");
+
+// console.info(`当前正在读取${componentsPath}中的vue原始组件`);
+
+
+
+import { compiler } from './compileComponent.js'
+import glob from 'glob'
+import path from 'path'
+import process from 'process'
 
 const componentsPath = path.join(process.cwd(), "src/rawComponents");
-
-console.info(`当前正在读取${componentsPath}中的vue原始组件`);
 
 // options is optional
 glob(

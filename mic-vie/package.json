@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "compileComponent": "node ./src/script/compile.js"
   },
   "dependencies": {
     "@element-plus/icons-vue": "2.1.0",
@@ -20,10 +21,13 @@
     "css-scoped": "^1.0.0",
     "dedent": "^1.5.3",
     "ejs": "^3.1.6",
+    "escodegen": "^2.0.0",
+    "css": "^3.0.0",
     "element-plus": "2.3.8",
     "eventemitter3": "^4.0.7",
     "file-saver": "^2.0.2",
     "glob": "^7.1.6",
+    "espree": "^7.3.0",
     "is-obj": "^3.0.0",
     "is-regexp": "^3.0.0",
     "keymaster": "^1.6.2",
@@ -46,6 +50,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
+    "require": "^2.4.20",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-external-globals": "^0.10.0",
     "sass": "^1.75.0",
