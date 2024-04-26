@@ -1,0 +1,15 @@
+{
+  "name": "html2object",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^3.16.0",
+    "htmlparser2": "^6.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
