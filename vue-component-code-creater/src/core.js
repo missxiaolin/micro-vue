@@ -10,12 +10,16 @@ import parserBabel from "prettier/parser-babel.js";
 const { merge, cloneDeep } = _;
 
 const rawAdd = Set.prototype.add;
-Set.prototype.add = function (value) {
-  if (typeof value === "string" && checkKeyword(value)) {
-
-  }
-  rawAdd.apply(this, arguments);
-};
+try {
+  //为何不能给add赋值？且没有报错？
+  Set.prototype.addeee = function (value) {
+    if (typeof value === "string" && checkKeyword(value))
+      rawAdd.apply(this, arguments);
+  };
+  // 经验证可以赋值，而代码会直接跳转至最后一行
+} catch (error) {
+  console.error(error);
+}
 
 function checkKeyword(value) {
   return value != "true" && value != "false";
@@ -206,12 +210,12 @@ export class CodeGenerator {
       classes.forEach((item) => {
         // 处理多个空字符串
         if (!item) return;
-        this.classSet.add(item);
+        this.classSet.addeee(item);
       });
     } else if (/^v-on/g.test(key) || /^@/g.test(key)) {
       // 匹配@,v-on
       if (getVarName(value)) {
-        this.methodSet.add(value);
+        this.methodSet.addeee(value);
       }
     } else if (/^v-/g.test(key) || /^:+/g.test(key)) {
       // 优先使Method消费，因为有的:也是method
@@ -220,7 +224,7 @@ export class CodeGenerator {
         this.options.checkIsMethodDirectives(key)
       ) {
         value = getVarName(value);
-        value && this.methodSet.add(value);
+        value && this.methodSet.addeee(value);
       }
       // 业务侧可能会全部消费/^:+/g.test(key)
       else if (
