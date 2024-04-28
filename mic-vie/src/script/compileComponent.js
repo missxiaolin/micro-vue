@@ -10,6 +10,8 @@ const cryptoRandomString = require("crypto-random-string");
 const espree = require("espree");
 const escodegen = require("escodegen");
 const css = require("css");
+const sass = require("sass");
+const _ = require("lodash");
 
 const templateStructureMap = {};
 const scriptDataMap = {};
@@ -235,8 +237,12 @@ async function compiler(path) {
 
     // 解析CSS
     const style = findAObject(obj.root.__children, "style");
-    if (style && style["__text__"]) {
-      compileStyleCode(style["__text__"], (oldD, newD) => {
+    const newStyle = _.cloneDeep(style)
+    if (newStyle.lang === 'scss') {
+      newStyle["__text__"] = sass.renderSync({ data: newStyle["__text__"] }).css.toString();
+    }
+    if (newStyle && newStyle["__text__"]) {
+      compileStyleCode(newStyle["__text__"], (oldD, newD) => {
         repeatDecalations.push({
           oldD,
           newD,
