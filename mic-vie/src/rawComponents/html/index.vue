@@ -27,18 +27,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.title {
-  width: 120px;
-}
-
-.demonstration-raw {
-  padding: 10px 0;
-}
-
-[div-lc-mark] {
-  border: 1px grey dashed;
-  min-height: 1rem;
-  border-radius: 5px;
-}
-</style>
