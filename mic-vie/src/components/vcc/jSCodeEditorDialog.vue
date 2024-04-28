@@ -31,7 +31,7 @@
 
       <div style="margin-left: 5px">
         <el-link
-          href="https://vcc3-docs.surge.sh/#/improve/logic?id=%e9%80%bb%e8%be%91%e6%a8%a1%e6%9d%bf"
+          href="javascript:void(0)"
           target="_blank"
         >
           <el-icon>

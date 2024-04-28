@@ -433,6 +433,7 @@ export default {
   box-sizing: border-box;
   background-color: var(--search-bg-color);
   border: 1px solid var(--el-border-color-light);
+  
   transition: width 1s;
   padding: 20px;
 }
@@ -443,6 +444,8 @@ export default {
   display: flex;
   justify-content: center;
   background-color: var(--search-bg-color);
+  background-image: radial-gradient(rgba(9,89,194,.3) 6%,transparent 0),radial-gradient(#faf9f8 6%,transparent 0);
+  background-size: 10px 10px;
 }
 
 .copy {
