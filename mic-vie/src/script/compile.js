@@ -1,21 +1,12 @@
-// const { compiler } = require("./compileComponent.js");
+const { compiler } = require("./compileComponent.js");
 
-// const glob = require("glob");
-// const path = require("path");
-// const process = require("process");
-
-// const componentsPath = path.join(process.cwd(), "src/rawComponents");
-
-// console.info(`当前正在读取${componentsPath}中的vue原始组件`);
-
-
-
-import { compiler } from './compileComponent.js'
-import glob from 'glob'
-import path from 'path'
-import process from 'process'
+const glob = require("glob");
+const path = require("path");
+const process = require("process");
 
 const componentsPath = path.join(process.cwd(), "src/rawComponents");
+
+console.info(`当前正在读取${componentsPath}中的vue原始组件`);
 
 // options is optional
 glob(
@@ -23,12 +14,12 @@ glob(
   {
     cwd: componentsPath,
     absolute: true,
-    ignore: ["**/element/index.vue", "**/vant/index.vue", "**/iview/index.vue", "**/antd/index.vue", "**/echart/index.vue", "**/echart/chart.vue"],
+    ignore: ["**/ele/index.vue", "**/html/index.vue"],
   },
   function (er, files) {
-    console.info(`正在对${files.length}个文件进行编译...`);
+    // console.info(`正在对${files.length}个文件进行编译...`);
     files.forEach((filePath) => {
-      console.info(`正在编译${filePath}`);
+      // console.info(`正在编译${filePath}`);
       compiler(filePath);
     });
   }

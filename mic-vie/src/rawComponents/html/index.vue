@@ -1,36 +1,16 @@
-<template lc_id="vSeYn6dQcE">
-  <div lc_id="NahfEKxF68" class="demonstration-raw">
-    <table border="0" lc_id="RDLbKPIVyp">
-      <tr lc_id="riqra/6H1d">
-        <td lc_id="RhfgQCKISj">
-          <div class="title" lc_id="OnWMPOSYwo">div:</div>
-        </td>
-        <td lc_id="ZOFUAuegZ7">
-          <div lc_id="jayChQGWVD" div-lc-mark lc-mark></div>
-        </td>
-      </tr>
-      <tr lc_id="i+v/R6TP05">
-        <td lc_id="wLL4oua+v6">
-          <div class="title" lc_id="ySJLvpCtUj">span:</div>
-        </td>
-        <td lc_id="Wg/gdfZ1hC">
-          <span lc_id="m+Oy7pHzNT" lc-mark>Span Element</span>
-        </td>
-      </tr>
-      <tr lc_id="Ejan36KyM/">
-        <td lc_id="ke9QDthYso">
-          <div class="title" lc_id="V2t1JzpJnA">a（超链接）:</div>
-        </td>
-        <td lc_id="SUPSw5gtWC">
-          <a lc-mark lc_id="MjGtLkly03">W3School</a>
-        </td>
-      </tr>
-    </table>
+<template>
+  <div class="demonstration-raw">
+    <rowHtml />
   </div>
 </template>
 <script>
 import { deepLCEle } from "../../utils/initRawComponent";
+import rowHtml from "./row.vue";
+
 export default {
+  components: {
+    rowHtml,
+  },
   data() {
     return {};
   },
@@ -46,6 +26,7 @@ export default {
   methods: {},
 };
 </script>
+
 <style scoped>
 .title {
   width: 120px;

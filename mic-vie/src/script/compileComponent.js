@@ -1,13 +1,15 @@
-import fse from 'fs-extra'
-import fs from "fs";
-import { html2Json } from '../libs/bundle-html2json-common.js';
-import { Parser } from '../libs/bundle-json2html-common.js';
-import _path from 'path';
-import process from 'process';
-import cryptoRandomString from 'crypto-random-string';
-import espree from 'espree';
-import escodegen from 'escodegen';
-import css from 'css';
+// 本文件主要用于对原始组件文件进行预编译，生成新的源组件文件，与与之匹配的Json对象
+
+const fse = require("fs-extra");
+const fs = require("fs");
+const { html2Json } = require("../libs/bundle-html2json-common.js");
+const { Parser } = require("../libs/bundle-json2html-common.js");
+const _path = require("path");
+const process = require("process");
+const cryptoRandomString = require("crypto-random-string");
+const espree = require("espree");
+const escodegen = require("escodegen");
+const css = require("css");
 
 const templateStructureMap = {};
 const scriptDataMap = {};
@@ -108,6 +110,7 @@ function findProperty(properties, findWhoStructure) {
 // 对JS代码进行编译
 function compileJsCode(code, onEncounterDuplicateDeclared = () => {}) {
   const ast = espree.parse(code, { ecmaVersion: 6, sourceType: "module" });
+  
   // 提取data中返回的对象结构, 如果文件引入了其它文件, 则body[0]为import语句。
   if (ast.body[0].declaration) {
     const properties = ast.body[0].declaration.properties;
@@ -312,7 +315,7 @@ function outputToFile(sourceObject, path) {
   );
 }
 
-export {
+module.exports = {
   compiler,
   ergodic,
-}
+};
