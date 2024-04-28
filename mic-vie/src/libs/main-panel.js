@@ -55,12 +55,12 @@ export class MainPanelProvider {
     // 对外只提供副本，防止外面污染内部
     const codeStructureCopy = cloneDeep(rawDataStructure);
     this.eventEmitter.emit("codeStructureUpdated", codeStructureCopy);
-
     this.initCodeGenerator();
 
-    console.groupCollapsed("---> for code generator warn <---");
+    // console.groupCollapsed("---> for code generator warn <---");
 
     // 生成原始代码
+    // console.log('rawDataStructure----->', rawDataStructure)
     let code = this.codeGenerator.outputVueCodeWithJsonObj(rawDataStructure);
 
     // 将xxx: () => {} 转换为xxx(){}
@@ -71,7 +71,7 @@ export class MainPanelProvider {
     codeForShow = codeForShow.replace(/\s{1}lc-mark/g, "");
     this.eventEmitter.emit("codeCreated", codeForShow);
 
-    console.groupEnd();
+    // console.groupEnd();
 
     const { template, script, styles, customBlocks } = parseComponent(code);
     this.loadStyle(styles);
