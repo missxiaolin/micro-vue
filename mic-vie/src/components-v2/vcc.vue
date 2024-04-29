@@ -20,15 +20,8 @@
           </div>
         </div>
         <!-- 属性设置 -->
-        <attribute-input
-          :enableRemoveButton="true"
-          class="attribute"
-          @save="onSaveAttr"
-          @remove="onRemove"
-          ref="attributeInput"
-          shortcutInitMode="hand"
-          :__rawVueInfo__="currentEditRawInfo"
-        >
+        <attribute-input v-show="isShowAttribute" :enableRemoveButton="true" class="attribute" @save="onSaveAttr" @remove="onRemove"
+          ref="attributeInput" shortcutInitMode="hand" :__rawVueInfo__="currentEditRawInfo">
         </attribute-input>
       </div>
     </div>
@@ -153,16 +146,18 @@ export default {
 
       codeRawVueInfo: null,
       JSCode: "",
+
+      isShowAttribute: false
     };
   },
   watch: {
     currentEditRawInfo(newValue) {
-      const attributeContainter = document.querySelector(".attribute");
+      // const attributeContainter = document.querySelector(".attribute");
       if (newValue) {
-        attributeContainter.style = "right:10px;";
+        this.isShowAttribute = true
         this.$refs["attributeInput"].onShow();
       } else {
-        attributeContainter.style = "right: var(--init-right)";
+        this.isShowAttribute = false
         this.$refs["attributeInput"].onHide();
       }
     },
@@ -395,6 +390,7 @@ export default {
   display: flex;
   flex: 1;
   background-color: var(--search-bg-color);
+  overflow: hidden;
 }
 
 .base-component-container {
@@ -410,12 +406,11 @@ export default {
 }
 
 .attribute {
-  --init-right: calc(-500px - 20px);
   width: 400px;
   border-radius: 10px;
   margin-left: 10px;
   position: absolute;
-  right: var(--init-right);
+  right: 0;
   top: 10px;
   max-height: calc(80% - 20px);
   transition-property: right;
