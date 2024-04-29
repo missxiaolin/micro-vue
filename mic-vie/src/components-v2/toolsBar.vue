@@ -1,7 +1,7 @@
 <template>
   <div class="top-tools-bar">
     <el-row :gutter="22">
-      <el-col :span="3">
+      <el-col :span="2">
         <div class="edit">
           <el-tooltip
             class="item"
@@ -19,12 +19,12 @@
           <el-link type="primary" @click="$emit('redo')">redo</el-link>
         </div>
       </el-col>
-      <el-col :span="3">
+      <el-col :span="2">
         <el-link type="primary" @click="onPreviewModeChange"
           >{{ previewMode ? "PC" : "Mobile" }}</el-link
         >
       </el-col>
-      <el-col :span="3">
+      <el-col :span="2">
         <div style="display: inline-block">
           <el-link
             :type="editMode ? 'primary' : 'danger'"
@@ -33,9 +33,19 @@
           >
         </div>
       </el-col>
-      <el-col :span="10">
+      <el-col :span="2">
         <el-link type="primary" @click="$emit('structureVisible')"
           >结构树</el-link
+        >
+      </el-col>
+      <el-col :span="2">
+        <el-link type="primary" @click="notification"
+          >页面设置</el-link
+        >
+      </el-col>
+      <el-col :span="2">
+        <el-link type="primary" @click="notification"
+          >模版</el-link
         >
       </el-col>
     </el-row>
@@ -43,6 +53,8 @@
 </template>
 
 <script>
+import { ElNotification } from 'element-plus'
+
 export default {
   props: [],
   components: {},
@@ -83,6 +95,12 @@ export default {
         this.editMode = true;
       }, 500);
     },
+    notification() {
+      ElNotification({
+        message: '暂未开发',
+        type: 'warning',
+      })
+    }
   },
   fillter: {},
 };
