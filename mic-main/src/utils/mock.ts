@@ -9,7 +9,8 @@ const microApps = {
         "shadowDOM": false,
         "iframe": true,
         "systemCodes": [
-            "vie"
+            "vie",
+            "bba"
         ],
         "openBlank": false
     }, 

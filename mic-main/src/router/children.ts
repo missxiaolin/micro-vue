@@ -12,14 +12,19 @@ export default [
         meta: {
           title: "路由列表",
         },
-      },
-      {
+      }, {
         path: "/vie/vcc/detail",
         hidden: true,
         meta: {
           title: "路由详情",
         },
-      },
+      }, {
+        path: "/bba/index",
+        hidden: false,
+        meta: {
+          title: "vie 首页",
+        },
+      }
     ],
   },
   {
