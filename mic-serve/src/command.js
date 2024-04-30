@@ -12,6 +12,7 @@ import ace from '@adonisjs/ace'
 
 const registedCommandList = [
     './commands/demo', // 命令demo测试
+    './commands/generateProject/index.js', // 项目生成
 ]
 
 

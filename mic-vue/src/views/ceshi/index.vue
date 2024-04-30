@@ -1,6 +1,8 @@
 <template>
   <div class="container" style="min-height: 100%">
     <el-button type="primary" @click="btnClick">主要按钮</el-button>
+    <el-button>默认按钮</el-button>
+    <el-button>默认按钮</el-button>
   </div>
 </template>
 
@@ -22,7 +24,9 @@ export default {
   destroyed() {},
   methods: {
     request() {},
-    btnClick() {},
+    btnClick() {
+      console.log(1);
+    },
   },
   fillter: {},
 };

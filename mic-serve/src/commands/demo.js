@@ -21,6 +21,7 @@ class CommandDemo extends Base {
         console.log('测试')
         console.log(args)
         console.log(options)
+        this.log('ceshi')
         let { onlyFlag, logName, isTest } = options
         // this.log(`CommandDemo, onlyFlag=> ${onlyFlag}`)
         // this.log(`CommandDemo, logName=> ${logName}`)

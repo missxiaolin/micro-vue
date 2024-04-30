@@ -2,6 +2,8 @@ var express = require('express')
 import login from '../middleware/login'
 import RouterConfigBuilder from '../library/utils/router_config_builder'
 import Api from './api'
+const { exec } = require('child_process');
+
 
 // 路由分为以下部分
 const baseRouter = express.Router()
@@ -53,6 +55,9 @@ for (let url of Object.keys(routerConfigMap)) {
 
 /* GET home page. */
 withoutLoginRouter.get('/', function (req, res) {
+  exec('npm run command Command:Demo user ceshi --onlyFlag false', (error, stdout, stderr) => {
+    console.log(stdout, stderr)
+  })
   res.json({ title: '根路径' })
 })
 
