@@ -1,7 +1,9 @@
-import redisConfig from '../../config/redis'
 import Redis from 'ioredis'
 import _ from 'lodash'
 import Logger from '../logger'
+import dotenv from "dotenv";
+
+const appConfig = dotenv.config().parsed;
 
 /**
  * @via(@xiaolin)
@@ -18,8 +20,9 @@ class RedisClient {
      */
     constructor(isTest = false) {
         this.redisClient = new Redis({
-            port: redisConfig.port,
-            host: redisConfig.host,
+            port: appConfig.REDIS_PORT,
+            host: appConfig.REDIS_HOST,
+            password: appConfig.REDIS_PASSWORD || "",
             retryStrategy: (hasRetryTimes) => {
                 // 关闭自动重连功能
                 return false
