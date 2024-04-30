@@ -1,7 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   lintOnSave: false,
-  publicPath: process.env.NODE_ENV === 'production' ? '/vue3/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/cha/' : '/',
   devServer: {
     host: '',
     port: 8092, // 端口

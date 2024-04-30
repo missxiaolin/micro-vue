@@ -14,8 +14,8 @@ const microApps = {
         "openBlank": false
     }, 
     'micro-vue': {
-        "name": "micro-vue3",
-        "url": "http://mic.missxiaolin.com/vue3",
+        "name": "micro-cha",
+        "url": "http://mic.missxiaolin.com/cha",
         "inline": false,
         "destroy": false,
         "disableScopecss": false,
