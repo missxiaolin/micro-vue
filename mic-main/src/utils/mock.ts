@@ -25,7 +25,7 @@ const microApps = {
         "iframe": true,
         "systemCodes": [
             "cha",
-            "hba"
+            "hba",
         ],
         "openBlank": false
     },

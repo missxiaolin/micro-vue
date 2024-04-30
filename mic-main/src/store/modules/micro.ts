@@ -12,12 +12,12 @@ const micro = {
       "micro-vie": {
         host: "", // 可选项
         port: 8091, // 必填项
-        debugging: true, //是否开启开发验证模式
+        debugging: false, //是否开启开发验证模式
       },
-      "micro-vue": {
+      "micro-cha": {
         host: "", // 可选项
         port: 8092, // 必填项
-        debugging: true, //是否开启开发验证模式
+        debugging: false, //是否开启开发验证模式
       },
     },
   },

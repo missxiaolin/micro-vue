@@ -31,7 +31,7 @@ export default [
     path: "/cha/hba",
     meta: {
       title: "项目",
-      elIcon: "House",
+      elIcon: "ElementPlus",
     },
     children: [
       {
