@@ -24,11 +24,28 @@ export default [
     ],
   },
   {
-    path: "/vue/index",
-    hidden: false,
+    path: "/vue",
+    redirect: "/vue/index",
     meta: {
-      title: "vue项目",
-      elIcon: "Operation",
+      title: "项目",
+      elIcon: "House",
     },
+    children: [
+      {
+        path: "/vue/index",
+        hidden: false,
+        meta: {
+          title: "概括",
+        },
+      },
+      {
+        path: "/vue/ceshi",
+        hidden: false,
+        meta: {
+          title: "测试",
+        },
+      },
+    ],
   },
+  
 ];

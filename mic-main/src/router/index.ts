@@ -5,22 +5,24 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 export const constantRoutes: any = [
   {
     path: "/",
-    redirect: "/dashboard",
+    // redirect: "/dashboard",
     meta: {
       title: "首页",
       elIcon: "House",
     },
-    children: [
-      {
-        path: "/dashboard",
-        component: () => import("@/views/dashboard/index.vue"),
-        hidden: false,
-        meta: {
-          title: "应用概览",
-          elIcon: "House",
-        },
-      },
-    ],
+    hidden: false,
+    component: () => import("@/views/dashboard/index.vue"),
+    // children: [
+    //   {
+    //     path: "/dashboard",
+    //     component: () => import("@/views/dashboard/index.vue"),
+    //     hidden: false,
+    //     meta: {
+    //       title: "应用概览",
+    //       elIcon: "House",
+    //     },
+    //   },
+    // ],
   }
 ]
 
