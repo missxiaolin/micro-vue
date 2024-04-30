@@ -2,32 +2,20 @@ import { createRouter, createWebHistory } from "vue-router";
 
 export const defaultRoute = [
   {
-    path: "/vie/vcc",
-    redirect: "/vie/vcc/index",
+    path: "/vie/vcc/index",
+    component: () => import("@/views/vcc/index.vue"),
+    hidden: false,
     meta: {
-      title: "项目",
-      elIcon: "Operation",
+      title: "路由列表",
     },
-    children: [
-      {
-        path: "/vie/vcc/index",
-        component: () =>
-          import(/* webpackChunkName: "vcc" */ "@/views/vcc/index.vue"),
-        hidden: false,
-        meta: {
-          title: "路由列表",
-        },
-      },
-      {
-        path: "/vie/vcc/detail",
-        component: () =>
-          import(/* webpackChunkName: "vcc" */ "@/views/vcc/detail.vue"),
-        hidden: true,
-        meta: {
-          title: "路由详情",
-        },
-      },
-    ],
+  },
+  {
+    path: "/vie/vcc/detail",
+    component: () => import("@/views/vcc/detail.vue"),
+    hidden: true,
+    meta: {
+      title: "路由详情",
+    },
   },
 ];
 

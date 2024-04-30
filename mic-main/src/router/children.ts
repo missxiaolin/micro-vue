@@ -1,7 +1,6 @@
 export default [
   {
     path: "/vie/vcc",
-    redirect: "/vie/vcc/index",
     meta: {
       title: "项目",
       elIcon: "Operation",
@@ -25,7 +24,6 @@ export default [
   },
   {
     path: "/cha/hba",
-    redirect: "/cha/hba/index",
     meta: {
       title: "项目",
       elIcon: "House",
