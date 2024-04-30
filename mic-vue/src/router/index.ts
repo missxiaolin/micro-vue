@@ -14,21 +14,6 @@ const routes: Array<any> = [
       },
     ]
   }
-  // {
-  //   path: '/cha/index',
-  //   name: 'home',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "home" */ '../views/home.vue')
-  // }, {
-  //   path: '/cha/ceshi',
-  //   name: 'ceshi',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "home" */ '../views/ceshi/index.vue')
-  // }
 ]
 
 const router = createRouter({
