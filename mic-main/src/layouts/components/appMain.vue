@@ -5,7 +5,7 @@
         <router-view :key="key"></router-view>
       </template>
       <div v-for="(item, index) in getmicroApps" :key="index">
-        <div v-if="item.name == getCurrentService.name">
+        <div v-show="item.name == getCurrentService.name">
           <micro-app
             :name="item.name"
             :key="item.name"

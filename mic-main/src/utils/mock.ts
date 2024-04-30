@@ -14,7 +14,7 @@ const microApps = {
         ],
         "openBlank": false
     }, 
-    'micro-vue': {
+    'micro-cha': {
         "name": "micro-cha",
         "url": "http://mic.missxiaolin.com/cha",
         "inline": false,
