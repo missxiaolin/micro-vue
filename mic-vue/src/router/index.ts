@@ -2,14 +2,14 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: Array<any> = [
   {
-    path: "/cha/hba/index",
+    path: "/hba/index",
     component: () => import("../views/home.vue"),
     hidden: false,
     meta: {
       title: "vue 首页",
     },
   }, {
-    path: "/cha/hba/ceshi",
+    path: "/hba/ceshi",
     component: () => import("../views/ceshi/index.vue"),
     hidden: false,
     meta: {
