@@ -4,7 +4,7 @@ const microApps = {
         "url": "http://mic.missxiaolin.com/vie",
         "inline": false,
         "destroy": false,
-        "disableScopecss": false,
+        "disableScopecss": true,
         "disableSandbox": false,
         "shadowDOM": false,
         "iframe": true,
@@ -18,12 +18,12 @@ const microApps = {
         "url": "http://mic.missxiaolin.com/cha",
         "inline": false,
         "destroy": false,
-        "disableScopecss": false,
+        "disableScopecss": true,
         "disableSandbox": false,
         "shadowDOM": false,
         "iframe": true,
         "systemCodes": [
-            "vue"
+            "cha"
         ],
         "openBlank": false
     },

@@ -2,18 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 
 export const defaultRoute = [
   {
-    path: "/vie/index",
-    name: "首页",
-    component: () =>
-      import(/* webpackChunkName: "index" */ "@/views/index.vue"),
-    meta: {
-      title: "vie项目",
-      elIcon: "Operation",
-      keepAlive: false,
-      affix: true,
-    },
-  },
-  {
     path: "/vie/vcc",
     redirect: "/vie/vcc/index",
     meta: {

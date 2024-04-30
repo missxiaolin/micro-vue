@@ -24,22 +24,22 @@ export default [
     ],
   },
   {
-    path: "/vue",
-    redirect: "/vue/index",
+    path: "/cha/hba",
+    redirect: "/cha/hba/index",
     meta: {
       title: "项目",
       elIcon: "House",
     },
     children: [
       {
-        path: "/vue/index",
+        path: "/cha/hba/index",
         hidden: false,
         meta: {
           title: "概括",
         },
       },
       {
-        path: "/vue/ceshi",
+        path: "/cha/hba/ceshi",
         hidden: false,
         meta: {
           title: "测试",
