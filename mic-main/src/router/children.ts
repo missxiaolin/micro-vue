@@ -19,10 +19,10 @@ export default [
           title: "路由详情",
         },
       }, {
-        path: "/bba/index",
+        path: "/bba/list",
         hidden: false,
         meta: {
-          title: "vie 首页",
+          title: "项目列表",
         },
       }
     ],

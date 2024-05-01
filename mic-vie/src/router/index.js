@@ -2,11 +2,11 @@ import { createRouter, createWebHistory } from "vue-router";
 
 export const defaultRoute = [
   {
-    path: "/bba/index",
-    component: () => import("@/views/index.vue"),
+    path: "/bba/list",
+    component: () => import("@/views/bba/list.vue"),
     hidden: false,
     meta: {
-      title: "vie 首页",
+      title: "项目列表",
     },
   },
   {
