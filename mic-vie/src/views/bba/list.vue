@@ -38,7 +38,14 @@
       </div>
     </div>
     <div class="mu-handle-content">
-      <el-button type="primary" @click="goRoute">创建项目</el-button>
+      <l-pop
+        :btn-text="'创建项目'"
+        :title="'创建项目'"
+        :dialog-visible="dialogVisible"
+        :btn-pop-form="btnPopForm"
+        @popClick="popClick"
+        @success="popSuccess"
+      ></l-pop>
     </div>
     <l-table :data="tableData" :columns="columns">
       <template #options="scope">
@@ -53,6 +60,7 @@
 export default {
   data() {
     return {
+      dialogVisible: false,
       searchForm: {
         name: "",
         type: "",
@@ -69,7 +77,7 @@ export default {
         },
         {
           value: "2",
-          label: "发布中",
+          label: "生成中",
         },
       ],
       typeOptions: [
@@ -105,15 +113,97 @@ export default {
           noEmptyValue: true,
         },
       ],
-      tableData: [
+      btnPopForm: [
         {
-          name: 111,
-          type_desc: 111,
-          status_desc: 111,
-          create_time: 11,
+          key: "type",
+          default: 1,
+          type: "radio",
+          label: "项目类型",
+          dataOptions: [
+            {
+              label: "pc",
+              value: 1,
+            },
+            {
+              label: "mobile",
+              value: 2,
+            },
+          ],
+          placeholder: "请选择项目类型",
+          value: "",
+          rules: [
+            {
+              required: true,
+              message: "请选择项目类型",
+            },
+          ],
+        },
+        {
+          key: "name",
+          default: "",
+          type: "input",
+          label: "项目名称",
+          data: "",
+          placeholder: "请输入项目名称",
+          value: "",
+          rules: [
+            {
+              required: true,
+              message: "请输入项目名称",
+              trigger: "blur",
+            },
+          ],
+        },
+        {
+          key: "desc",
+          default: "",
+          type: "input",
+          label: "项目描述",
+          data: "",
+          placeholder: "请输入项目描述",
+          value: "",
+          rules: [
+            {
+              required: true,
+              message: "请输入项目描述",
+              trigger: "blur",
+            },
+          ],
+        },
+        {
+          key: "status",
+          default: 1,
+          type: "radio",
+          label: "是否禁用",
+          dataOptions: [
+            {
+              label: "禁用",
+              value: 0,
+            },
+            {
+              label: "开启",
+              value: 1,
+            },
+          ],
+          value: "",
+          rules: [
+            {
+              required: true,
+              message: "请选择是否禁用",
+            },
+          ],
         },
       ],
+      tableData: [],
     };
+  },
+  methods: {
+    popClick(e) {
+      this.dialogVisible = e;
+    },
+    popSuccess(e) {
+      console.log("popSuccess", e);
+    },
   },
 };
 </script>
