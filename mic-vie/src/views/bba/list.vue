@@ -40,29 +40,12 @@
     <div class="mu-handle-content">
       <el-button type="primary" @click="goRoute">创建项目</el-button>
     </div>
-    <l-table :data="tableData"></l-table>
-    <!-- <div class="content-body">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column fixed prop="date" label="Date" width="150" />
-        <el-table-column prop="name" label="Name" width="120" />
-        <el-table-column prop="name" label="Name" width="120" />
-        <el-table-column prop="name" label="Name" width="120" />
-        <el-table-column prop="name" label="Name" width="120" />
-        <el-table-column prop="state" label="State" width="120" />
-        <el-table-column prop="city" label="City" width="120" />
-        <el-table-column prop="address" label="Address" width="600" />
-        <el-table-column prop="zip" label="Zip" width="120" />
-        <el-table-column fixed="right" label="操作" width="120">
-          <template #default>
-            <el-button link type="primary" size="small">详情</el-button>
-            <el-button link type="primary" size="small">修改</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div class="page-scroll mt20">
-        <el-pagination background layout="prev, pager, next" :total="1000" />
-      </div>
-    </div> -->
+    <l-table :data="tableData" :columns="columns">
+      <template #options="scope">
+        <el-button link type="primary" size="small">详情</el-button>
+        <el-button link type="primary" size="small">修改</el-button>
+      </template>
+    </l-table>
   </div>
 </template>
 
@@ -99,7 +82,37 @@ export default {
           label: "移动端",
         },
       ],
-      tableData: [],
+      columns: [
+        {
+          label: "项目名称",
+          prop: "name",
+        },
+        {
+          label: "项目类型",
+          prop: "type_desc",
+        },
+        {
+          label: "项目状态",
+          prop: "status_desc",
+        },
+        {
+          label: "创建时间",
+          prop: "create_time",
+        },
+        {
+          label: "操作",
+          prop: "options",
+          noEmptyValue: true,
+        },
+      ],
+      tableData: [
+        {
+          name: 111,
+          type_desc: 111,
+          status_desc: 111,
+          create_time: 11,
+        },
+      ],
     };
   },
 };

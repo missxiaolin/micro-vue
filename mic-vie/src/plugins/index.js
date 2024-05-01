@@ -4,7 +4,7 @@ import SvgIcon from "@/components/svgIcon/index.vue"; // svg组件
 import SearchLabel from "@/components/searchLabel/index.vue";
 import LTable from "@/components/lTable/index.vue";
 
-import "virtual:svg-icons-register"
+import "virtual:svg-icons-register";
 export function loadPlugins(app) {
   loadElementPlus(app);
   loadElementPlusIcon(app);

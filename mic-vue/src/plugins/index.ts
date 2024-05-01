@@ -3,6 +3,7 @@ import { loadElementPlus } from "./element-plus";
 import { loadElementPlusIcon } from "./element-plus-icon";
 import SvgIcon from "@/components/svgIcon/index.vue"; // svg组件
 import SearchLabel from "@/components/searchLabel/index.vue";
+import LTable from "@/components/lTable/index.vue";
 
 export function loadPlugins(app: App) {
   loadElementPlus(app);
@@ -10,7 +11,10 @@ export function loadPlugins(app: App) {
   // 注册到全局
   app.component("svg-icon", SvgIcon);
   app.component("search-label", SearchLabel);
-  const requireAll = (requireContext: any) => requireContext.keys().map(requireContext)
+  app.component("l-table", LTable);
+
+  const requireAll = (requireContext: any) =>
+    requireContext.keys().map(requireContext);
 
   // map传入一个函数，遍历数组中的每个对象，被webpack自动进行导入
   // eslint-disable-next-line
