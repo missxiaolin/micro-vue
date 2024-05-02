@@ -7,12 +7,12 @@ const projectController = new Project()
 // 项目保存/修改
 const projectSave = RouterConfigBuilder.routerConfigBuilder('/adm/project/save', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
     return projectController.save(req, res)
-}, false)
+}, true)
 
 // 项目列表
 const projectList = RouterConfigBuilder.routerConfigBuilder('/adm/project/list', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
     return projectController.projectList(req, res)
-}, false)
+}, true)
 
 
 export default {
