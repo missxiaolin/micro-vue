@@ -40,16 +40,29 @@
     <div class="mu-handle-content">
       <l-pop
         :btn-text="'创建项目'"
-        :title="'创建项目'"
+        :detail="projectDetail"
+        :title="popTitle"
+        :disabled="formDisbled"
+        :form-save-btn="formSaveBtn"
         :dialog-visible="dialogVisible"
         :btn-pop-form="btnPopForm"
+        :is-show-bottom-btn="popShowBottomBtn"
         @popClick="popClick"
         @success="popSuccess"
       ></l-pop>
     </div>
-    <l-table :data="tableData" :columns="columns" :page-size="searchForm.pageSize" :total="total" @handleCurrentChange="handleCurrentChange">
+    <l-table
+      :data="tableData"
+      :columns="columns"
+      :page-size="searchForm.pageSize"
+      :total="total"
+      @handleCurrentChange="handleCurrentChange"
+    >
       <template #options="scope">
-        <el-button link type="primary" size="small" v-for="(item, index) in tableBtns" :key="index" @click="tableBtnClick(scope.row, item.click)">{{ item.name }}</el-button>
+        <el-button link type="primary" size="small" @click="edit(scope.row)"
+          >修改</el-button
+        >
+        <el-button link type="primary" size="small" @click="detail(scope.row)">详情</el-button>
       </template>
     </l-table>
   </div>
@@ -63,6 +76,10 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      popTitle: "创建项目",
+      formSaveBtn: "保存",
+      formDisbled: false,
+      popShowBottomBtn: true,
       searchForm: {
         name: "",
         type: "",
@@ -112,20 +129,11 @@ export default {
           prop: "create_time",
         },
         {
-          width: '100px',
+          width: "100px",
           label: "操作",
           prop: "options",
           noEmptyValue: true,
         },
-      ],
-      tableBtns: [
-        {
-          name: '详情',
-          click: 'detail'
-        }, {
-          name: '修改',
-          click: 'detail'
-        }
       ],
       tableData: [],
       total: 0,
@@ -218,7 +226,7 @@ export default {
   },
   methods: {
     handleCurrentChange(e) {
-      this.searchForm.page = e
+      this.searchForm.page = e;
       this.getProjectList();
     },
     async getProjectList() {
@@ -235,21 +243,38 @@ export default {
     },
     popClick(e) {
       this.dialogVisible = e;
+      this.projectDetail = {};
+      this.popTitle = "创建项目";
+      this.formSaveBtn = "保存";
+      this.formDisbled = false;
     },
-    tableBtnClick(item, click) {
-      console.log(item)
-      switch (click) {
-        case 'edit':
-          break;
-        case 'detail':
-          break;
-        default:
-            break;
-      }
+
+    edit(e) {
+      this.projectDetail = e;
+      this.dialogVisible = true;
+      this.popTitle = "修改项目";
+      this.formSaveBtn = "修改";
+      this.popShowBottomBtn = true
     },
+
+    detail(e) {
+      this.projectDetail = e;
+      this.dialogVisible = true;
+      this.popTitle = "项目详情";
+      this.formDisbled = true;
+      this.formSaveBtn = "修改";
+      this.popShowBottomBtn = false
+    },
+
     async popSuccess(e) {
+      if (this.projectDetail) {
+        e.id =
+          this.projectDetail && this.projectDetail.id
+            ? this.projectDetail.id
+            : "";
+      }
       let res = await projectSave(e);
-      if (!res.success) {
+      if (!res.success) { 
         ElMessage({
           message: res.errorMessage,
           type: "error",
@@ -261,6 +286,8 @@ export default {
         type: "success",
       });
       this.projectDetail = {};
+      this.popTitle = "创建项目";
+      this.formSaveBtn = "保存";
       this.dialogVisible = false;
       this.getProjectList();
     },

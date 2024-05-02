@@ -92,7 +92,6 @@
 </template>
 
 <script>
-import zhCn from "element-plus/es/locale/lang/zh-cn";
 export default {
   props: {
     btnText: {
@@ -130,28 +129,36 @@ export default {
       type: String,
       default: "保存",
     },
+    detail: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
   },
   watch: {
     btnPopForm(v) {
       this.init(v);
+    },
+    detail(v) {
+      this.init(this.btnPopForm, v || {});
     },
   },
   data() {
     return {
       ruleForm: {},
       rules: {},
-      lang: zhCn,
     };
   },
   mounted() {
-    this.init(this.btnPopForm);
+    this.init(this.btnPopForm, this.detail);
   },
   methods: {
-    init(popForm) {
+    init(popForm, detail) {
       let ruleFormObj = {};
       let rulesArr = {};
       popForm.forEach((item) => {
-        ruleFormObj[item.key] = item.default || "";
+        ruleFormObj[item.key] = detail[item.key] || item.default || "";
         rulesArr[item.key] = item.rules;
       });
       this.ruleForm = ruleFormObj;
