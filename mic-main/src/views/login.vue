@@ -91,9 +91,7 @@ export default {
             }
             setCookie('userId', res.model.userId || "")
             setToken(res.model.token || "")
-            router.push({
-              path: '/'
-            })
+            window.location.href = '/'
           } catch (e) {
             loading.value = false;
           }

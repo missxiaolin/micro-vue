@@ -87,13 +87,13 @@ export const serviceRouter = ({ fullPath = '/', jump = false, callBack = null })
 /**
  * @param {*} router 
  */
-export const handleMicroData = (router) => {
+export const handleMicroData = (router, app) => {
     let routerHasRegister = false;
     window.microApp.addDataListener((data) => {
-		console.log('来自主应用的数据', data)
-		
-
-
+		// 挂载主应用方法
+		if (data.getDomain) {
+			app.config.globalProperties.$getDomain = data.getDomain
+		}
 
         const { path, refresh, openBlank, business = {} } = data;
 		routeIsOpenBlank = openBlank;

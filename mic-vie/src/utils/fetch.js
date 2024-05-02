@@ -5,7 +5,7 @@ import { getCookie, getToken } from "./cache/cookies";
 
 /** 退出登录并强制刷新页面（会重定向到登录页） */
 function logout() {
-  // window.microApp.dispatch({isPushLogin: true})
+  window.microApp.dispatch({isPushLogin: true})
 }
 
 /** 创建请求实例 */

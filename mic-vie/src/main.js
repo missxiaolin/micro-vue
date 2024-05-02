@@ -48,7 +48,7 @@ function mount() {
   window.createBaseAppAsync = createBaseAppAsync;
   if (isSubMicro) {
     // 微前端环境下， 处理路由下发跳转
-    handleMicroData(router);
+    handleMicroData(router, app);
   }
 }
 
