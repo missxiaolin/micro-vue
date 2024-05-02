@@ -1,4 +1,4 @@
-const SYSTEM_NAME = "v3-admin-main";
+const SYSTEM_NAME = "micro-admin";
 
 /** 缓存数据时用到的 Key */
 class CacheKey {

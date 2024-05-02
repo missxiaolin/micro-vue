@@ -90,6 +90,11 @@ export const serviceRouter = ({ fullPath = '/', jump = false, callBack = null })
 export const handleMicroData = (router) => {
     let routerHasRegister = false;
     window.microApp.addDataListener((data) => {
+		console.log('来自主应用的数据', data)
+		
+
+
+
         const { path, refresh, openBlank, business = {} } = data;
 		routeIsOpenBlank = openBlank;
 		if (openBlank && !routerHasRegister) {

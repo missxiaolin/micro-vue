@@ -50,6 +50,8 @@ import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { type FormInstance, FormRules } from "element-plus";
 import { User, Lock } from "@element-plus/icons-vue";
+import { loginApi } from "../api/login";
+import { setCookie, setToken } from '../utils/cache/cookies'
 
 export default {
   components: {
@@ -78,9 +80,24 @@ export default {
 
     /** 登录逻辑 */
     const handleLogin = () => {
-      loginFormRef.value?.validate((valid: boolean, fields: any) => {
+      loginFormRef.value?.validate(async (valid: boolean, fields: any) => {
         if (valid) {
-          // loading.value = true;
+          loading.value = true;
+          try {
+            let res = await loginApi(loginFormData)
+            loading.value = false;
+            if (!res.success) {
+              return
+            }
+            setCookie('userId', res.model.userId || "")
+            setToken(res.model.token || "")
+            router.push({
+              path: '/'
+            })
+          } catch (e) {
+            loading.value = false;
+          }
+          
         } else {
           console.error("表单校验不通过", fields);
         }

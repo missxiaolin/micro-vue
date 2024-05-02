@@ -1,5 +1,6 @@
 import microApp from '@micro-zoe/micro-app'
 import router from '@/router'
+import { getDomain } from '@/utils/cache/cookies'
 
 
 function isPushLogin(data: any) {
@@ -17,7 +18,6 @@ microApp.addDataListener('micro-cha', (data: any) => {
 })
 
 
-
 const microStart = () => {
   microApp.start({
     // @ts-ignore
@@ -27,6 +27,8 @@ const microStart = () => {
       beforemount () {
       },
       mounted () {
+        microApp.setData('micro-vie', {getDomain: getDomain})
+        microApp.setData('micro-cha', {getDomain: getDomain})
       },
       unmount () {
       },

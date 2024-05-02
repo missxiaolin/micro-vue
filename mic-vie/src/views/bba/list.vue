@@ -117,6 +117,10 @@ export default {
           prop: "name",
         },
         {
+          label: "项目描述",
+          prop: "desc",
+        },
+        {
           label: "项目类型",
           prop: "type_desc",
         },

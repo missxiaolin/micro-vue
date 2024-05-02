@@ -1,11 +1,15 @@
-import axios from "axios";
+import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
 import { ElMessage } from "element-plus";
 import { get, merge } from "lodash-es";
 import { getCookie, getToken } from "./cache/cookies";
+import router from "@/router";
 
 /** 退出登录并强制刷新页面（会重定向到登录页） */
 function logout() {
-  // window.microApp.dispatch({isPushLogin: true})
+  // location.reload();
+  router.push({
+    path: '/login'
+  })
 }
 
 /** 创建请求实例 */
@@ -95,8 +99,8 @@ export {
 }
 
 /** 创建请求方法 */
-function createRequest(service) {
-  return function (config) {
+function createRequest(service: AxiosInstance) {
+  return function <T>(config: AxiosRequestConfig): Promise<T> {
     const token = getToken();
     const defaultConfig = {
       headers: {
