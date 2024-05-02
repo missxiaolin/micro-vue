@@ -42,6 +42,40 @@
               </el-radio-group>
             </el-form-item>
           </template>
+          <template v-if="item.type == 'checkbox'">
+            <el-form-item
+              :key="index"
+              :label="item.label"
+              :prop="`${item.key}`"
+            >
+              <el-checkbox-group v-model="ruleForm[item.key]">
+                <el-checkbox
+                  :label="v.value"
+                  :value="v.value"
+                  v-for="(v, i) in item.dataOptions"
+                  :key="i"
+                />
+              </el-checkbox-group>
+            </el-form-item>
+          </template>
+          <template v-if="item.type == 'data'">
+            <el-form-item
+              :key="index"
+              :label="item.label"
+              :prop="`${item.key}`"
+            >
+              <el-date-picker
+                v-model="ruleForm[item.key]"
+                :type="item.dataType"
+                :teleported="true"
+                :editable="false"
+                :clearable="false"
+                :placeholder="`${item.placeholder}`"
+                :value-format="item.valueFormat || 'YYYY-MM-DD HH:mm:ss'"
+                :format="item.format || 'YYYY-MM-DD HH:mm:ss'"
+              />
+            </el-form-item>
+          </template>
         </template>
 
         <el-form-item v-if="isShowBottomBtn">
@@ -58,6 +92,7 @@
 </template>
 
 <script>
+import zhCn from "element-plus/es/locale/lang/zh-cn";
 export default {
   props: {
     btnText: {
@@ -92,9 +127,9 @@ export default {
       },
     },
     formSaveBtn: {
-        type: String,
-        default: '保存'
-    }
+      type: String,
+      default: "保存",
+    },
   },
   watch: {
     btnPopForm(v) {
@@ -105,6 +140,7 @@ export default {
     return {
       ruleForm: {},
       rules: {},
+      lang: zhCn,
     };
   },
   mounted() {
