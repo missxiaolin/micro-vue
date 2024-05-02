@@ -57,6 +57,9 @@
 </template>
 
 <script>
+import { projectSave } from "../../api/project";
+import { ElMessage } from "element-plus";
+
 export default {
   data() {
     return {
@@ -68,15 +71,15 @@ export default {
       },
       statusOptions: [
         {
-          value: "0",
+          value: "1",
           label: "禁用",
         },
         {
-          value: "1",
+          value: "2",
           label: "启用",
         },
         {
-          value: "2",
+          value: "3",
           label: "生成中",
         },
       ],
@@ -113,6 +116,7 @@ export default {
           noEmptyValue: true,
         },
       ],
+      tableData: [],
       btnPopForm: [
         {
           key: "type",
@@ -178,11 +182,11 @@ export default {
           dataOptions: [
             {
               label: "禁用",
-              value: 0,
+              value: 1,
             },
             {
               label: "开启",
-              value: 1,
+              value: 2,
             },
           ],
           value: "",
@@ -194,15 +198,29 @@ export default {
           ],
         },
       ],
-      tableData: [],
+      projectDetail: {},
     };
   },
   methods: {
     popClick(e) {
       this.dialogVisible = e;
     },
-    popSuccess(e) {
-      console.log("popSuccess", e);
+    async popSuccess(e) {
+      let res = await projectSave(e);
+      if (!res.success) {
+        ElMessage({
+          message: res.errorMessage,
+          type: "error",
+        });
+        return;
+      }
+      ElMessage({
+        message: '添加成功',
+        type: "success",
+      });
+      this.dialogVisible = false;
+      
+     
     },
   },
 };
