@@ -47,17 +47,16 @@
         @success="popSuccess"
       ></l-pop>
     </div>
-    <l-table :data="tableData" :columns="columns">
+    <l-table :data="tableData" :columns="columns" :page-size="searchForm.pageSize" :total="total" @handleCurrentChange="handleCurrentChange">
       <template #options="scope">
-        <el-button link type="primary" size="small">详情</el-button>
-        <el-button link type="primary" size="small">修改</el-button>
+        <el-button link type="primary" size="small" v-for="(item, index) in tableBtns" :key="index" @click="tableBtnClick(scope.row, item.click)">{{ item.name }}</el-button>
       </template>
     </l-table>
   </div>
 </template>
 
 <script>
-import { projectSave } from "../../api/project";
+import { projectSave, projectList } from "../../api/project";
 import { ElMessage } from "element-plus";
 
 export default {
@@ -68,6 +67,8 @@ export default {
         name: "",
         type: "",
         status: "",
+        pageSize: 10,
+        page: 1,
       },
       statusOptions: [
         {
@@ -111,12 +112,23 @@ export default {
           prop: "create_time",
         },
         {
+          width: '100px',
           label: "操作",
           prop: "options",
           noEmptyValue: true,
         },
       ],
+      tableBtns: [
+        {
+          name: '详情',
+          click: 'detail'
+        }, {
+          name: '修改',
+          click: 'detail'
+        }
+      ],
       tableData: [],
+      total: 0,
       btnPopForm: [
         {
           key: "type",
@@ -201,9 +213,39 @@ export default {
       projectDetail: {},
     };
   },
+  mounted() {
+    this.getProjectList();
+  },
   methods: {
+    handleCurrentChange(e) {
+      this.searchForm.page = e
+      this.getProjectList();
+    },
+    async getProjectList() {
+      let res = await projectList(this.searchForm);
+      if (!res.success) {
+        ElMessage({
+          message: res.errorMessage,
+          type: "error",
+        });
+        return;
+      }
+      this.tableData = res.model.list;
+      this.total = res.model.count;
+    },
     popClick(e) {
       this.dialogVisible = e;
+    },
+    tableBtnClick(item, click) {
+      console.log(item)
+      switch (click) {
+        case 'edit':
+          break;
+        case 'detail':
+          break;
+        default:
+            break;
+      }
     },
     async popSuccess(e) {
       let res = await projectSave(e);
@@ -215,12 +257,12 @@ export default {
         return;
       }
       ElMessage({
-        message: '添加成功',
+        message: "添加成功",
         type: "success",
       });
+      this.projectDetail = {};
       this.dialogVisible = false;
-      
-     
+      this.getProjectList();
     },
   },
 };

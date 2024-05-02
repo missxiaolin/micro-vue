@@ -27,4 +27,19 @@ export default class Project extends Base {
     }
     return this.send(res, result);
   }
+
+  /**
+   * 获取项目列表
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async projectList(req, res) {
+    let data = req.body || {},
+      result = {};
+
+    result.list = await projectModel.getPages(data);
+    result.count = await projectModel.getPagesCount(data);
+    return this.send(res, result);
+  }
 }

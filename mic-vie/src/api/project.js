@@ -12,3 +12,12 @@ export function projectSave(data) {
     data,
   });
 }
+
+
+export function projectList(data) {
+  return request({
+    url: "/adm/project/list",
+    method: "post",
+    data,
+  });
+}

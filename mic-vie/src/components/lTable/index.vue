@@ -35,7 +35,8 @@
       <el-pagination
         :page-size="pageSize"
         background
-        layout="prev, pager, next"
+        layout="total, prev, pager, next"
+        @current-change="handleCurrentChange"
         :total="total"
       />
     </div>
@@ -68,5 +69,11 @@ export default {
       default: 10,
     },
   },
+  methods: {
+    handleCurrentChange(e) {
+      console.log(e)
+      this.$emit("handleCurrentChange", e)
+    }
+  }
 };
 </script>
