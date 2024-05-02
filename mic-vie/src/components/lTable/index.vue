@@ -24,7 +24,6 @@
               <slot
                 :name="col.prop || col.scope"
                 :row="scope.row"
-                :$index="scope.$index"
               ></slot>
             </template>
           </el-table-column>

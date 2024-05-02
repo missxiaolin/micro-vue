@@ -24,7 +24,6 @@
               <slot
                 :name="col.prop || col.scope"
                 :row="scope.row"
-                :$index="scope.$index"
               ></slot>
             </template>
           </el-table-column>
@@ -35,7 +34,8 @@
       <el-pagination
         :page-size="pageSize"
         background
-        layout="prev, pager, next"
+        layout="total, prev, pager, next"
+        @current-change="handleCurrentChange"
         :total="total"
       />
     </div>
@@ -66,6 +66,11 @@ export default {
     pageSize: {
       type: Number,
       default: 10,
+    },
+  },
+  methods: {
+    handleCurrentChange(e) {
+      this.$emit("handleCurrentChange", e);
     },
   },
 };

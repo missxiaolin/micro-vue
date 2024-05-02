@@ -129,6 +129,10 @@ export default {
           prop: "create_time",
         },
         {
+          label: "修改时间",
+          prop: "update_time",
+        },
+        {
           width: "100px",
           label: "操作",
           prop: "options",

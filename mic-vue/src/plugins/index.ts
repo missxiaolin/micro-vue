@@ -4,6 +4,7 @@ import { loadElementPlusIcon } from "./element-plus-icon";
 import SvgIcon from "@/components/svgIcon/index.vue"; // svg组件
 import SearchLabel from "@/components/searchLabel/index.vue";
 import LTable from "@/components/lTable/index.vue";
+import Pop from "@/components/pop/index.vue";
 
 export function loadPlugins(app: App) {
   loadElementPlus(app);
@@ -12,6 +13,7 @@ export function loadPlugins(app: App) {
   app.component("svg-icon", SvgIcon);
   app.component("search-label", SearchLabel);
   app.component("l-table", LTable);
+  app.component("l-pop", Pop);
 
   const requireAll = (requireContext: any) =>
     requireContext.keys().map(requireContext);
