@@ -15,7 +15,7 @@ const routes: Array<any> = [
     meta: {
       title: "测试页面",
     },
-  },
+  }
 ]
 
 const router = createRouter({

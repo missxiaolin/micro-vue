@@ -1,7 +1,7 @@
 const microApps = {
     'micro-vie': {
         "name": "micro-vie",
-        "url": "http://localhost:8091/vie",
+        "url": "http://localhost:8091",
         // "url": "http://mic.missxiaolin.com/vie",
         "inline": false,
         "destroy": false,
@@ -17,7 +17,7 @@ const microApps = {
     }, 
     'micro-cha': {
         "name": "micro-cha",
-        "url": "http://localhost:8092/vie",
+        "url": "http://localhost:8092",
         // "url": "http://mic.missxiaolin.com/cha",
         "inline": false,
         "destroy": false,

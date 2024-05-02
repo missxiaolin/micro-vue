@@ -28,21 +28,21 @@ export default [
     ],
   },
   {
-    path: "/cha/hba",
+    path: "/hba/index",
     meta: {
       title: "项目",
       elIcon: "ElementPlus",
     },
     children: [
       {
-        path: "/cha/hba/index",
+        path: "/hba/index",
         hidden: false,
         meta: {
           title: "概括",
         },
       },
       {
-        path: "/cha/hba/ceshi",
+        path: "/hba/ceshi",
         hidden: false,
         meta: {
           title: "测试",
