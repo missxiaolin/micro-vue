@@ -32,12 +32,13 @@
 
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import screenfull from "@/components/screenfull/index.vue";
+import screenfull from "../../../components/screenfull/index.vue";
 import breadcrumb from "../breadcrumb/index.vue";
 import hamburger from "../hamburger/index.vue";
-import themeSwitch from "@/components/themeSwitch/index.vue";
+import themeSwitch from "../../../components/themeSwitch/index.vue";
 import { UserFilled } from "@element-plus/icons-vue";
 import { useStore, mapGetters } from "vuex";
+import { setToken } from "../../../utils/cache/cookies"
 
 export default defineComponent({
   computed: {
@@ -56,7 +57,10 @@ export default defineComponent({
       store.commit('setSidebarOpened', !store.state.setting.sidebarOpened)
     };
 
-    const logout = () => {}
+    const logout = () => {
+      setToken("")
+      window.location.href = '/login'
+    }
 
     return {
       toggleSidebar,

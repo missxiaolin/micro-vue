@@ -84,7 +84,7 @@ function createService() {
 }
 
 let baseURL = ""
-const urls = ['127.0.0.1', "localhost"]
+const urls = ['127.0.0.1', "localhost", "mic.missxiaolin.com"]
 
 if (urls.indexOf(window.location.hostname) > -1) {
   baseURL = "http://127.0.0.1:9002";
