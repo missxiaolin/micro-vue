@@ -14,6 +14,16 @@ const pageSave = RouterConfigBuilder.routerConfigBuilder(
   true
 );
 
+// 路由详情
+const pageDetail = RouterConfigBuilder.routerConfigBuilder(
+  "/adm/page/detail",
+  RouterConfigBuilder.METHOD_TYPE_POST,
+  (req, res) => {
+    return pageController.detail(req, res);
+  },
+  true
+);
+
 // 路由列表
 const pageList = RouterConfigBuilder.routerConfigBuilder(
   "/adm/page/list",
@@ -27,4 +37,5 @@ const pageList = RouterConfigBuilder.routerConfigBuilder(
 export default {
   ...pageSave,
   ...pageList,
+  ...pageDetail
 };

@@ -9,7 +9,6 @@ const TABLE_COLUMN = [];
 
 const DISOLAYT_TABLE_COLUMN = [];
 
-
 function getTableName() {
   return BASE_TABLE_NAME;
 }
@@ -70,20 +69,20 @@ export default class PageRoute {
    * @returns
    */
   async getPages(params) {
-    let { pageSize = 10, page = 1, route_name = '', path =  "" } = params;
+    let { pageSize = 10, page = 1, route_name = "", path = "" } = params;
     let tableName = getTableName();
 
     let res = Knex.select("*")
       .from(tableName)
-      .where('create_time', '>', '2023-05-02 21:19:50');
+      .where("create_time", ">", "2023-05-02 21:19:50");
 
     if (route_name) {
       res = res.andWhere("route_name", "like", `%${route_name}%`);
     }
     if (path) {
-      res = res.andWhere("path", path)
+      res = res.andWhere("path", path);
     }
-    
+
     res = await res
       .orderBy("update_time", "desc")
       .limit(pageSize)
@@ -111,25 +110,43 @@ export default class PageRoute {
    * @returns
    */
   async getPagesCount(params) {
-    let { route_name = '', path =  "" } = params;
+    let { route_name = "", path = "" } = params;
     let tableName = getTableName();
     let res = Knex.from(tableName);
 
-    res = res.where('create_time', '>', '2023-05-02 21:19:50');
+    res = res.where("create_time", ">", "2023-05-02 21:19:50");
 
     if (route_name) {
       res = res.andWhere("route_name", "like", `%${route_name}%`);
     }
     if (path) {
-      res = res.andWhere("path", path)
+      res = res.andWhere("path", path);
     }
-    
-    
+
     res = await res.count("* as routeCount").catch((err) => {
       console.log(err);
       return 0;
     });
 
     return res[0].routeCount;
+  }
+
+  /**
+   * 获取详情
+   * @param {*} params
+   * @returns
+   */
+  async getPageDetail(params) {
+    let tableName = getTableName();
+    let res = await Knex.select("*")
+      .from(tableName)
+      .where("id", params.id)
+      .first()
+      .catch((e) => {
+        Logger.warn("查询失败, 错误原因 =>", e);
+        return [];
+      });
+
+    return res;
   }
 }

@@ -35,6 +35,20 @@ export default class Page extends Base {
   }
 
   /**
+   * 获取详情
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  async detail(req, res) {
+    let data = req.body || {},
+      result = {};
+    result = await pageRouteModel.getPageDetail(data);
+    return this.send(res, result);
+  }
+  
+
+  /**
    * 获取项目列表
    * @param {*} req
    * @param {*} res
