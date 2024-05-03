@@ -252,10 +252,6 @@ export default {
     async getProjectList() {
       let res = await projectList(this.searchForm);
       if (!res.success) {
-        ElMessage({
-          message: res.errorMessage,
-          type: "error",
-        });
         return;
       }
       this.tableData = res.model.list;
@@ -295,10 +291,6 @@ export default {
       }
       let res = await projectSave(e);
       if (!res.success) {
-        ElMessage({
-          message: res.errorMessage,
-          type: "error",
-        });
         return;
       }
       ElMessage({

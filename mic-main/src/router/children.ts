@@ -7,18 +7,6 @@ export default [
     },
     children: [
       {
-        path: "/vie/vcc/index",
-        hidden: false,
-        meta: {
-          title: "路由列表",
-        },
-      }, {
-        path: "/vie/vcc/detail",
-        hidden: true,
-        meta: {
-          title: "路由详情",
-        },
-      }, {
         path: "/bba/list",
         hidden: false,
         meta: {

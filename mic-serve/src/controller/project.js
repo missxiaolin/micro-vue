@@ -1,7 +1,9 @@
 import Base from "./base";
 import moment from "moment";
 import ProjectModel from "../model/project";
+import dotenv from "dotenv";
 
+const appConfig = dotenv.config().parsed;
 const projectModel = new ProjectModel();
 
 /**
@@ -17,6 +19,10 @@ export default class Project extends Base {
     let data = req.body || {},
       startAt = moment().format("YYYY-MM-DD HH:mm:ss"),
       result = {};
+
+    if (appConfig.IS_CREATE_PROJECT_OPEN == 0) {
+      return this.send(res, result, false, "暂时为开放创建项目");
+    }
 
     if (data.id == 0 || !data.id) {
       result = await projectModel.save({

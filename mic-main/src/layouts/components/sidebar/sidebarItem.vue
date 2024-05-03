@@ -1,6 +1,7 @@
 <template>
+  
   <div
-    v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children"
+    v-if="theOnlyOneChild && !theOnlyOneChild.children"
   >
     <sidebarItemLink
       v-if="theOnlyOneChild.meta"
@@ -104,10 +105,10 @@ export default defineComponent({
     const theOnlyOneChild = computed(() => {
       const number = showingChildNumber.value;
       switch (true) {
-        case number > 1:
-          return null;
-        case number === 1:
-          return showingChildren.value[0];
+        case number > 0:
+        return { ...props.item, path: "" };
+        // case number === 1:
+        //   return showingChildren.value[0];
         default:
           return { ...props.item, path: "" };
       }
