@@ -33,8 +33,8 @@
         </el-col>
       </el-row>
       <div class="mu-search-form-button">
-        <el-button>重置</el-button>
-        <el-button type="primary">查询</el-button>
+        <el-button @click="resetForm">重置</el-button>
+        <el-button type="primary" @click="getProjectList">查询</el-button>
       </div>
     </div>
     <div class="mu-handle-content">
@@ -62,7 +62,9 @@
         <el-button link type="primary" size="small" @click="edit(scope.row)"
           >修改</el-button
         >
-        <el-button link type="primary" size="small" @click="detail(scope.row)">详情</el-button>
+        <el-button link type="primary" size="small" @click="detail(scope.row)"
+          >详情</el-button
+        >
       </template>
     </l-table>
   </div>
@@ -204,7 +206,7 @@ export default {
         },
         {
           key: "status",
-          default: 1,
+          default: 2,
           type: "radio",
           label: "是否禁用",
           dataOptions: [
@@ -237,6 +239,16 @@ export default {
       this.searchForm.page = e;
       this.getProjectList();
     },
+    resetForm() {
+      this.searchForm = {
+        name: "",
+        type: "",
+        status: "",
+        pageSize: 10,
+        page: 1,
+      };
+      this.getProjectList();
+    },
     async getProjectList() {
       let res = await projectList(this.searchForm);
       if (!res.success) {
@@ -262,7 +274,7 @@ export default {
       this.dialogVisible = true;
       this.popTitle = "修改项目";
       this.formSaveBtn = "修改";
-      this.popShowBottomBtn = true
+      this.popShowBottomBtn = true;
     },
 
     detail(e) {
@@ -271,7 +283,7 @@ export default {
       this.popTitle = "项目详情";
       this.formDisbled = true;
       this.formSaveBtn = "修改";
-      this.popShowBottomBtn = false
+      this.popShowBottomBtn = false;
     },
 
     async popSuccess(e) {
@@ -282,7 +294,7 @@ export default {
             : "";
       }
       let res = await projectSave(e);
-      if (!res.success) { 
+      if (!res.success) {
         ElMessage({
           message: res.errorMessage,
           type: "error",
@@ -290,7 +302,7 @@ export default {
         return;
       }
       ElMessage({
-        message: e.id ? '修改成功' : "添加成功",
+        message: e.id ? "修改成功" : "添加成功",
         type: "success",
       });
       this.projectDetail = {};
