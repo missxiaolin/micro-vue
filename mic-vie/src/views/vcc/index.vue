@@ -1,8 +1,21 @@
 <template>
   <div class="vcc-index-box">
     <div class="mu-search-container pall10">
+      <el-row>
+        <el-col :span="8">
+          <search-label :labelName="'路由名称'">
+            <el-input v-model="searchForm.route_name" placeholder="请输入路由名称" />
+          </search-label>
+        </el-col>
+        <el-col :span="8">
+          <search-label :labelName="'路由路径'">
+            <el-input v-model="searchForm.path" placeholder="请输入路由路径" />
+          </search-label>
+        </el-col>
+        <el-col :span="8"></el-col>
+      </el-row>
       <div class="mu-search-form-button">
-        <el-button>重置</el-button>
+        <el-button @click="resetForm">重置</el-button>
         <el-button type="primary" @click="getRouteList">查询</el-button>
       </div>
     </div>
@@ -29,13 +42,15 @@
 export default {
   data() {
     return {
-      searchForm: {},
+      projectId: 0,
+      searchForm: {
+        route_name: "",
+        path: "",
+        pageSize: 10,
+        page: 1,
+      },
       tableData: [],
       columns: [
-        {
-          label: "项目名称",
-          prop: "project_name",
-        },
         {
           label: "路由名称",
           prop: "route_name",
@@ -62,25 +77,40 @@ export default {
       total: 0,
     };
   },
+  mounted() {
+    this.projectId = this.$route.query.projectId || 0
+  },
   methods: {
     // 创建
     goRoute() {
       this.$router.push({
-        path: "/vie/vcc/detail",
+        path: "/vcc/detail",
+        query: {
+          projectId: this.projectId,
+        },
       });
     },
     // 修改
     edit(item) {
       this.$router.push({
-        path: "/vie/vcc/detail",
+        path: "/vcc/detail",
         query: {
           id: item.id,
+          projectId: this.projectId,
         },
       });
     },
     handleCurrentChange(e) {
       this.searchForm.page = e;
       this.getRouteList();
+    },
+    resetForm() {
+      this.searchForm = {
+        route_name: "",
+        path: "",
+        pageSize: 10,
+        page: 1,
+      }
     },
     getRouteList() {},
   },

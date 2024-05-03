@@ -10,7 +10,7 @@ export const defaultRoute = [
     },
   },
   {
-    path: "/vie/vcc/index",
+    path: "/vcc/index",
     component: () => import("@/views/vcc/index.vue"),
     hidden: false,
     meta: {
@@ -18,7 +18,7 @@ export const defaultRoute = [
     },
   },
   {
-    path: "/vie/vcc/detail",
+    path: "/vcc/detail",
     component: () => import("@/views/vcc/detail.vue"),
     hidden: true,
     meta: {

@@ -12,17 +12,6 @@ export const constantRoutes: any = [
     },
     hidden: false,
     component: () => import("@/views/dashboard/index.vue"),
-    // children: [
-    //   {
-    //     path: "/dashboard",
-    //     component: () => import("@/views/dashboard/index.vue"),
-    //     hidden: false,
-    //     meta: {
-    //       title: "应用概览",
-    //       elIcon: "House",
-    //     },
-    //   },
-    // ],
   }
 ]
 

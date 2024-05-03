@@ -65,6 +65,9 @@
         <el-button link type="primary" size="small" @click="detail(scope.row)"
           >详情</el-button
         >
+        <el-button link type="primary" size="small" @click="goRoutePage(scope.row)"
+          >路由列表</el-button
+        >
       </template>
     </l-table>
   </div>
@@ -139,7 +142,7 @@ export default {
           prop: "update_time",
         },
         {
-          width: "100px",
+          width: "180px",
           label: "操作",
           prop: "options",
           noEmptyValue: true,
@@ -303,6 +306,16 @@ export default {
       this.dialogVisible = false;
       this.getProjectList();
     },
+
+    // 跳转路由列表
+    goRoutePage(item) {
+      this.$router.push({
+        path: '/vcc/index',
+        query: {
+          projectId: item.id
+        }
+      })
+    }
   },
 };
 </script>

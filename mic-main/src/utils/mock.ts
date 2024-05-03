@@ -11,6 +11,7 @@ const microApps = {
         "iframe": true,
         "systemCodes": [
             "vie",
+            "vcc",
             "bba"
         ],
         "openBlank": false
