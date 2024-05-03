@@ -2,24 +2,31 @@
 
 import CacheKey from "../../constants/cache-key";
 import Cookies from "js-cookie";
-import { getCurrentInstance } from "vue";
+export function getDomain() {
+  // 获取前端域名
+  let host = location.host,
+    domain = "";
+  if (host.includes(".missxiaolin.com")) {
+    domain = ".missxiaolin.com";
+  } else {
+    domain = "localhost";
+  }
+  return domain;
+}
 
 export const getToken = () => {
   return Cookies.get(CacheKey.TOKEN, {
-    domain:
-      getCurrentInstance().appContext.app.config.globalProperties.$getDomain(),
+    domain: getDomain(),
   });
 };
 export const setToken = (token) => {
   Cookies.set(CacheKey.TOKEN, token, {
-    domain:
-      getCurrentInstance().appContext.app.config.globalProperties.$getDomain(),
+    domain: getDomain(),
   });
 };
 export const removeToken = () => {
   Cookies.remove(CacheKey.TOKEN, {
-    domain:
-      getCurrentInstance().appContext.app.config.globalProperties.$getDomain(),
+    domain: getDomain(),
   });
 };
 
@@ -30,8 +37,7 @@ export const removeToken = () => {
  */
 export const setCookie = (key, value) => {
   Cookies.set(key, value, {
-    domain:
-      getCurrentInstance().appContext.app.config.globalProperties.$getDomain(),
+    domain: getDomain(),
   });
 };
 
@@ -42,7 +48,6 @@ export const setCookie = (key, value) => {
  */
 export const getCookie = (key) => {
   return Cookies.get(key, {
-    domain:
-      getCurrentInstance().appContext.app.config.globalProperties.$getDomain(),
+    domain: getDomain(),
   });
 };

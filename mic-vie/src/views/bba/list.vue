@@ -290,7 +290,7 @@ export default {
         return;
       }
       ElMessage({
-        message: "添加成功",
+        message: e.id ? '修改成功' : "添加成功",
         type: "success",
       });
       this.projectDetail = {};

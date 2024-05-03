@@ -92,7 +92,9 @@ export const handleMicroData = (router, app) => {
     window.microApp.addDataListener((data) => {
 		// 挂载主应用方法
 		if (data.getDomain) {
-			app.config.globalProperties.$getDomain = data.getDomain
+			// window.microApp.$getDomain = data.getDomain
+			// app.provide('$getDomain', data.getDomain)
+			// app.config.globalProperties.$getDomain = data.getDomain
 		}
 
         const { path, refresh, openBlank, business = {} } = data;

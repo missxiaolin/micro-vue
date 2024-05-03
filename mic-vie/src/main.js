@@ -42,7 +42,7 @@ let app = null;
 function mount() {
   app = createApp(App);
   app.use(router);
-  app.mount("#vie-app");
+  
   /** 加载插件 */
   loadPlugins(app);
   window.createBaseAppAsync = createBaseAppAsync;
@@ -50,6 +50,7 @@ function mount() {
     // 微前端环境下， 处理路由下发跳转
     handleMicroData(router, app);
   }
+  app.mount("#vie-app");
 }
 
 mount();

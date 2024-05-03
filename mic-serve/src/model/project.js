@@ -64,6 +64,18 @@ export default class ProjectModel {
   }
 
   /**
+   * 修改
+   * @param {*} data 
+   * @param {*} id 
+   * @returns 
+   */
+  async update(data, id) {
+    let tableName = getTableName();
+    let updateResult = await Knex.from(tableName).update(data).where('id', id)
+    return updateResult
+  }
+
+  /**
    * 分页
    * @param {*} params
    * @returns

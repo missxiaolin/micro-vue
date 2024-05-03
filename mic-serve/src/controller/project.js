@@ -24,6 +24,12 @@ export default class Project extends Base {
         create_time: startAt,
         update_time: startAt,
       });
+    } else {
+      let param = {
+        ...data,
+        update_time: startAt,
+      };
+      result = await projectModel.update(param, param.id);
     }
     return this.send(res, result);
   }
