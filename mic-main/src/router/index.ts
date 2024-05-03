@@ -7,7 +7,7 @@ export const constantRoutes: any = [
     path: "/",
     // redirect: "/dashboard",
     meta: {
-      title: "首页",
+      title: "介绍",
       elIcon: "House",
     },
     hidden: false,

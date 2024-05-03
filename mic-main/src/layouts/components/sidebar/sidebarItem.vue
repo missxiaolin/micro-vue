@@ -1,20 +1,20 @@
 <template>
   
   <div
-    v-if="theOnlyOneChild && !theOnlyOneChild.children"
+    v-if="item && !item.children"
   >
     <sidebarItemLink
-      v-if="theOnlyOneChild.meta"
-      :to="resolvePath(theOnlyOneChild.path)"
+      v-if="item.meta"
+      :to="resolvePath(item.path)"
     >
-      <el-menu-item :index="resolvePath(theOnlyOneChild.path)">
+      <el-menu-item :index="resolvePath(item.path)">
         <component
-          v-if="theOnlyOneChild.meta.elIcon"
-          :is="theOnlyOneChild.meta.elIcon"
+          v-if="item.meta.elIcon"
+          :is="item.meta.elIcon"
           class="el-icon"
         />
-        <template v-if="theOnlyOneChild.meta.title" #title>
-          {{ theOnlyOneChild.meta.title }}
+        <template v-if="item.meta.title" #title>
+          {{ item.meta.title }}
         </template>
       </el-menu-item>
     </sidebarItemLink>
@@ -80,39 +80,8 @@ export default defineComponent({
   },
   setup(props) {
     const {
-      item,
-      hidden,
-      isCollapse,
-      isFirstLevel,
       basePath,
-      alwaysShow,
     }: any = props;
-
-    /** 是否始终显示根菜单 */
-    const alwaysShowRootMenu = computed(() => alwaysShow);
-
-    /** 显示的子菜单 */
-    const showingChildren = computed(() => {
-      return item.children?.filter(() => !hidden) ?? [];
-    });
-
-    /** 显示的子菜单数量 */
-    const showingChildNumber = computed(() => {
-      return showingChildren.value.length;
-    });
-
-    /** 唯一的子菜单项 */
-    const theOnlyOneChild = computed(() => {
-      const number = showingChildNumber.value;
-      switch (true) {
-        case number > 0:
-        return { ...props.item, path: "" };
-        // case number === 1:
-        //   return showingChildren.value[0];
-        default:
-          return { ...props.item, path: "" };
-      }
-    });
 
     /** 解析路径 */
     const resolvePath = (routePath: string) => {
@@ -128,8 +97,6 @@ export default defineComponent({
 
     return {
       props,
-      alwaysShowRootMenu,
-      theOnlyOneChild,
       resolvePath,
     };
   },
