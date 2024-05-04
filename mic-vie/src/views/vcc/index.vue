@@ -44,6 +44,7 @@ export default {
     return {
       projectId: 0,
       searchForm: {
+        projectId: 0,
         route_name: "",
         path: "",
         pageSize: 10,
@@ -79,6 +80,7 @@ export default {
   },
   mounted() {
     this.projectId = this.$route.query.projectId || 0
+
   },
   methods: {
     // 创建

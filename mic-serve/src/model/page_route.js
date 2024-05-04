@@ -69,12 +69,12 @@ export default class PageRoute {
    * @returns
    */
   async getPages(params) {
-    let { pageSize = 10, page = 1, route_name = "", path = "" } = params;
+    let { projectId = 0, pageSize = 10, page = 1, route_name = "", path = "" } = params;
     let tableName = getTableName();
 
     let res = Knex.select("*")
       .from(tableName)
-      .where("create_time", ">", "2023-05-02 21:19:50");
+      .where("projectId", projectId);
 
     if (route_name) {
       res = res.andWhere("route_name", "like", `%${route_name}%`);
@@ -110,11 +110,11 @@ export default class PageRoute {
    * @returns
    */
   async getPagesCount(params) {
-    let { route_name = "", path = "" } = params;
+    let { projectId = 0, route_name = "", path = "" } = params;
     let tableName = getTableName();
     let res = Knex.from(tableName);
 
-    res = res.where("create_time", ">", "2023-05-02 21:19:50");
+    res = res.where("projectId", projectId);
 
     if (route_name) {
       res = res.andWhere("route_name", "like", `%${route_name}%`);
