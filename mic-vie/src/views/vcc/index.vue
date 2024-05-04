@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { pageRouteList } from '../../api/page'
+
 export default {
   data() {
     return {
@@ -80,9 +82,19 @@ export default {
   },
   mounted() {
     this.projectId = this.$route.query.projectId || 0
-
+    this.getPage()
   },
   methods: {
+    async getPage() {
+      let param = this.searchForm
+      param.projectId = this.projectId
+      let res = await pageRouteList(param)
+      if (!res.success) {
+        return
+      }
+      this.tableData = res.model.list
+      this.total = res.model.count
+    },
     // 创建
     goRoute() {
       this.$router.push({

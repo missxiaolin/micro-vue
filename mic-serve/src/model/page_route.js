@@ -74,7 +74,7 @@ export default class PageRoute {
 
     let res = Knex.select("*")
       .from(tableName)
-      .where("projectId", projectId);
+      .where("project_id", projectId);
 
     if (route_name) {
       res = res.andWhere("route_name", "like", `%${route_name}%`);
@@ -114,7 +114,7 @@ export default class PageRoute {
     let tableName = getTableName();
     let res = Knex.from(tableName);
 
-    res = res.where("projectId", projectId);
+    res = res.where("project_id", projectId);
 
     if (route_name) {
       res = res.andWhere("route_name", "like", `%${route_name}%`);
