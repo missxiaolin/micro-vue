@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <div style="margin-left: 5px">
+      <!-- <div style="margin-left: 5px">
         <el-link
           href="javascript:void(0)"
           target="_blank"
@@ -42,7 +42,7 @@
         <div style="color: #6c6c6c; font-size: 12px; margin-top: 5px">
           Tips: 建议看一下使用说明
         </div>
-      </div>
+      </div> -->
     </div>
   </el-dialog>
 </template>

@@ -38,16 +38,6 @@
           >结构树</el-link
         >
       </el-col>
-      <el-col :span="3">
-        <el-link type="primary" @click="notification"
-          >页面设置</el-link
-        >
-      </el-col>
-      <el-col :span="3">
-        <el-link type="primary" @click="notification"
-          >模版</el-link
-        >
-      </el-col>
     </el-row>
   </div>
 </template>

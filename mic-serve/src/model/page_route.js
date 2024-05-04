@@ -21,7 +21,6 @@ export default class PageRoute {
       "path",
       "tem_json",
       "script_json",
-      "vue_page",
       "create_time",
       "update_time",
     ];
