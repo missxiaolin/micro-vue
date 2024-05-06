@@ -69,6 +69,17 @@
           </div>
         </template>
       </el-popconfirm>
+      <el-tooltip effect="dark" content="保存" placement="top-start">
+        <div
+          class="round-icon icon-js"
+          alt=""
+          @click="$emit('save')"
+          style="padding: 12px"
+        >
+          <el-icon><Document /></el-icon>
+        </div>
+      </el-tooltip>
+      
     </div>
 
     <div>

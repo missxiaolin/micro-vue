@@ -1,6 +1,6 @@
 <template>
   <div class="vcc-detaiil-box">
-    <div class="vcc-base-box" v-if="isShowVcc">
+    <div class="vcc-base-box" v-if="isShowBaseForm">
       <div class="vcc-body-header">基础信息</div>
       <div class="vcc-body-content">
         <el-form
@@ -13,7 +13,10 @@
             <el-input v-model="formData.route_name" />
           </el-form-item>
           <el-form-item label="路由路径" prop="path">
-            <el-input v-model="formData.path" />
+            <el-input
+              :disabled="formData.id ? true : false"
+              v-model="formData.path"
+            />
           </el-form-item>
           <el-form-item>
             <div class="form-bottom-box">
@@ -27,28 +30,39 @@
       </div>
     </div>
     <vcc
-      v-else
+      v-if="isShowVcc"
       :initCodeEntity="codeInfoEntity"
       @updateCodeEntity="onCodeUpdate"
       @onLoadFinish="onLoadFinish"
+      @save="save"
     ></vcc>
   </div>
 </template>
 
 <script>
-import { pageRouteSave } from "../../api/page";
+import { pageRouteSave, pageRouteDetail } from "../../api/page";
 import { defineAsyncComponent } from "vue";
 // 以这样一段结构初始化VCC组件
 const initCodeStr =
   '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","style":"min-height: 100%;","lc_id":"container","__children":[]}}]}}';
 
+const jsTem = `
+{
+  data() {
+    return {
+    };
+  },
+  methods: {
+  },
+}
+`;
 export default {
   components: {
     vcc: defineAsyncComponent(() => import("../../components-v2/vcc.vue")),
   },
   data() {
     return {
-      active: 0,
+      isShowBaseForm: false,
       rules: {
         route_name: [
           { required: true, message: "请输入路由名称", trigger: "blur" },
@@ -71,46 +85,60 @@ export default {
     };
   },
   mounted() {
-    this.formData.project_id = this.$route.query.projectId;
+    this.formData.project_id = this.$route.query.projectId || "";
     this.init();
   },
   methods: {
-    init() {
+    async init() {
       if (!this.formData.project_id) {
-        this.$message.error("项目id不能为空");
-        setTimeout(() => {
-          this.$router.push(
-            {
+        this.$message.error({
+          message: "项目id不能为空",
+          duration: 2000,
+          onClose: () => {
+            this.$router.push({
               path: "/bba/list",
-            },
-            2000
-          );
+            });
+          },
         });
         return;
       }
-      if (this.formData.id != 0) {
+      if (this.$route.query.id && this.$route.query.id != 0) {
         // 编辑
+        let res = await pageRouteDetail({
+          id: this.$route.query.id,
+          projectId: this.$route.query.projectId
+        });
+        if (!res.success || res.model.length == 0) {
+          setTimeout(() => {
+            this.$router.push(
+              {
+                path: "/vcc/index",
+                query: {
+                  projectId: this.$route.query.projectId,
+                },
+              },
+            );
+          }, 2000);
+          return false;
+        }
+        this.formData = res.model;
+        this.codeInfoEntity.codeStructure = JSON.parse(res.model.tem_json);
+        this.codeInfoEntity.JSCode = res.model.script_json;
       } else {
         // 创建
         this.codeInfoEntity.codeStructure = JSON.parse(initCodeStr);
-        this.codeInfoEntity.JSCode = `
-{
-  data() {
-    return {
-    };
-  },
-  methods: {
-  },
-}
-        `;
+        this.codeInfoEntity.JSCode = jsTem;
+        this.formData.tem_json = initCodeStr;
+        this.formData.script_json = jsTem;
       }
-      this.isShowVcc = true;
+      this.isShowBaseForm = true;
     },
     onCodeUpdate({ codeRawVueInfo, JSCode }) {
       // 编辑后新的代码结构
       // codeRawVueInfo为template对象表示结构
       // JSCode为显式输入的JS逻辑
-      this.formData.tem_json = codeRawVueInfo;
+      console.log("onCodeUpdate", codeRawVueInfo, JSCode);
+      this.formData.tem_json = JSON.stringify(codeRawVueInfo);
       this.formData.script_json = JSCode;
     },
     onLoadFinish() {},
@@ -119,7 +147,8 @@ export default {
       if (!el) return;
       await el.validate((valid, fields) => {
         if (valid) {
-          this.isShowVcc = false
+          this.isShowVcc = true;
+          this.isShowBaseForm = false;
         } else {
           //   console.log("error submit!", fields);
         }
@@ -156,7 +185,7 @@ export default {
   display: flex;
   .vcc-base-box {
     width: 100%;
-    box-shadow: 0 1px 3px rgba(192,198,201,.3);
+    box-shadow: 0 1px 3px rgba(192, 198, 201, 0.3);
     .vcc-body-header {
       height: 42px;
       background: var(--search-bg-color);

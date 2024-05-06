@@ -137,9 +137,10 @@ export default class PageRoute {
    */
   async getPageDetail(params) {
     let tableName = getTableName();
-    let res = await Knex.select("*")
+    let res = await Knex.select("id", "project_id", "route_name", "path", "tem_json", "script_json",)
       .from(tableName)
       .where("id", params.id)
+      .andWhere("project_id", params.projectId)
       .first()
       .catch((e) => {
         Logger.warn("查询失败, 错误原因 =>", e);

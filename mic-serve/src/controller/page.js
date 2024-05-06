@@ -29,6 +29,8 @@ export default class Page extends Base {
         ...data,
         update_time: startAt,
       };
+      delete param.project_id
+      delete param.path
       result = await pageRouteModel.update(param, param.id);
     }
     return this.send(res, result);
@@ -44,6 +46,9 @@ export default class Page extends Base {
     let data = req.body || {},
       result = {};
     result = await pageRouteModel.getPageDetail(data);
+    if (result.length == 0) {
+      return this.send(res, result, false, '未找到该路由');
+    }
     return this.send(res, result);
   }
   
