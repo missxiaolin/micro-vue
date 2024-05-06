@@ -62,6 +62,7 @@ export class MainPanelProvider {
     // 生成原始代码
     // console.log('rawDataStructure----->', rawDataStructure)
     let code = this.codeGenerator.outputVueCodeWithJsonObj(rawDataStructure);
+    // console.log('code', code)
 
     // 将xxx: () => {} 转换为xxx(){}
     code = code.replace(/:\s*\(([\w\s]*)\)\s*=>/g, "($1)");

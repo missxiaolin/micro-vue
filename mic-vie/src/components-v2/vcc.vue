@@ -73,7 +73,7 @@
         <div
           class="round-icon icon-js"
           alt=""
-          @click="$emit('save')"
+          @click="save"
           style="padding: 12px"
         >
           <el-icon><Document /></el-icon>
@@ -381,6 +381,9 @@ export default {
     help() {
       // window.open("");
     },
+    save() {
+      this.$emit('save', this.code)
+    }
   },
   fillter: {},
 };

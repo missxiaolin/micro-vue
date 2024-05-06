@@ -21,6 +21,7 @@ export default class PageRoute {
       "path",
       "tem_json",
       "script_json",
+      "page_html",
       "create_time",
       "update_time",
     ];
@@ -137,7 +138,7 @@ export default class PageRoute {
    */
   async getPageDetail(params) {
     let tableName = getTableName();
-    let res = await Knex.select("id", "project_id", "route_name", "path", "tem_json", "script_json",)
+    let res = await Knex.select("id", "project_id", "route_name", "path", "tem_json", "script_json", "page_html")
       .from(tableName)
       .where("id", params.id)
       .andWhere("project_id", params.projectId)

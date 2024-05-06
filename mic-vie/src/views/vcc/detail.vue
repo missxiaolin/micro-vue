@@ -154,8 +154,9 @@ export default {
         }
       });
     },
-    async save() {
+    async save(code) {
       let param = this.formData;
+      param.page_html = code;
       let res = await pageRouteSave(param);
       if (!res.success) {
         return;

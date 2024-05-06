@@ -63,6 +63,22 @@ class GenerateProject extends Base {
     //   console.log(`执行命令成功，输出结果: ${stdout}`);
     // });
   }
+
+  convertLogicCode(JSCode) {
+    try {
+      const JSCodeInfo = eval(
+        `(function(){return ${JSCode.replace(/\s+/g, "")}})()`
+      );
+      // 保留JS代码
+      this.JSCode = JSCode;
+      
+      return JSCodeInfo;
+    } catch (e) {
+      console.warn(
+        `外部逻辑代码解析出错，解析的逻辑代码为: ${JSCode}, Error: ${e}`
+      );
+    }
+  }
 }
 
 export default GenerateProject;
