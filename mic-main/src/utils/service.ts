@@ -87,7 +87,7 @@ function createService() {
   return service;
 }
 
-let baseURL = ""
+let baseURL = "http://micro-serve.missxiaolin.com"
 const urls = ['127.0.0.1', "localhost", "mic.missxiaolin.com"]
 
 if (urls.indexOf(window.location.hostname) > -1) {
