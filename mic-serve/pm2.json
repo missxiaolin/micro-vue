@@ -1,6 +1,6 @@
 [
     {
-      "name": "montor-server",
+      "name": "micro-server",
       "script": "npm run start"
     }
 ]
