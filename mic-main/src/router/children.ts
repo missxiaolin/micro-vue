@@ -26,9 +26,15 @@ export default [
         path: "/hba/index",
         hidden: false,
         meta: {
-          title: "概括",
+          title: "测试1",
         },
-      },
+      }, {
+        path: "/vsa/index",
+        hidden: false,
+        meta: {
+          title: "测试2",
+        },
+      }
     ],
   },
   

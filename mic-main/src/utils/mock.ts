@@ -29,6 +29,7 @@ const microApps = {
         "systemCodes": [
             "cha",
             "hba",
+            "vsa"
         ],
         "openBlank": false
     },

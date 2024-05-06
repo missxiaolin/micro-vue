@@ -4,7 +4,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import microRoutes from './route'
 
 const routes: any = [
-  ...microRoutes
+  
+  ...microRoutes,
 ]
 
 const router = createRouter({

@@ -47,6 +47,7 @@ import { pageRouteList, apiAeneratePage } from '../../api/page'
 export default {
   data() {
     return {
+      isClickPage: false,
       projectId: 0,
       searchForm: {
         projectId: 0,
@@ -130,10 +131,20 @@ export default {
       }
     },
     async generatePage(item) {
-      let res = await apiAeneratePage({
-        projectId: this.projectId,
-        id: item.id,
-      })
+      if (this.isClickPage) {
+        return
+      }
+      this.isClickPage = true;
+      let res
+      try {
+        res = await apiAeneratePage({
+          projectId: this.projectId,
+          id: item.id,
+        })
+      } catch (e) {
+        this.isClickPage = false;
+      }
+      this.isClickPage = false;
       if (!res.success) {
         return
       }
