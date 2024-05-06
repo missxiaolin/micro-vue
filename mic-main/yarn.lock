@@ -1212,10 +1212,10 @@
   resolved "https://registry.npmmirror.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
 
-"@micro-zoe/micro-app@1.0.0-beta.5":
-  version "1.0.0-beta.5"
-  resolved "https://registry.npmmirror.com/@micro-zoe/micro-app/-/micro-app-1.0.0-beta.5.tgz"
-  integrity sha512-7d1NGl+gBZB6A0AYU3fzN0MCzKi/MJu6zFr8HCA9lJA/rsfYX8NkjTh0f6rm0wkvoLrBcrICxzNcbqfEMYVPFA==
+"@micro-zoe/micro-app@^1.0.0-rc.5":
+  version "1.0.0-rc.5"
+  resolved "https://registry.npmmirror.com/@micro-zoe/micro-app/-/micro-app-1.0.0-rc.5.tgz"
+  integrity sha512-Z7Qkp1ZxFc04UYkR6UYPorg/VgACvE0E0Y8tyOKfR9AZmvoSNPdv4TpBFv3FRoYcvMlXW8TnEXhxL1VmCbL+2w==
 
 "@node-ipc/js-queue@2.0.3":
   version "2.0.3"

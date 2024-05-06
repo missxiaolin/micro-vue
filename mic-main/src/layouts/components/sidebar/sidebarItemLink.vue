@@ -7,13 +7,17 @@
   >
     <slot />
   </a>
-  <router-link v-else :to="props.to">
+  <div v-else @click="routePush(props.to)">
     <slot />
-  </router-link>
+  </div>
+  <!-- <router-link v-else :to="props.to">
+    <slot />
+  </router-link> -->
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
 import { isExternal } from "@/utils/validate";
 
 export default defineComponent({
@@ -24,9 +28,16 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const router = useRouter()
+    const routePush = (to: any) => {
+      console.log(to)
+      router.push(to)
+    }
+
     return {
       isExternal,
-      props
+      props,
+      routePush
     }
   }
 })

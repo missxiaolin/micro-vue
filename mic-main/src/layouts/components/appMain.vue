@@ -8,7 +8,7 @@
         <div v-if="item.name == getCurrentService.name">
           <micro-app
             :name="item.name"
-            :key="item.name"
+            :key="item.name + new Date().getTime()"
             :url="item.url"
             :inline="item.inline"
             :iframe="item.iframe"
