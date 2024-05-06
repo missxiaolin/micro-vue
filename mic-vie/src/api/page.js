@@ -38,3 +38,16 @@ export function pageRouteList(data) {
     data,
   });
 }
+
+/**
+ * 生成页面
+ * @param {*} data 
+ * @returns 
+ */
+export function apiAeneratePage(data) {
+  return request({
+    url: "/adm/page/generate",
+    method: "post",
+    data,
+  });
+}

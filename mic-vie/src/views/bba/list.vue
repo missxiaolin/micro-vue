@@ -101,10 +101,6 @@ export default {
           value: "2",
           label: "启用",
         },
-        {
-          value: "3",
-          label: "生成中",
-        },
       ],
       typeOptions: [
         {

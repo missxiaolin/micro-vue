@@ -20,7 +20,7 @@ export const typeEnum = {
 export const statusEnum = {
   1: "禁用",
   2: "启用",
-  3: "发布中",
+  3: "项目页面生成中",
 };
 
 function getTableName() {

@@ -1,6 +1,7 @@
 import Base from "./base";
 import moment from "moment";
 import PageRouteModel from "../model/page_route";
+const { exec } = require("child_process");
 
 const pageRouteModel = new PageRouteModel();
 
@@ -29,8 +30,8 @@ export default class Page extends Base {
         ...data,
         update_time: startAt,
       };
-      delete param.project_id
-      delete param.path
+      delete param.project_id;
+      delete param.path;
       result = await pageRouteModel.update(param, param.id);
     }
     return this.send(res, result);
@@ -38,20 +39,19 @@ export default class Page extends Base {
 
   /**
    * 获取详情
-   * @param {*} req 
-   * @param {*} res 
-   * @returns 
+   * @param {*} req
+   * @param {*} res
+   * @returns
    */
   async detail(req, res) {
     let data = req.body || {},
       result = {};
     result = await pageRouteModel.getPageDetail(data);
     if (result.length == 0) {
-      return this.send(res, result, false, '未找到该路由');
+      return this.send(res, result, false, "未找到该路由");
     }
     return this.send(res, result);
   }
-  
 
   /**
    * 获取项目列表
@@ -65,6 +65,25 @@ export default class Page extends Base {
 
     result.list = await pageRouteModel.getPages(data);
     result.count = await pageRouteModel.getPagesCount(data);
+    return this.send(res, result);
+  }
+
+  /**
+   * 生成页面
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async generatePage(req, res) {
+    let data = req.body || {},
+      result = {};
+    
+    exec(
+      `npm run command Generate:Project ${data.projectId} ${data.id}`,
+      (error, stdout, stderr) => {
+        console.log(stdout, stderr);
+      }
+    );
     return this.send(res, result);
   }
 }

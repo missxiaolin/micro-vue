@@ -16,7 +16,7 @@
       </el-row>
       <div class="mu-search-form-button">
         <el-button @click="resetForm">重置</el-button>
-        <el-button type="primary" @click="getRouteList">查询</el-button>
+        <el-button type="primary" @click="getPage">查询</el-button>
       </div>
     </div>
     <div class="mu-handle-content">
@@ -33,13 +33,16 @@
         <el-button link type="primary" size="small" @click="edit(scope.row)"
           >修改</el-button
         >
+        <el-button link type="primary" size="small" @click="generatePage(scope.row)"
+          >生成页面</el-button
+        >
       </template>
     </l-table>
   </div>
 </template>
 
 <script>
-import { pageRouteList } from '../../api/page'
+import { pageRouteList, apiAeneratePage } from '../../api/page'
 
 export default {
   data() {
@@ -71,7 +74,7 @@ export default {
           prop: "update_time",
         },
         {
-          width: "100px",
+          width: "150px",
           label: "操作",
           prop: "options",
           noEmptyValue: true,
@@ -116,7 +119,7 @@ export default {
     },
     handleCurrentChange(e) {
       this.searchForm.page = e;
-      this.getRouteList();
+      this.getPage();
     },
     resetForm() {
       this.searchForm = {
@@ -126,7 +129,19 @@ export default {
         page: 1,
       }
     },
-    getRouteList() {},
+    async generatePage(item) {
+      let res = await apiAeneratePage({
+        projectId: this.projectId,
+        id: item.id,
+      })
+      if (!res.success) {
+        return
+      }
+      this.$message({
+        message: '页面生成中',
+        type: 'success',
+      })
+    }
   },
 };
 </script>

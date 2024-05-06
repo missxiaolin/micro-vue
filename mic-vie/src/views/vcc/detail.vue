@@ -20,7 +20,7 @@
           </el-form-item>
           <el-form-item>
             <div class="form-bottom-box">
-              <el-button>取消</el-button>
+              <el-button @click="goVccIndex">取消</el-button>
               <el-button type="primary" @click="submitForm('ruleFormRef')">
                 保存
               </el-button>
@@ -153,6 +153,17 @@ export default {
           //   console.log("error submit!", fields);
         }
       });
+    },
+    goVccIndex() {
+      this.$router.push(
+          {
+            path: "/vcc/index",
+            query: {
+              projectId: this.formData.project_id,
+            },
+          },
+          1000
+        );
     },
     async save(code) {
       let param = this.formData;
