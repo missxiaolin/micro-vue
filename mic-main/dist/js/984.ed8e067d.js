@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkmic_main"]=self["webpackChunkmic_main"]||[]).push([[984],{3984:function(n,a,r){r.r(a),r.d(a,{default:function(){return d}});var e=r(5976);const t={class:"dashboard-main"};function u(n,a,r,u,c,s){return(0,e.uX)(),(0,e.CE)("div",t," 介绍，最后用MD插件渲染 ")}var c=(0,e.pM)({setup(){return{}}}),s=r(1169);const i=(0,s.A)(c,[["render",u],["__scopeId","data-v-79645765"]]);var d=i}}]);
+//# sourceMappingURL=984.ed8e067d.js.map
