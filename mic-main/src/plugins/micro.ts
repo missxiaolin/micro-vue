@@ -20,6 +20,7 @@ microApp.addDataListener('micro-cha', (data: any) => {
 
 const microStart = () => {
   microApp.start({
+    'disable-memory-router': true, // 关闭虚拟路由
     // @ts-ignore
     lifeCycles: {
       created () {

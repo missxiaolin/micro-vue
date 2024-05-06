@@ -1,19 +1,19 @@
 <template>
-  <router-view/>
+  <el-config-provider :locale="lang">
+    <router-view></router-view>
+  </el-config-provider>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from 'vue'
+<script>
+import zhCn from "element-plus/es/locale/lang/zh-cn";
 
-export default defineComponent({
-  setup() {
-    onMounted(() => {
-      document.documentElement.className = 'dark';
-    })
-  }
-})
-
+export default {
+  data() {
+    return {
+      lang: zhCn,
+    };
+  },
+};
 </script>
 
-<style lang="scss">
-</style>
+<style scoped></style>

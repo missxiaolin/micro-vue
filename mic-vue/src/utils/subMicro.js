@@ -1,6 +1,5 @@
-// @ts-nocheck
 export const isSubMicro = (window).__MICRO_APP_ENVIRONMENT__ || (window).__MICRO_APP_PUBLIC_PATH__; // (window as any).__MICRO_APP_BASE_APPLICATION__;
-export const subApp = `micro-cha`; // 子服务名称
+export const subApp = `micro-vie`; // 子服务名称
 
 export let routeIsOpenBlank = false;
 
@@ -88,9 +87,16 @@ export const serviceRouter = ({ fullPath = '/', jump = false, callBack = null })
 /**
  * @param {*} router 
  */
-export const handleMicroData = (router) => {
+export const handleMicroData = (router, app) => {
     let routerHasRegister = false;
     window.microApp.addDataListener((data) => {
+		// 挂载主应用方法
+		if (data.getDomain) {
+			// window.microApp.$getDomain = data.getDomain
+			// app.provide('$getDomain', data.getDomain)
+			// app.config.globalProperties.$getDomain = data.getDomain
+		}
+
         const { path, refresh, openBlank, business = {} } = data;
 		routeIsOpenBlank = openBlank;
 		if (openBlank && !routerHasRegister) {

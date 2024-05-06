@@ -70,8 +70,9 @@ export default {
   },
   methods: {
     handleCurrentChange(e) {
-      this.$emit("handleCurrentChange", e);
-    },
-  },
+      console.log(e)
+      this.$emit("handleCurrentChange", e)
+    }
+  }
 };
 </script>

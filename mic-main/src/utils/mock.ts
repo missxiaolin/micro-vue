@@ -28,6 +28,7 @@ const microApps = {
         "shadowDOM": false,
         "iframe": true,
         "systemCodes": [
+            "cha",
             "hba",
             "vsa"
         ],

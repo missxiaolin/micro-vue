@@ -1,10 +1,10 @@
 <template>
-  <svg :class="svgClass" aria-hidden="true">
+  <svg :class="svgClass" aria-hidden="true" :style="svgStyle">
     <use :xlink:href="iconName"></use>
   </svg>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent, computed } from "vue";
 
 export default defineComponent({
@@ -17,6 +17,10 @@ export default defineComponent({
     className: {
       type: String,
     },
+    svgStyle: {
+      type: String,
+      default: ''
+    }
   },
   setup(props) {
     const iconName = computed(() => {

@@ -30,7 +30,9 @@ export default defineComponent({
   flex-direction: row;
   position: relative;
   padding: 8px;
-  
+  ::v-deep(.el-select) {
+    width: 100%;
+  }
   .label-name {
     position: absolute;
     top: 0px;
@@ -45,9 +47,5 @@ export default defineComponent({
     align-items: center !important;
   }
 }
-.search-l-b {
-  ::v-deep .el-select {
-    width: 100%;
-  }
-}
+
 </style>
