@@ -38,7 +38,6 @@ class GenerateProject extends Base {
     }
 
     // 生成页面
-
     const pageName = this.generateCamelCaseString(route.path);
 
     const targetDirectory = resolve(__dirname, "../../../../mic-vue");
@@ -46,11 +45,21 @@ class GenerateProject extends Base {
     // 切换到目标文件夹
     process.chdir(targetDirectory);
 
+    const rJsonName = resolve(__dirname, "../../../../mic-vue/src/router/r.json")
+    if (!fs.existsSync(rJsonName)) {
+      try {
+        fs.writeFileSync(rJsonName, '');
+        console.log('文件已创建');
+      } catch (error) {
+        console.error('创建文件时发生错误：', error);
+      }
+    }
+
     let r = fs.readFileSync(
-      resolve(__dirname, "../../../../mic-vue/src/router/r.json"),
+      rJsonName,
       "utf8"
     );
-    r = JSON.parse(r);
+    r = JSON.parse(r || '[]');
     let x = false;
     r.forEach((item) => {
       if (item.path === route.path) {
