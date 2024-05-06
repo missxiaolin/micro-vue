@@ -4,8 +4,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import microRoutes from './route'
 
 const routes: any = [
-  
-  ...microRoutes,
+  {
+    path: '/hba/index',
+    component: () => import(`../views/hbaIndex.vue`),
+}, {
+    path: '/vsa/index',
+    component: () => import(`../views/vsaIndex.vue`),
+}
+  // ...microRoutes,
 ]
 
 const router = createRouter({

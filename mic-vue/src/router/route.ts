@@ -8,15 +8,17 @@
 // @ts-ignore
 import r from './r.json'
 
-const routes: any = [];
+const routes: any = [
+    
+];
 
 // @ts-ignore
-r.forEach((item: any) => {
-    routes.push({
-        path: item.path,
-        name: item.pageName,
-        component: () => import(`../views/${item.pageName}.vue`),
-    })
-})
+// r.forEach((item: any) => {
+//     routes.push({
+//         path: item.path,
+//         name: item.pageName,
+//         component: () => import(`../views/${item.pageName}.vue`),
+//     })
+// })
 
 export default routes;

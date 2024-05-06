@@ -5,9 +5,9 @@
   >
     <sidebarItemLink
       v-if="item.meta"
-      :to="resolvePath(item.path)"
+      :to="item.path"
     >
-      <el-menu-item :index="resolvePath(item.path)">
+      <el-menu-item :index="item.path">
         <component
           v-if="item.meta.elIcon"
           :is="item.meta.elIcon"
@@ -19,7 +19,7 @@
       </el-menu-item>
     </sidebarItemLink>
   </div>
-  <el-sub-menu v-else :index="resolvePath(item.path)" teleported>
+  <el-sub-menu v-else :index="item.path" teleported>
     <template #title>
       <component
         v-if="item.meta?.elIcon"
@@ -35,7 +35,7 @@
           :item="child"
           :is-collapse="isCollapse"
           :is-first-level="false"
-          :base-path="resolvePath(child.path)"
+          :base-path="item.path"
         />
       </div>
     </template>

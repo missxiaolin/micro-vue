@@ -10,7 +10,6 @@
             :name="item.name"
             :key="item.name"
             :url="item.url"
-            :baseroute="item.baseroute"
             :inline="item.inline"
             :iframe="item.iframe"
             :destroy="item.destroy"
