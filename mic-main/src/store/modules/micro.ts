@@ -9,16 +9,16 @@ const micro = {
     currentService: {}, // 当前服务
     isMainService: true,
     devService: {
-      "micro-vie": {
-        host: "", // 可选项
-        port: 8091, // 必填项
-        debugging: false, //是否开启开发验证模式
-      },
-      "micro-cha": {
-        host: "", // 可选项
-        port: 8092, // 必填项
-        debugging: false, //是否开启开发验证模式
-      },
+      // "micro-vie": {
+      //   host: "", // 可选项
+      //   port: 8091, // 必填项
+      //   debugging: false, //是否开启开发验证模式
+      // },
+      // "micro-cha": {
+      //   host: "", // 可选项
+      //   port: 8092, // 必填项
+      //   debugging: false, //是否开启开发验证模式
+      // },
     },
   },
   mutations: {
