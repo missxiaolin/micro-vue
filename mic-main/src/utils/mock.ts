@@ -10,7 +10,6 @@ const microApps = {
         "shadowDOM": false,
         "iframe": true,
         "systemCodes": [
-            "vie",
             "vcc",
             "bba"
         ],
@@ -27,7 +26,6 @@ const microApps = {
         "shadowDOM": false,
         "iframe": true,
         "systemCodes": [
-            "cha",
             "hba",
             "vsa"
         ],
