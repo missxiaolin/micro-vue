@@ -8,6 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 /dist
 /src/views
+/src/router/r.json
 
 node_modules
 dist-ssr
