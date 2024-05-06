@@ -26,6 +26,7 @@ module.exports = {
     'eslint-plugin-vue': 'off',
     'vue/require-valid-default-prop': 'off',
     'vue/no-setup-props-destructure': 'off',
-    'no-empty': 'off'
+    'no-empty': 'off',
+    'vue/no-deprecated-destroyed-lifecycle': 'off'
   }
 }
