@@ -32,6 +32,7 @@ export default class Page extends Base {
       };
       delete param.project_id;
       delete param.path;
+      param.status = 1
       result = await pageRouteModel.update(param, param.id);
     }
     return this.send(res, result);
@@ -77,11 +78,25 @@ export default class Page extends Base {
   async generatePage(req, res) {
     let data = req.body || {},
       result = {};
+    let pageRes = await pageRouteModel.getPageDetail({
+      projectId: data.projectId,
+      status: 2
+    })
+    if (pageRes) {
+      return this.send(res, result, false, "待上一个页面生成完成，才能继续生成！");
+    }
+    let param = {
+      status: 2,
+      project_id: data.projectId,
+    }
+    await pageRouteModel.update(param, data.id)
     
     exec(
       `npm run command Generate:Project ${data.projectId} ${data.id}`,
-      (error, stdout, stderr) => {
+      async (error, stdout, stderr) => {
         console.log(stdout, stderr);
+        param.status = 3
+        await pageRouteModel.update(param, data.id)
       }
     );
     return this.send(res, result);

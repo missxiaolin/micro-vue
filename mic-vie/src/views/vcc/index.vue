@@ -75,6 +75,10 @@ export default {
           prop: "update_time",
         },
         {
+          label: "状态",
+          prop: "status_desc",
+        },
+        {
           width: "150px",
           label: "操作",
           prop: "options",
@@ -148,6 +152,7 @@ export default {
       if (!res.success) {
         return
       }
+      this.getPage()
       this.$message({
         message: '页面生成中',
         type: 'success',
