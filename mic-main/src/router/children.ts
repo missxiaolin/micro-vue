@@ -29,13 +29,6 @@ export default [
           title: "概括",
         },
       },
-      {
-        path: "/hba/ceshi",
-        hidden: false,
-        meta: {
-          title: "测试",
-        },
-      },
     ],
   },
   

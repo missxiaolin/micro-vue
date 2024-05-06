@@ -1,21 +1,10 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
-const routes: Array<any> = [
-  {
-    path: "/hba/index",
-    component: () => import("../views/home.vue"),
-    hidden: false,
-    meta: {
-      title: "vue 首页",
-    },
-  }, {
-    path: "/hba/ceshi",
-    component: () => import("../views/ceshi/index.vue"),
-    hidden: false,
-    meta: {
-      title: "测试页面",
-    },
-  }
+
+import { createRouter, createWebHistory } from 'vue-router'
+import microRoutes from './route'
+
+const routes: any = [
+  ...microRoutes
 ]
 
 const router = createRouter({

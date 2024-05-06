@@ -1,14 +1,17 @@
 import Base from "../base";
+import PageRoute from '../../model/page_route'
 import path, { resolve } from "path";
 import fs from "fs";
 
 const { exec } = require("child_process");
+const pageRouteModel = new PageRoute()
 
 class GenerateProject extends Base {
   static get signature() {
     return `
             Generate:Project 
-            {id:[必传]用户名}
+            {projectId:[必传]项目ID}
+            {id:[必传]路由ID}
          `;
     // return `
 
@@ -21,27 +24,44 @@ class GenerateProject extends Base {
   }
 
   async execute(args, options) {
-    const targetDirectory = resolve(__dirname, "../../../../mic-vue");
+    const { projectId, id } = args;
 
-    const content = fs.readFileSync(
-      resolve(__dirname, "../../../uploads/ceshi/detail.vue"),
-      "utf8"
-    );
+    // 获取路由配置
+    const route = await pageRouteModel.getPageDetail({
+      projectId,
+      id
+    })
+    
+    if (!route || route.length == 0) {
+      this.log("页面不存在");
+      return
+    }
 
-    // 切换到目标文件夹
-    process.chdir(targetDirectory);
-    fs.writeFileSync(
-      resolve(__dirname, "../../../../mic-vue/src/views/ceshi/index.vue"),
-      content
-    );
-    exec("npm run build", (error, stdout, stderr) => {
-      if (error) {
-        console.error(`执行命令失败: ${error.message}`);
-        return;
-      }
+    // 生成页面
+    
+    console.log(route)
 
-      console.log(`执行命令成功，输出结果: ${stdout}`);
-    });
+    // const targetDirectory = resolve(__dirname, "../../../../mic-vue");
+
+    // const content = fs.readFileSync(
+    //   resolve(__dirname, "../../../uploads/ceshi/detail.vue"),
+    //   "utf8"
+    // );
+
+    // // 切换到目标文件夹
+    // process.chdir(targetDirectory);
+    // fs.writeFileSync(
+    //   resolve(__dirname, "../../../../mic-vue/src/views/ceshi/index.vue"),
+    //   content
+    // );
+    // exec("npm run build", (error, stdout, stderr) => {
+    //   if (error) {
+    //     console.error(`执行命令失败: ${error.message}`);
+    //     return;
+    //   }
+
+    //   console.log(`执行命令成功，输出结果: ${stdout}`);
+    // });
   }
 }
 
