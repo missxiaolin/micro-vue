@@ -21,7 +21,7 @@ export default class Project extends Base {
       result = {};
 
     if (appConfig.IS_CREATE_PROJECT_OPEN == 0) {
-      return this.send(res, result, false, "暂时为开放创建项目");
+      return this.send(res, result, false, "暂时未开放创建项目");
     }
 
     if (data.id == 0 || !data.id) {
