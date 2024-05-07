@@ -1,5 +1,4 @@
 <template>
-  
   <div
     v-if="item && !item.children"
   >
@@ -45,7 +44,7 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import sidebarItemLink from "./sidebarItemLink.vue";
-import { isExternal } from "@/utils/validate";
+import { isExternal } from "../../../utils/validate";
 import path from "path-browserify";
 
 export default defineComponent({

@@ -2,28 +2,16 @@ import { createRouter, createWebHistory } from "vue-router";
 
 export const defaultRoute = [
   {
-    path: "/bba/list",
+    path: "/vcc/project/list",
     component: () => import("@/views/bba/list.vue"),
-    hidden: false,
-    meta: {
-      title: "项目列表",
-    },
   },
   {
     path: "/vcc/index",
     component: () => import("@/views/vcc/index.vue"),
-    hidden: false,
-    meta: {
-      title: "路由列表",
-    },
   },
   {
     path: "/vcc/detail",
     component: () => import("@/views/vcc/detail.vue"),
-    hidden: true,
-    meta: {
-      title: "路由详情",
-    },
   },
 ];
 

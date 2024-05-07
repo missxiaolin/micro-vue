@@ -65,7 +65,11 @@
         <el-button link type="primary" size="small" @click="detail(scope.row)"
           >详情</el-button
         >
-        <el-button link type="primary" size="small" @click="goRoutePage(scope.row)"
+        <el-button
+          link
+          type="primary"
+          size="small"
+          @click="goRoutePage(scope.row)"
           >路由列表</el-button
         >
       </template>
@@ -118,6 +122,10 @@ export default {
           prop: "name",
         },
         {
+          label: "三字码",
+          prop: "code",
+        },
+        {
           label: "项目描述",
           prop: "desc",
         },
@@ -168,6 +176,27 @@ export default {
             {
               required: true,
               message: "请选择项目类型",
+            },
+          ],
+        },
+        {
+          key: "code",
+          default: "",
+          type: "input",
+          label: "三字码",
+          data: "",
+          placeholder: "请输入项目三字码",
+          value: "",
+          rules: [
+            {
+              required: true,
+              message: "请输入项目三字码",
+              trigger: "blur",
+            },
+            {
+              max: 3,
+              message: "请输入英文3个字符串",
+              trigger: "blur",
             },
           ],
         },
@@ -306,12 +335,12 @@ export default {
     // 跳转路由列表
     goRoutePage(item) {
       this.$router.push({
-        path: '/vcc/index',
+        path: "/vcc/index",
         query: {
-          projectId: item.id
-        }
-      })
-    }
+          projectId: item.id,
+        },
+      });
+    },
   },
 };
 </script>

@@ -31,6 +31,7 @@ export default class ProjectModel {
   constructor() {
     this.tableColumnArr = [
       "type",
+      "code",
       "name",
       "desc",
       "status",

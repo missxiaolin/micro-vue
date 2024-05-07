@@ -31,6 +31,7 @@ import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useStore, mapGetters } from "vuex";
 import microApps from "../../utils/mock";
+import { getMicro } from '../../api/index/index'
 
 export default {
   computed: {
@@ -39,9 +40,10 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-    function getMicroOnlineConfig() {
+    const getMicroOnlineConfig = async () => {
       // TOODO: 获取微服务配置
       store.commit("setmicroApps", microApps);
+      let res = await getMicro()
     }
     function handleDataChange(e: any) {
       // TOODO:
