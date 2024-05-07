@@ -9,7 +9,12 @@ const getAdmColum = RouterConfigBuilder.routerConfigBuilder('/adm/get/colum', Ro
     return indexController.getColum(req, res)
 }, true)
 
+// 微前端配置
+const getMicro = RouterConfigBuilder.routerConfigBuilder('/adm/get/micro', RouterConfigBuilder.METHOD_TYPE_GET, (req, res) => {
+    return indexController.getMicro(req, res)
+}, true)
 
 export default {
-    ...getAdmColum
+    ...getAdmColum,
+    ...getMicro
 }

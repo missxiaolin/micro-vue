@@ -5,7 +5,7 @@
       :is-active="!getSidebarOpened"
       @toggle-click="toggleSidebar"
     />
-    <breadcrumb class="breadcrumb"></breadcrumb>
+    <!-- <breadcrumb class="breadcrumb"></breadcrumb> -->
     <div class="right-menu">
       <screenfull class="right-menu-item" />
       <themeSwitch class="right-menu-item" />
@@ -33,7 +33,7 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import screenfull from "../../../components/screenfull/index.vue";
-import breadcrumb from "../breadcrumb/index.vue";
+// import breadcrumb from "../breadcrumb/index.vue";
 import hamburger from "../hamburger/index.vue";
 import themeSwitch from "../../../components/themeSwitch/index.vue";
 import { UserFilled } from "@element-plus/icons-vue";
@@ -46,7 +46,7 @@ export default defineComponent({
   },
   components: {
     hamburger,
-    breadcrumb,
+    // breadcrumb,
     screenfull,
     themeSwitch
   },

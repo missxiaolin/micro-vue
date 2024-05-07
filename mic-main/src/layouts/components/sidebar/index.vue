@@ -96,6 +96,7 @@ export default defineComponent({
 
     const init = async () => {
       let res = await getColum()
+      
       if (res.success) {
         routes.value = [...routes.value, ...res.model]
       }

@@ -28,10 +28,9 @@ import {
   onMounted,
 } from "vue";
 import { type RouteLocationMatched, useRoute, useRouter } from "vue-router";
-import { constantRoutes } from "@/router/index";
-import childrenRoutes from '@/router/children'
+import { constantRoutes } from "../../../router/index";
 import { compile } from "path-to-regexp";
-const rRoute = [...constantRoutes, ...childrenRoutes]
+const rRoute = [...constantRoutes]
 
 export default defineComponent({
   setup() {

@@ -5,6 +5,7 @@ import Token from "../library/utils/token";
 import colums from '../config/colum'
 import ProjectModel from '../model/project'
 import PageRoute from '../model/page_route'
+import microList from '../config/micro'
 
 const admUser = new AdmUser();
 const projectModel = new ProjectModel();
@@ -76,6 +77,19 @@ export default class Index extends Base {
       arr[i].children = pageArr
     }
     result = [...result, ...arr]
+    return this.send(res, result);
+  }
+
+  /**
+   * 微前端配置
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  async getMicro(req, res) {
+    let data = req.body || {},
+      result = microList;
+
     return this.send(res, result);
   }
 }
