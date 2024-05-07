@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+const appConfig = dotenv.config().parsed;
+
 /**
  *  === env config ===
  *  环境配置
@@ -8,5 +11,5 @@
 // development
 // testing
 // production
-let env = process.env.NODE_ENV || 'development'
+let env = appConfig['NODE_ENV'] || 'development'
 export default env
