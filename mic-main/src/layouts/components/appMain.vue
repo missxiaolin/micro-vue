@@ -1,9 +1,9 @@
 <template>
   <section class="app-main">
     <div class="app-scrollbar">
-      <template v-if="getIsMainService">
+      <div v-if="getIsMainService">
         <router-view :key="key"></router-view>
-      </template>
+      </div>
       <div v-for="(item, index) in getmicroApps" :key="index">
         <div v-if="item.name == getCurrentService.name">
           <micro-app
@@ -30,7 +30,6 @@
 import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useStore, mapGetters } from "vuex";
-import microApps from "../../utils/mock";
 import { getMicro } from '../../api/index/index'
 
 export default {
@@ -40,21 +39,15 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-    const getMicroOnlineConfig = async () => {
-      // TOODO: 获取微服务配置
-      store.commit("setmicroApps", microApps);
-      let res = await getMicro()
-    }
     function handleDataChange(e: any) {
       // TOODO:
     }
 
     const key = computed(() => {
       // 返回 route.path 和 route.fullPath 有着不同的效果，大多数时候 path 更通用
-      return route.path;
+      return route.path + new Date().getTime();
     });
     onMounted(() => {
-      getMicroOnlineConfig();
     });
     return {
       handleDataChange,

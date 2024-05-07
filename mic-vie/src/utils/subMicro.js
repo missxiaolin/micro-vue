@@ -1,3 +1,4 @@
+import router from '../router/index'
 export const isSubMicro = (window).__MICRO_APP_ENVIRONMENT__ || (window).__MICRO_APP_PUBLIC_PATH__; // (window as any).__MICRO_APP_BASE_APPLICATION__;
 export const subApp = `micro-vie`; // 子服务名称
 

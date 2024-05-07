@@ -1,32 +1,29 @@
 <template>
   <div class="main-app-content">
     <template v-if="['/login'].includes(route.path)">
-      <ElConfigProvider :locale="lang" :key="key">
-        <router-view />
-      </ElConfigProvider>
+      <router-view />
     </template>
     <template v-else>
-      <ElConfigProvider :locale="lang">
-        <layouts></layouts>
-      </ElConfigProvider>
+      <layouts></layouts>
     </template>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, computed } from "vue";
-import zhCn from "element-plus/es/locale/lang/zh-cn";
+import { defineComponent, onBeforeMount, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import layouts from "./layouts/index.vue";
 import { useTheme } from "./hooks/useTheme";
+import { useStore } from "vuex";
+import { getMicro } from './api/index/index'
 
 export default defineComponent({
   components: {
     layouts,
   },
   setup() {
-    const lang = ref(zhCn);
     const route = useRoute();
+    const store = useStore();
     const key = computed(() => {
       return route !== undefined
         ? route.path + +new Date()
@@ -36,8 +33,18 @@ export default defineComponent({
     const { initTheme } = useTheme();
     /** 初始化主题 */
     initTheme();
+    const getMicroOnlineConfig = async () => {
+      // TOODO: 获取微服务配置
+      
+      let res = await getMicro()
+      if (res.success) {
+        store.commit("setmicroApps", res.model);
+      }
+    }
+    onBeforeMount(() => {
+      getMicroOnlineConfig()
+    })
     return {
-      lang,
       route,
       key,
     };

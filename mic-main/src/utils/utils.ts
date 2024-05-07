@@ -47,10 +47,12 @@ export const setServiceBasicInfo = ({
   setTimeout(() => {
     // 非主服务 则 通知对应的子服务跳转
     // 当 microStore 不存在 ，是子服务内部跳转 来子服务进行
-    !isMainServe &&
+    if (!isMainServe) {
       microApp.setData(currentService.name, {
         path: fullPath,
         openBlank: currentService.openBlank,
+        data: new Date().getTime()
       });
+    }
   }, 10);
 };
