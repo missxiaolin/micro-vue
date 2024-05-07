@@ -90,6 +90,23 @@ export default class Index extends Base {
     let data = req.body || {},
       result = microList;
 
+    let projectList = await projectModel.getAll()
+    for (let i = 0; i < projectList.length; i++) {
+      if (result[`micro-${projectList[i].code}`].name) {
+        let pageList = await pageModel.getAll({
+          projectId: projectList[i].id,
+          status: [2, 3, 4]
+        })
+        let arr = []
+        pageList.forEach(item => {
+          const segments = item.path.split("/");
+          arr.push(segments[1])
+        })
+        result[`micro-${projectList[i].code}`].systemCodes = arr
+      }
+      
+    }
+
     return this.send(res, result);
   }
 }
