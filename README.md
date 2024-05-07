@@ -1,5 +1,9 @@
 # micro-vue
 
+## 前端监控平台
+
+https://github.com/missxiaolin/msc-serve
+
 ## 微前端文档
 
 https://micro-zoe.github.io/micro-app/docs.html#/
