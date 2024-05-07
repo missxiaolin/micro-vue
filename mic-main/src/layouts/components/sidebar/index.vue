@@ -1,7 +1,7 @@
 <template>
   <div :class="{ 'has-logo': isLogo }">
     <logo v-if="isLogo" :collapse="getSidebarOpened" />
-    <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-scrollbar v-if="isShowMenu" wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
         :collapse="getSidebarOpened"
@@ -27,11 +27,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { constantRoutes } from "../../../router/index";
-import childrenRoutes from '@/router/children'
-import { getCssVariableValue } from "@/utils/index";
+import { getColum } from '../../../api/index/index'
+import { getCssVariableValue } from "../../../utils/index";
 import logo from "../logo/index.vue";
 import sidebarItem from "./sidebarItem.vue";
 import { useStore, mapGetters } from "vuex";
@@ -52,6 +52,8 @@ export default defineComponent({
   },
   setup() {
     const isCollapse = ref(false);
+    const isShowMenu = ref(false);
+    const routes = ref([...constantRoutes])
     const store = useStore();
     isCollapse.value = store.state.setting.sidebarOpened
     const route = useRoute();
@@ -91,10 +93,23 @@ export default defineComponent({
     const sidebarMenuHoverBgColor = computed(() => {
       return getCssVariableValue("--v3-sidebar-menu-hover-bg-color");
     });
-    console.log([...constantRoutes, ...childrenRoutes])
+
+    const init = async () => {
+      let res = await getColum()
+      if (res.success) {
+        routes.value = [...routes.value, ...res.model]
+      }
+      isShowMenu.value = true
+    }
+
+
+    onMounted(() => {
+      init()
+    })
     return {
+      isShowMenu,
       isCollapse,
-      routes: [...constantRoutes, ...childrenRoutes],
+      routes,
       activeMenu,
       backgroundColor,
       textColor,

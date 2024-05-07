@@ -4,12 +4,12 @@ import RouterConfigBuilder from '../../../library/utils/router_config_builder'
 
 const indexController = new Index()
 
-// 首页
-const index = RouterConfigBuilder.routerConfigBuilder('/api/index', RouterConfigBuilder.METHOD_TYPE_GET, (req, res) => {
-    return indexController.index(req, res)
-}, false)
+// 获取左边菜单栏
+const getAdmColum = RouterConfigBuilder.routerConfigBuilder('/adm/get/colum', RouterConfigBuilder.METHOD_TYPE_GET, (req, res) => {
+    return indexController.getColum(req, res)
+}, true)
 
 
 export default {
-    ...index,
+    ...getAdmColum
 }

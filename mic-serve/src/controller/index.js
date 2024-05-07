@@ -2,23 +2,18 @@ import Base from "./base";
 import md5 from "md5";
 import AdmUser from "../model/adm_user";
 import Token from "../library/utils/token";
+import colums from '../config/colum'
+import ProjectModel from '../model/project'
+import PageRoute from '../model/page_route'
 
 const admUser = new AdmUser();
+const projectModel = new ProjectModel();
+const pageModel = new PageRoute();
 
 /**
  * 首页
  */
 export default class Index extends Base {
-  /**
-   * 首页测试
-   * @param {*} req
-   * @param {*} res
-   */
-  index(req, res) {
-    let data = req.body || {};
-    console.log(data);
-    return this.send(res, { title: "保存成功" });
-  }
 
   /**
    * adm 登录
@@ -40,5 +35,47 @@ export default class Index extends Base {
     } else {
       return this.send(res, {}, false, "账号密码错误");
     }
+  }
+
+  /**
+   * 菜单栏
+   * @param {*} req 
+   * @param {*} res 
+   * @returns 
+   */
+  async getColum(req, res) {
+    let data = req.body || {},
+      result = colums;
+    let arr = [];
+    let projectList = await projectModel.getAll()
+    projectList.forEach(item => {
+      let obj = {
+        path: item.id,
+        meta: {
+          title: item.name,
+          elIcon: "Operation",
+        },
+      }
+      arr.push(obj)
+    })
+    for(let i = 0; i < arr.length; i++) {
+      let pageList = await pageModel.getAll({
+        projectId: arr[i].path,
+        status: [2, 3, 4]
+      })
+      let pageArr = []
+      pageList.forEach(item => {
+        let obj = {
+          path: item.path,
+          meta: {
+            title: item.route_name,
+          },
+        }
+        pageArr.push(obj)
+      })
+      arr[i].children = pageArr
+    }
+    result = [...result, ...arr]
+    return this.send(res, result);
   }
 }

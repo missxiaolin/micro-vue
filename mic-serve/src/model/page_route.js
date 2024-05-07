@@ -176,4 +176,18 @@ export default class PageRoute {
 
     return res;
   }
+
+  /**
+   * 获取所有项目
+   * @param {*} params 
+   * @returns 
+   */
+  async getAll(params) {
+    let tableName = getTableName();
+    let res = await Knex.select("*")
+      .from(tableName)
+      .where("project_id", params.projectId)
+      .andWhere("status", "in", params.status);
+    return res;
+  }
 }
