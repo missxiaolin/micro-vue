@@ -45,14 +45,13 @@ export default {
           selectIndex: 0,
           componentName: "htmlRow",
           titleArray: [],
-        }, 
-        // {
-        //   labelName: '基础组件',
-        //   className: "demonstration-element",
-        //   selectIndex: 0,
-        //   componentName: "ele",
-        //   titleArray: [],
-        // },
+        }, {
+          labelName: '基础组件',
+          className: "demonstration-element",
+          selectIndex: 0,
+          componentName: "ele",
+          titleArray: [],
+        },
       ],
       currentIndex: 0,
     };
