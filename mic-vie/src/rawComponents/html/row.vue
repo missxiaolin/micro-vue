@@ -1,43 +1,24 @@
-  <template lc_id="/TDFS+GcBp">
-      <div lc_id="7Pbavq5HnG">
-          <table border="0" lc_id="uuP+T8yRLR">
-              <tr lc_id="5ARb2ZjT1U">
-                  <td lc_id="iA98DKytvg">
-                      <div class="title" lc_id="CLjcQgCaX7">div:</div>
-                  </td>
-                  <td lc_id="RDoW6kCO0e">
-                      <div div-lc-mark lc-mark lc_id="SR5zEkECaJ"></div>
-                  </td>
-              </tr>
-              <tr lc_id="cBtYk5FHEK">
-                  <td lc_id="lXnrup89hx">
-                      <div class="title" lc_id="G6Ex+ZUDyq">span:</div>
-                  </td>
-                  <td lc_id="92kT0v24+M">
-                      <span lc-mark lc_id="oR87+V6frl">Span Element</span>
-                  </td>
-              </tr>
-              <tr lc_id="OkF98Hdm/v">
-                  <td lc_id="7FQjrKW440">
-                      <div class="title" lc_id="gQX/GhgbYl">a（超链接）:</div>
-                  </td>
-                  <td lc_id="2TyUfZYPym">
-                      <a lc-mark lc_id="xum5SvMss2">W3School</a>
-                  </td>
-              </tr>
-          </table>
+<template lc_id="/TDFS+GcBp">
+  <div class="vcc-column-ul" lc_id="7Pbavq5HnG">
+    <div class="column-li" lc-mark lc_id="KAIdrg0n/W">
+      <img
+        class="li-img"
+        src="../../assets//img/r.png"
+        alt
+        lc_id="alOafiLj/U"
+      />
+      <div class="title" lc_id="CLjcQgCaX7">容器组件</div>
+      <div class="li-mark-content" lc_id="fy4AUrqmNa">
+        <div div-lc-mark lc_id="SR5zEkECaJ"></div>
       </div>
-  </template>
-  <style scoped>.title {
-  width: 120px;
-}
+    </div>
+  </div>
+</template>
 
-.demonstration-raw {
-  padding: 10px 0;
-}
-
+<style scoped>
 [div-lc-mark] {
   border: 1px grey dashed;
   min-height: 1rem;
   border-radius: 5px;
-}</style>
+}
+</style>

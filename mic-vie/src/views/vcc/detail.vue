@@ -132,12 +132,14 @@ export default {
         this.formData.script_json = jsTem;
       }
       this.isShowBaseForm = true;
+      this.isShowVcc = true;
+      this.isShowBaseForm = false;
     },
     onCodeUpdate({ codeRawVueInfo, JSCode }) {
       // 编辑后新的代码结构
       // codeRawVueInfo为template对象表示结构
       // JSCode为显式输入的JS逻辑
-      console.log("onCodeUpdate", codeRawVueInfo, JSCode);
+      // console.log("onCodeUpdate", codeRawVueInfo, JSCode);
       this.formData.tem_json = JSON.stringify(codeRawVueInfo);
       this.formData.script_json = JSCode;
     },

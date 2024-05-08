@@ -195,7 +195,7 @@ export default {
       this.$emit("onLoadFinish");
       this.init();
     });
-    splitInit();
+    // splitInit();
     this.initShortcut();
   },
   beforeUpdate() {},
@@ -414,6 +414,7 @@ export default {
 }
 
 .vcc-main-container {
+  width: 100%;
   margin: 0px 0px 0 0;
   display: flex;
   max-height: 100vh;

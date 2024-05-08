@@ -1,1 +1,1 @@
-export default {"btnClick":"function () {\n    console.log(1);\n}"}
+export default {"btnClick":"function () {\n    console.log(1);\n}","ceshi":"function () {\n    console.log(1);\n}"}

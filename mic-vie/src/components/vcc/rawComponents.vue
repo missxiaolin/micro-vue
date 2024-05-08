@@ -1,35 +1,32 @@
-<template lc_id="OpUzJauqXb">
-  <div lc_id="wL/ZpJzwjh" class="container">
-    <!-- <nav class="top-nav">
-        <div
-          :index="index + ''"
-          v-for="(item, index) in iconArray"
-          @click="onSelectElement(index)"
-          :key="item.icon"
-          :class="{ active: currentIndex === index }"
-          class="main-icon-container"
-        >
-          <svg-icon :icon-class="item.icon" class="icon" />
-        </div>
-      </nav> -->
-    <div class="z">
-      <keep-alive>
-        <component
-          :is="currentSelectBrand.componentName"
-          @mounted="onMouted"
-        ></component>
-      </keep-alive>
-    </div>
+<template>
+  <div class="container">
+    <el-tabs tab-position="left" class="left-tabs">
+      <!-- <div class="">
+        <el-icon>
+          <DArrowRight />
+        </el-icon>
+      </div> -->
+      <el-tab-pane v-for="(item, index) in iconArray" :key="index" :label="item.labelName">
+        <keep-alive>
+          <component
+            :is="item.componentName"
+            @mounted="onMouted"
+          ></component>
+        </keep-alive>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script>
 import { defineComponent, ref, computed } from "vue";
 import ele from "../../rawComponents/ele/index.vue";
+import htmlRow from "../../rawComponents/html/index.vue";
 
 export default {
   components: {
     ele,
+    htmlRow
   },
   computed: {
     currentSelectBrand() {
@@ -43,22 +40,24 @@ export default {
     return {
       iconArray: [
         {
-          icon: "ele",
-          className: "demonstration-element",
+          labelName: 'html组件',
+          className: "demonstration-raw",
           selectIndex: 0,
-          componentName: "ele",
+          componentName: "htmlRow",
           titleArray: [],
-        },
+        }, 
+        // {
+        //   labelName: '基础组件',
+        //   className: "demonstration-element",
+        //   selectIndex: 0,
+        //   componentName: "ele",
+        //   titleArray: [],
+        // },
       ],
       currentIndex: 0,
     };
   },
   methods: {
-    onSelectElement(index) {
-      if (this.iconArray[index].enable) {
-        this.currentIndex = index;
-      }
-    },
     onMouted(index) {
       this.initOnly(this.iconArray[index || 0]);
     },
@@ -90,32 +89,12 @@ export default {
 
 <style lang="scss" scoped>
 .container {
+  width: 315px;
   display: flex;
   height: 100%;
-  .top-nav {
-    margin-right: 10px;
+  padding-right: 20px;
+  .left-tabs {
+    position: relative;
   }
-}
-.main-icon-container {
-  padding: 10px;
-  line-height: 0;
-
-  &:hover {
-    background: rgb(236, 245, 255);
-    border-radius: 5px;
-  }
-}
-nav {
-  height: 100%;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  border-right: 1px solid #f0f0f0;
-}
-.z {
-  overflow: auto;
-  padding: 0 10px;
-  width: 100%;
 }
 </style>

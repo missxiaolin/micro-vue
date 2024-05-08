@@ -268,8 +268,9 @@ export class MainPanelProvider {
       const data = event.dataTransfer.getData("text/plain");
       const [, , , , rawInfo] = data.split(getSplitTag());
 
-      const newDropObj = JSON.parse(rawInfo);
-
+      let newDropObj = JSON.parse(rawInfo);
+      
+      newDropObj = newDropObj.div.__children[2].div.__children[0]
       if (isRawComponents(newDropObj)) {
         // 插入预设属性
         insertPresetAttribute(newDropObj);
