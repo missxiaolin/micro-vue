@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-main" v-html="markdownToHtml"></div>
+  <div class="dashboard-main markdown-body" v-html="markdownToHtml"></div>
 </template>
 
 <script lang="ts">
@@ -36,5 +36,11 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: start;
+  &.markdown-body {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--search-bg-color);
+    color: var(--el-text-color-primary);
+  }
 }
 </style>

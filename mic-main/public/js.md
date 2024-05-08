@@ -175,8 +175,6 @@ v-if
 
 目前仅集成了部分组件库。组件库的集成希望可以通过开源的方式让大家自助添加。
 
-👉🏻 详细的视频演示地址（强烈推荐）：【VCC如何集成UI组件库?-哔哩哔哩】https://b23.tv/HdreZjI
-
 基本的添加流程为：在 src/rawComponents 目录下建立以组件名为名称的文件夹(例如:element)，并在该文件夹内提供一个 index.vue 文件，然后再将此文件引入到 src/components/RawComponents.vue 文件中。
 
 *.vue 文件建议以组件类型划分，例如 Button 类的组件就可以都放在 button.vue 文件中，然后由 index.vue 文件引用。这样 Button 的路径为:src/rawComponents/element/button.vue
