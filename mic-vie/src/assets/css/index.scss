@@ -403,9 +403,10 @@ $layout-height: 50px;
   flex-wrap: wrap;
   position: relative;
   padding-top: 10px;
+  padding-left: 3px;
   .column-li {
     width: 90px;
-    height: 100px;
+    height: 110px;
     border: 2px solid hsla(0,0%,62%,.24);
     display: flex;
     flex-direction: column;

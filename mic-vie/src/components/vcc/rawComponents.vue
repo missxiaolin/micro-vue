@@ -89,7 +89,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  width: 315px;
+  width: 318px;
   display: flex;
   height: 100%;
   padding-right: 20px;
