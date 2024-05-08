@@ -1,16 +1,29 @@
 <template>
-  <div class="dashboard-main">
-    介绍，最后用MD插件渲染
-  </div>
+  <div class="dashboard-main" v-html="markdownToHtml"></div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
+import { loadScript } from '../../utils/loadScript'
+import axios from "axios";
 
 export default defineComponent({
   setup() {
+    let markdownToHtml = ref('')
 
+    const init = () => {
+      loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js', 'marked', async () => {
+        let mdRes = await axios.get('/js.md')
+        // @ts-ignore
+         markdownToHtml.value = marked.parse(mdRes.data)
+      })
+    }
+
+    onMounted(() => {
+      init()
+    })
     return {
+      markdownToHtml
     };
   },
 });
