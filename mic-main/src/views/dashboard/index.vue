@@ -6,6 +6,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import { loadScript } from '../../utils/loadScript'
 import axios from "axios";
+import "github-markdown-css"
 
 export default defineComponent({
   setup() {
