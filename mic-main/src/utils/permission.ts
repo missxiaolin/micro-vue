@@ -1,12 +1,17 @@
 import router from "@/router";
 import store from "@/store";
 import { setServiceBasicInfo } from "@/utils/utils";
+import { getToken } from './cache/cookies'
 const whiteList = ["/login"]; // 不需要重定向的白名单
 
 // 全局路由守卫 动态更新权限
 router.beforeEach(async (to, from, next) => {
   if (whiteList.indexOf(to.path) !== -1) {
     next();
+  } else if(!getToken()) {
+    router.push({
+      path: '/login'
+    })
   } else {
     const checkHasconfigure = async () => {
       const apps = store.getters.getmicroApps;
