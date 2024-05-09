@@ -30,7 +30,6 @@
 import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useStore, mapGetters } from "vuex";
-import { getMicro } from '../../api/index/index'
 
 export default {
   computed: {
