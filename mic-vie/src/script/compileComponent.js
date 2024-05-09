@@ -238,9 +238,9 @@ async function compiler(path) {
     // 解析CSS
     const style = findAObject(obj.root.__children, "style");
     const newStyle = _.cloneDeep(style)
-    if (newStyle.lang === 'scss') {
-      newStyle["__text__"] = sass.renderSync({ data: newStyle["__text__"] }).css.toString();
-    }
+    // if (newStyle.lang === 'scss') {
+    //   newStyle["__text__"] = sass.renderSync({ data: newStyle["__text__"] }).css.toString();
+    // }
     if (newStyle && newStyle["__text__"]) {
       compileStyleCode(newStyle["__text__"], (oldD, newD) => {
         repeatDecalations.push({

@@ -20,12 +20,12 @@
 
 <script>
 import { defineComponent, ref, computed } from "vue";
-import ele from "../../rawComponents/ele/index.vue";
+import elBase from "../../rawComponents/elBase/index.vue";
 import htmlRow from "../../rawComponents/html/index.vue";
 
 export default {
   components: {
-    ele,
+    elBase,
     htmlRow
   },
   computed: {
@@ -49,7 +49,7 @@ export default {
           labelName: '基础组件',
           className: "demonstration-element",
           selectIndex: 0,
-          componentName: "ele",
+          componentName: "elBase",
           titleArray: [],
         },
       ],

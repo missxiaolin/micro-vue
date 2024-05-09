@@ -1,1 +1,1 @@
-export default {"btnClick":"function () {\n    console.log(1);\n}"}
+export default {}

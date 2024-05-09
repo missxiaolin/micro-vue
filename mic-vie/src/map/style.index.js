@@ -1,1 +1,1 @@
-export default {".demonstration-element":"margin-bottom: 10px;","[div-lc-mark]":"border: 1px grey dashed; min-height: 1rem; border-radius: 5px;"}
+export default {"[div-lc-mark]":"border: 1px grey dashed; min-height: 1rem; border-radius: 5px;"}
