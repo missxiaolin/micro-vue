@@ -7,7 +7,7 @@
               </div>
           </div>
           <div class="column-li" lc-mark lc_id="ceTmJgodvB">
-              <img class="li-img" style="width: 70%;margin: 0 auto;margin-top: 10px" src="../../assets/img/elIcon.png" alt lc_id="6wNsG0TpQn"/>              <div class="title" lc_id="x3l8b0stRE">饿了么图标</div>
+              <img class="li-img max-img" src="../../assets/img/elIcon.png" alt lc_id="6wNsG0TpQn"/>              <div class="title" lc_id="x3l8b0stRE">饿了么图标</div>
               <div class="li-mark-content" lc_id="qpwERkcUfM">
                   <el-icon lc_id="/rOQj4hsN+">
                       <component :is="icon" lc_id="Wsst/HbTvP"></component>
@@ -33,7 +33,7 @@
               </div>
           </div>
           <div class="column-li" lc-mark lc_id="akIusgI46B">
-              <img class="li-img" style="width: 70%;margin: 0 auto;margin-top: 10px" src="../../assets/img/text.png" alt lc_id="9nJgcPmA9+"/>              <div class="title" lc_id="Sd+k0xS1ZG">Text 文本</div>
+              <img class="li-img max-img" src="../../assets/img/text.png" alt lc_id="9nJgcPmA9+"/>              <div class="title" lc_id="Sd+k0xS1ZG">Text 文本</div>
               <div class="li-mark-content" lc_id="5EjnkkxEy/">
                   <el-text lc_id="gRjgAeZl4r">Default</el-text>
               </div>

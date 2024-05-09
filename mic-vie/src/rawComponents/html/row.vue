@@ -7,7 +7,7 @@
               </div>
           </div>
           <div class="column-li" lc-mark lc_id="afryX/m1eZ">
-              <img class="li-img" style="width: 70%;margin: 0 auto;margin-top: 10px" src="../../assets/img/html.png" alt lc_id="rq35MfFXax"/>              <div class="title" lc_id="5q+44f+80d">span标签</div>
+              <img class="li-img max-img" src="../../assets/img/html.png" alt lc_id="rq35MfFXax"/>              <div class="title" lc_id="5q+44f+80d">span标签</div>
               <div class="li-mark-content" lc_id="VBE1NjA+92">
                   <span lc_id="mh3o330Dly">Span Element</span>
               </div>

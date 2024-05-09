@@ -430,6 +430,11 @@ $layout-height: 50px;
     }
     .li-img {
       width: 100%;
+      &.max-img {
+        width: 70%;
+        margin: 0 auto;
+        margin-top: 10px;
+      }
     }
     .li-mark-content {
       position: absolute;
