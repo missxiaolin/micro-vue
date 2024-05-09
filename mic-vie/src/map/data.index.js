@@ -1,1 +1,1 @@
-export default {"icon":"ElemeFilled"}
+export default {"icon":"ElemeFilled","checkboxOptions":[{"label":"Option A","value":"Value A"},{"label":"Option B","value":"Value B"}],"cascaderOptions":[]}

@@ -24,6 +24,9 @@
           ref="attributeInput" shortcutInitMode="hand" :__rawVueInfo__="currentEditRawInfo">
         </attribute-input>
       </div>
+      <!-- <div style="width: 300px;">
+
+      </div> -->
     </div>
 
     <div class="copy">
@@ -403,6 +406,7 @@ export default {
   width: 100%;
   min-height: calc(100vh - 90px);
   display: flex;
+  flex-direction: row;
   flex: 1;
   background-color: var(--search-bg-color);
   overflow: hidden;
@@ -415,6 +419,7 @@ export default {
 
 .vcc-main-container {
   width: 100%;
+  flex: 1;
   margin: 0px 0px 0 0;
   display: flex;
   max-height: 100vh;

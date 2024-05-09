@@ -28,5 +28,6 @@ export function checkIsMethodDirectives(key) {
     ":on-success",
     ":format",
     ":before-upload",
+    ":fetch-suggestions"
   ].includes(key);
 }
