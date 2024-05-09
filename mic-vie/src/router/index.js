@@ -13,6 +13,10 @@ export const defaultRoute = [
     path: "/vcc/detail",
     component: () => import("@/views/vcc/detail.vue"),
   },
+  {
+    path: '/vcc/form',
+    component: () => import("@/views/vcc/form.vue"),
+  }
 ];
 
 let prdRoutesList = [...defaultRoute];
