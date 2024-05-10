@@ -22,12 +22,14 @@
 import elBase from "../../rawComponents/elBase/index.vue";
 import htmlRow from "../../rawComponents/html/index.vue";
 import elForm from "../../rawComponents/elForm/index.vue";
+import customRow from '../../rawComponents/custom/index.vue';
 
 export default {
   components: {
     elBase,
     htmlRow,
-    elForm
+    elForm,
+    customRow
   },
   computed: {
     
@@ -44,14 +46,20 @@ export default {
         }, {
           labelName: 'el基础组件',
           className: "demonstration-element-base",
-          selectIndex: 0,
+          selectIndex: 1,
           componentName: "elBase",
           titleArray: [],
         }, {
           labelName: 'el表单组件',
           className: "demonstration-element-form",
-          selectIndex: 0,
+          selectIndex: 2,
           componentName: "elForm",
+          titleArray: [],
+        }, {
+          labelName: '自定义组件',
+          className: "demonstration-custom",
+          selectIndex: 3,
+          componentName: "customRow",
           titleArray: [],
         }
       ],
