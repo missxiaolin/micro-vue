@@ -7,7 +7,7 @@ export default create({
   props: ["content", "modelValue"],
   setup(props, { slots, emit }) {
     const { type, propsData, options, value } = props.content;
-    const { customValue = "value" } = propsData || {};
+    const { customValue = "value", customLabel = 'label' } = propsData || {};
 
     // select 监听options变化，同步更新视图
     const contentComputed = computed(() => {
@@ -36,8 +36,11 @@ export default create({
             if (type === "select" && options && options.length) {
               const Option = resolveComponent(`el-option`);
               _options = options.map((ele, index) => {
+                const targetLabel = ele[customLabel];
+                const extedLabel = extUrl(customLabel, ele);
                 return h(Option, {
                   key: index,
+                  label: extedLabel || targetLabel,
                   value: ele[customValue],
                 });
               });

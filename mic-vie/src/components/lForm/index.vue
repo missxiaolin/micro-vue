@@ -1,24 +1,29 @@
 <template>
   <div class="form-container">
-    <el-form ref="ruleFormRef">
+    <el-form
+      :ref="ref"
+      :model="ruleForm"
+      :rules="rules"
+      :label-width="labelWidth"
+      :disabled="disabled"
+    >
       <el-row>
         <el-col :span="span" v-for="(item, index) in form" :key="index">
           <el-form-item :label="item.label" :prop="`${item.valueName}`">
             <VNode
               :content="item"
-              v-model="item.value"
+              v-model="ruleForm[item.valueName]"
               @updateOptions="updateOptions(item, index)"
             />
           </el-form-item>
-          
         </el-col>
       </el-row>
       <el-form-item v-if="isShowBottomBtn">
         <div class="form-bottom-box">
-          <el-button type="primary" @click="submitForm('ruleFormRef')">
+          <el-button type="primary" @click="submitForm">
             {{ formSaveBtn }}
           </el-button>
-          <el-button @click="resetForm('ruleFormRef')">重置</el-button>
+          <el-button @click="resetForm">重置</el-button>
         </div>
       </el-form-item>
     </el-form>
@@ -27,6 +32,8 @@
 
 <script>
 import VNode from "./vnodeComponent";
+import { uuid } from "../../utils/utils";
+
 export default {
   components: {
     VNode,
@@ -49,10 +56,60 @@ export default {
     formSaveBtn: {
       type: String,
       default: "保存",
-    }
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    labelWidth: {
+      type: String,
+      default: "auto",
+    },
   },
-  mounted() {},
+  data() {
+    return {
+      ref: uuid(16, 16),
+      ruleForm: {},
+      rules: {},
+    };
+  },
+  mounted() {
+    this.init(this.form);
+  },
+  watch: {
+    form(v) {
+      this.init(v);
+    },
+  },
   methods: {
+    init(form) {
+      let ruleForm = this.ruleForm || {};
+      let rulesArr = this.rules || {};
+      form.forEach((item) => {
+        ruleForm[item.valueName] = item.value;
+        rulesArr[item.valueName] = item.rule;
+      });
+      this.ruleForm = ruleForm;
+      this.rules = rulesArr;
+    },
+    resetForm() {
+      const el = this.$refs[this.ref];
+      if (!el) return;
+      el.resetFields();
+    },
+    async submitForm() {
+      const el = this.$refs[this.ref];
+      console.log(el);
+      if (!el) return;
+      await el.validate((valid, fields) => {
+        if (valid) {
+          console.log(this.ruleForm);
+          // this.$emit("success", this.ruleForm);
+        } else {
+          //   console.log("error submit!", fields);
+        }
+      });
+    },
     updateOptions(item, index) {
       const { propsData = {}, options = [] } = item;
       const { customValue = "value", customLabel = "label" } = propsData;
@@ -64,8 +121,6 @@ export default {
       if (!targetOptions) {
         item.value = targetItem.value;
       }
-      // 重置组件
-      item.id += "1";
     },
   },
 };
@@ -75,6 +130,9 @@ export default {
 .form-container {
   :deep(.el-select) {
     flex: 1;
+  }
+  :deep(.el-col) {
+    padding-left: 20px;
   }
   .form-bottom-box {
     width: 100%;
