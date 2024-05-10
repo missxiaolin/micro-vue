@@ -1,17 +1,19 @@
 <template>
-  <div class="container">
+  <div class="row-container">
+    <div class="icon-box" @click="clickDarrow">
+      <el-icon size="20">
+        <DArrowRight v-if="isExpand" />
+        <DArrowLeft v-else />
+      </el-icon>
+    </div>
     <el-tabs tab-position="left" class="left-tabs">
-      <!-- <div class="">
-        <el-icon>
-          <DArrowRight />
-        </el-icon>
-      </div> -->
-      <el-tab-pane v-for="(item, index) in iconArray" :key="index" :label="item.labelName">
+      <el-tab-pane
+        v-for="(item, index) in iconArray"
+        :key="index"
+        :label="item.labelName"
+      >
         <keep-alive>
-          <component
-            :is="item.componentName"
-            @mounted="onMouted"
-          ></component>
+          <component :is="item.componentName" @mounted="onMouted"></component>
         </keep-alive>
       </el-tab-pane>
     </el-tabs>
@@ -22,46 +24,48 @@
 import elBase from "../../rawComponents/elBase/index.vue";
 import htmlRow from "../../rawComponents/html/index.vue";
 import elForm from "../../rawComponents/elForm/index.vue";
-import customRow from '../../rawComponents/custom/index.vue';
+import customRow from "../../rawComponents/custom/index.vue";
 
 export default {
   components: {
     elBase,
     htmlRow,
     elForm,
-    customRow
+    customRow,
   },
-  computed: {
-    
-  },
+  computed: {},
   data() {
     return {
+      isExpand: true,
       iconArray: [
         {
-          labelName: 'html组件',
+          labelName: "html组件",
           className: "demonstration-raw",
           selectIndex: 0,
           componentName: "htmlRow",
           titleArray: [],
-        }, {
-          labelName: 'el基础组件',
+        },
+        {
+          labelName: "el基础组件",
           className: "demonstration-element-base",
           selectIndex: 1,
           componentName: "elBase",
           titleArray: [],
-        }, {
-          labelName: 'el表单组件',
+        },
+        {
+          labelName: "el表单组件",
           className: "demonstration-element-form",
           selectIndex: 2,
           componentName: "elForm",
           titleArray: [],
-        }, {
-          labelName: '自定义组件',
+        },
+        {
+          labelName: "自定义组件",
           className: "demonstration-custom",
           selectIndex: 3,
           componentName: "customRow",
           titleArray: [],
-        }
+        },
       ],
     };
   },
@@ -91,18 +95,36 @@ export default {
       //   };
       // }
     },
+    clickDarrow() {
+      let dom = document.getElementsByClassName("row-container")[0];
+      let width = this.isExpand ? "120" : "330";
+      dom.animate({ width: `${width}px` }, 500, "linear");
+      setTimeout(() => {
+        dom.style.width = `${width}px`;
+        this.isExpand = !this.isExpand;
+      }, 470);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.container {
+.row-container {
   width: 330px;
   display: flex;
   height: 100%;
   padding-right: 20px;
+  position: relative;
   .left-tabs {
     position: relative;
+  }
+  .icon-box {
+    height: 50px;
+    position: absolute;
+    left: 50px;
+    bottom: 0;
+    cursor: pointer;
+    z-index: 999;
   }
 }
 </style>
