@@ -16,7 +16,6 @@ export default {
           type: "input",
           rules: [],
           propsData: {
-            type: "number",
             maxlength: 4,
             integer: true,
             clearable: true,
@@ -24,7 +23,7 @@ export default {
           },
         }, {
           label: "配置名称",
-          valueName: "id",
+          valueName: "ceshi",
           value: "",
           type: "select",
           rules: [],

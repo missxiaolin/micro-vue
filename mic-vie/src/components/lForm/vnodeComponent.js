@@ -1,23 +1,61 @@
 import { h, renderSlot, resolveComponent, watch, computed } from "vue";
 import createComponent from "../../utils/create";
+import { deepClone, extUrl } from "../../utils/utils";
 const { create } = createComponent("Overlay");
 
 export default create({
   props: ["content", "modelValue"],
   setup(props, { slots, emit }) {
-    const e = 'el';
-    const { type, label, propsData, options, value } = props.content;
-    const { customValue = 'value', customLabel = 'label' } = propsData || {};
+    const { type, propsData, options, value } = props.content;
+    const { customValue = "value" } = propsData || {};
 
+    // select 监听options变化，同步更新视图
+    const contentComputed = computed(() => {
+      return deepClone(props.content?.options || "");
+    });
 
-    const custom = resolveComponent(`${e}-${type}`);
+    watch(
+      () => contentComputed,
+      (n, o) => {
+        emit("updateOptions");
+      },
+      { deep: true }
+    );
 
+    const custom = resolveComponent(`el-${type}`);
+
+    // !注意：select组件在渲染options时只接受function  [Non-function value encountered for default slot. Prefer function slots for b]
+    // !注意：cascader组件渲染时无默认插槽
+
+    const children =
+      type === "cascader"
+        ? ""
+        : () => {
+            let _options = renderSlot(slots, "default");
+
+            if (type === "select" && options && options.length) {
+              const Option = resolveComponent(`el-option`);
+              _options = options.map((ele, index) => {
+                return h(Option, {
+                  key: index,
+                  value: ele[customValue],
+                });
+              });
+            }
+
+            return _options;
+          };
     return () => {
-        if (!custom) return '';
-        console.log('custom', custom, label)
-        return h(
-            custom
-        )
-    }
+      if (!custom) return "";
+      return h(
+        custom,
+        {
+          ...propsData,
+          modelValue: props.modelValue,
+          "onUpdate:modelValue": (value) => emit("update:modelValue", value),
+        },
+        children
+      );
+    };
   },
 });
