@@ -1,6 +1,6 @@
 <template>
   <div>
-    <l-form form="formItem" :span="8"></l-form>
+    <l-form :form="formItem" :span="8"></l-form>
   </div>
 </template>
 

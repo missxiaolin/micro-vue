@@ -1,4 +1,4 @@
-import{d as dedent}from"./dedent-CSHlQ-s0.js";import{c as codeEditor}from"./codeEditor-kulCyeTv.js";import{p as prettier,c as babel}from"./vcc-ClycM3r3.js";import{_ as _export_sfc,r as resolveComponent,o as openBlock,f as createBlock,w as withCtx,b as createVNode,a as createBaseVNode,e as createTextVNode,c as createElementBlock,u as toDisplayString,h as createCommentVNode}from"./index-alzQSFE_.js";import"./fetch-CxZ7T0Ig.js";const example=dedent`
+import{d as dedent}from"./dedent-CSHlQ-s0.js";import{c as codeEditor}from"./codeEditor--utVu26k.js";import{p as prettier,c as babel}from"./vcc-bhfZiTwX.js";import{_ as _export_sfc,r as resolveComponent,o as openBlock,f as createBlock,w as withCtx,b as createVNode,a as createBaseVNode,e as createTextVNode,c as createElementBlock,u as toDisplayString,h as createCommentVNode}from"./index-DdYoSHfV.js";import"./fetch-ReC3Xk0E.js";const example=dedent`
     /**
      *  以下代码中的方法会被注入到最终的代码中，如果命名与源代码有相同的，则会替换源代码
      *  内部集成了axios，开发者可以直接通过axios发起网络请求，不过接口需要允许跨域。

@@ -17,7 +17,7 @@ export default {
   mounted() {
     this.$emit("mounted");
     // 对所有拥有lc-mark的元素进行初始化
-    deepLCEle(document.querySelector(".element-form-class"), () => {});
+    deepLCEle(document.querySelector(".l-custom"), () => {});
   },
 };
 </script>
