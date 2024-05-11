@@ -124,7 +124,7 @@ export default {
     left: 50px;
     bottom: 0;
     cursor: pointer;
-    z-index: 999;
+    z-index: 10;
   }
 }
 </style>

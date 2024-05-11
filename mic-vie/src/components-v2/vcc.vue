@@ -19,14 +19,19 @@
             <!--这里不能放任何东西，执行时会被清空-->
           </div>
         </div>
-        <!-- 属性设置 -->
-        <attribute-input v-show="isShowAttribute" :enableRemoveButton="true" class="attribute" @save="onSaveAttr" @remove="onRemove"
-          ref="attributeInput" shortcutInitMode="hand" :__rawVueInfo__="currentEditRawInfo">
-        </attribute-input>
       </div>
-      <!-- <div style="width: 300px;">
-
-      </div> -->
+      <!-- 属性设置 -->
+      <attribute-input
+        v-show="isShowAttribute"
+        :enableRemoveButton="true"
+        class="attribute"
+        @save="onSaveAttr"
+        @remove="onRemove"
+        ref="attributeInput"
+        shortcutInitMode="hand"
+        :__rawVueInfo__="currentEditRawInfo"
+      >
+      </attribute-input>
     </div>
 
     <div class="copy">
@@ -82,7 +87,6 @@
           <el-icon><Document /></el-icon>
         </div>
       </el-tooltip>
-      
     </div>
 
     <div>
@@ -97,8 +101,15 @@
         :initStructure="codeRawVueInfo"
       >
       </code-structure>
-      <codeEditor v-model:codeDialogVisible="jsDialogVisible" @saveJSCode="saveJSCode" ref="codeEditor"></codeEditor>
-      <vueEditor v-model:vueDialogVisible="vueDialogVisible" @codeParseSucess="codeParseSucess"></vueEditor>
+      <codeEditor
+        v-model:codeDialogVisible="jsDialogVisible"
+        @saveJSCode="saveJSCode"
+        ref="codeEditor"
+      ></codeEditor>
+      <vueEditor
+        v-model:vueDialogVisible="vueDialogVisible"
+        @codeParseSucess="codeParseSucess"
+      ></vueEditor>
     </div>
     <!-- 辅助定位线 -->
     <div class="cross-flag">
@@ -140,12 +151,16 @@ export default {
     attributeInput: defineAsyncComponent(() =>
       import("../components/vcc/attributeInput")
     ),
-    'lc-code': defineAsyncComponent(() => import("../components/vcc/code")),
+    "lc-code": defineAsyncComponent(() => import("../components/vcc/code")),
     codeStructure: defineAsyncComponent(() =>
       import("../components/vcc/codeStructure")
     ),
-    codeEditor: defineAsyncComponent(() => import('../components/vcc/jSCodeEditorDialog.vue')),
-    vueEditor: defineAsyncComponent(() => import('../components/vcc/vueCodeParseDialog.vue'))
+    codeEditor: defineAsyncComponent(() =>
+      import("../components/vcc/jSCodeEditorDialog.vue")
+    ),
+    vueEditor: defineAsyncComponent(() =>
+      import("../components/vcc/vueCodeParseDialog.vue")
+    ),
   },
   data() {
     return {
@@ -161,17 +176,17 @@ export default {
       codeRawVueInfo: null,
       JSCode: "",
 
-      isShowAttribute: false
+      isShowAttribute: false,
     };
   },
   watch: {
     currentEditRawInfo(newValue) {
       // const attributeContainter = document.querySelector(".attribute");
       if (newValue) {
-        this.isShowAttribute = true
+        this.isShowAttribute = true;
         this.$refs["attributeInput"].onShow();
       } else {
-        this.isShowAttribute = false
+        this.isShowAttribute = false;
         this.$refs["attributeInput"].onHide();
       }
     },
@@ -385,8 +400,8 @@ export default {
       // window.open("");
     },
     save() {
-      this.$emit('save', this.code)
-    }
+      this.$emit("save", this.code);
+    },
   },
   fillter: {},
 };
@@ -427,17 +442,6 @@ export default {
 }
 
 .attribute {
-  width: 400px;
-  border-radius: 10px;
-  margin-left: 10px;
-  position: absolute;
-  right: 0;
-  top: 10px;
-  max-height: calc(80% - 20px);
-  transition-property: right;
-  transition-duration: 300ms;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-  overflow: auto;
   z-index: 2;
 }
 
@@ -448,8 +452,7 @@ export default {
   overflow: auto;
   box-sizing: border-box;
   background-color: var(--search-bg-color);
-  
-  
+
   transition: width 1s;
   padding: 20px;
 }
@@ -460,7 +463,8 @@ export default {
   display: flex;
   justify-content: center;
   background-color: var(--search-bg-color);
-  background-image: radial-gradient(rgba(9,89,194,.3) 6%,transparent 0),radial-gradient(#faf9f8 6%,transparent 0);
+  background-image: radial-gradient(rgba(9, 89, 194, 0.3) 6%, transparent 0),
+    radial-gradient(#faf9f8 6%, transparent 0);
   background-size: 10px 10px;
   border: 1px solid var(--el-border-color-light);
 }
@@ -468,7 +472,7 @@ export default {
 .copy {
   position: fixed;
   right: 20px;
-  bottom: 20px;
+  bottom: 30px;
   display: flex;
   line-height: 0;
 }
