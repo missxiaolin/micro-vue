@@ -443,3 +443,17 @@ $layout-height: 50px;
     }
   }
 }
+
+.attribute-seeting-content {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  .attribute-seeting-content-item {
+    display: flex;
+    flex-direction: row;
+    .label {
+      line-height: 30px;
+    }
+  }
+}

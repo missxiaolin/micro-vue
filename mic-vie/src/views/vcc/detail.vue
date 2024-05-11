@@ -132,8 +132,8 @@ export default {
         this.formData.script_json = jsTem;
       }
       this.isShowBaseForm = true;
-      // this.isShowVcc = true;
-      // this.isShowBaseForm = false;
+      this.isShowVcc = true;
+      this.isShowBaseForm = false;
     },
     onCodeUpdate({ codeRawVueInfo, JSCode }) {
       // 编辑后新的代码结构
@@ -141,6 +141,7 @@ export default {
       // JSCode为显式输入的JS逻辑
       // console.log("onCodeUpdate", codeRawVueInfo, JSCode);
       this.formData.tem_json = JSON.stringify(codeRawVueInfo);
+      // console.log('JSCode', JSCode)
       this.formData.script_json = JSCode;
     },
     onLoadFinish() {},

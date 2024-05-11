@@ -44,6 +44,13 @@ export class MainPanelProvider {
     this.redoStack = [];
 
     this.externalJS = {};
+
+    this.componentOptions = {}
+  }
+
+
+  getComponentOptions() {
+    return this.componentOptions;
   }
 
   /**
@@ -80,6 +87,8 @@ export class MainPanelProvider {
     let newScript = script.content.replace(/\s*export default\s*/, "");
 
     const componentOptions = new Function(`return ${newScript}`)();
+    // 保存script代码
+    this.componentOptions = componentOptions
 
     componentOptions.template = template.content;
 

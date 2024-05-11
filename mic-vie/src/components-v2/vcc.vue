@@ -23,6 +23,7 @@
       <!-- 属性设置 -->
       <attribute-input
         v-show="isShowAttribute"
+        :JSCode="JSCode"
         :enableRemoveButton="true"
         class="attribute"
         @save="onSaveAttr"
@@ -126,7 +127,6 @@
 
 <script>
 import { defineAsyncComponent } from "vue";
-import { splitInit } from "../libs/split-init";
 // // 这个文件不可以进行懒加载，它会导致运行时不可点击的行为，具体原因未知
 import { MainPanelProvider } from "../libs/main-panel";
 import { initContainerForLine } from "@/utils/lineHelper";
@@ -184,10 +184,10 @@ export default {
       // const attributeContainter = document.querySelector(".attribute");
       if (newValue) {
         this.isShowAttribute = true;
-        this.$refs["attributeInput"].onShow();
+        // this.$refs["attributeInput"].onShow();
       } else {
         this.isShowAttribute = false;
-        this.$refs["attributeInput"].onHide();
+        // this.$refs["attributeInput"].onHide();
       }
     },
     initCodeEntity(newVal) {
@@ -204,6 +204,11 @@ export default {
   },
   computed: {},
   beforeCreate() {},
+  provide() {
+    return {
+      'vccApp': this
+    }
+  },
   created() {
     this.mainPanelProvider = new MainPanelProvider();
   },
@@ -221,6 +226,7 @@ export default {
   destroyed() {},
   methods: {
     convertLogicCode(JSCode) {
+      
       try {
         const JSCodeInfo = eval(
           `(function(){return ${JSCode.replace(/\s+/g, "")}})()`
@@ -230,6 +236,7 @@ export default {
         if (this.$refs.codeEditor) {
           this.$refs.codeEditor.updateLogicCode(JSCode);
         }
+        console.log('convertLogicCode', JSCodeInfo)
         return JSCodeInfo;
       } catch (e) {
         console.warn(
@@ -439,6 +446,7 @@ export default {
   display: flex;
   max-height: 100vh;
   flex-direction: column;
+  margin: 0 10px;
 }
 
 .attribute {
