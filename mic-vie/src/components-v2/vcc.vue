@@ -236,7 +236,6 @@ export default {
         if (this.$refs.codeEditor) {
           this.$refs.codeEditor.updateLogicCode(JSCode);
         }
-        console.log('convertLogicCode', JSCodeInfo)
         return JSCodeInfo;
       } catch (e) {
         console.warn(

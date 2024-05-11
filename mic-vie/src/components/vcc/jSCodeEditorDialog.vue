@@ -54,14 +54,7 @@ import codeEditor from "./codeEditor.vue";
 import prettier from "prettier/standalone";
 import babel from "prettier/parser-babel";
 
-const example = dedent`
-    /**
-     *  以下代码中的方法会被注入到最终的代码中，如果命名与源代码有相同的，则会替换源代码
-     *  内部集成了axios，开发者可以直接通过axios发起网络请求，不过接口需要允许跨域。
-     *  可以通过https://apis.sahadev.tech/exchange?url=的方式访问实际地址可以解决跨域问题。
-     *  axios官方文档：https://www.npmjs.com/package/axios
-     */
-    {
+const example = dedent`{
         data() {
           return {
   
@@ -76,10 +69,9 @@ const example = dedent`
         },
   
         methods: {
-          request(){
-          }
+          
         },
-    };
+};
         `;
 
 export default {

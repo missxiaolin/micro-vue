@@ -99,12 +99,18 @@
             </template>
             <template #default>
               <div class="form-props-btn" @click="formSelectBtn">
-                <template v-if="Object.keys(popObj.propsData).length == popObj.propsDataSelects.length">
-                  <div>
-                    无属性
-                  </div>
+                <template
+                  v-if="
+                    Object.keys(popObj.propsData).length ==
+                    popObj.propsDataSelects.length
+                  "
+                >
+                  <div>无属性</div>
                 </template>
-                <template v-else v-for="(item, index) in popObj.propsDataSelects">
+                <template
+                  v-else
+                  v-for="(item, index) in popObj.propsDataSelects"
+                >
                   <el-button
                     v-if="
                       Object.keys(popObj.propsData).indexOf(`${item.key}`) == -1
@@ -134,6 +140,7 @@
 <script>
 import VNode from "../../lForm/vnodeComponent";
 import { formArr } from "./utils/index";
+import { replaceKeyInfo, getJsTemData } from "../../../utils/utils";
 export default {
   components: {
     VNode,
@@ -146,7 +153,9 @@ export default {
       popObj: {},
       rules: {
         label: [{ required: true, message: "请输入名称", trigger: "blur" }],
-        valueName: [{ required: true, message: "请输入绑定数据字段", trigger: "blur" }],
+        valueName: [
+          { required: true, message: "请输入绑定数据字段", trigger: "blur" },
+        ],
       },
       isShowFormAPop: false,
       jsCode: "",
@@ -162,6 +171,7 @@ export default {
       localAttributes.forEach((item) => {
         if (item.key == ":form") {
           this.formItem = this.jsCode.data()[item.value] || [];
+          this.formItemKey = item.value;
         }
       });
     },
@@ -180,10 +190,12 @@ export default {
     radioChage(v) {
       if (v) {
         this.rules.rule = {
-          errorMessage: [{ required: true, message: "请输入提示", trigger: "blur" }],
-        }
+          errorMessage: [
+            { required: true, message: "请输入提示", trigger: "blur" },
+          ],
+        };
       } else {
-        delete this.rules.rule
+        delete this.rules.rule;
       }
     },
     deleteProps(key) {
@@ -200,17 +212,16 @@ export default {
             value: this.popObj.value,
             type: this.popObj.type,
             rule: [],
-            propsData: this.popObj.propsData
-          }
+            propsData: this.popObj.propsData,
+          };
           if (this.popObj.rule == true) {
             obj.rule.push({
               required: true,
               message: obj.rule.errorMessage,
-            })
+            });
           }
-          this.formItem.push(obj)
-          console.log(this.formItem)
-          this.viewSaveJs()
+          this.formItem.push(obj);
+          this.viewSaveJs();
           // this.isShowFormAPop = false
         } else {
           //   console.log("error submit!", fields);
@@ -218,8 +229,16 @@ export default {
       });
     },
     viewSaveJs() {
-      console.log(this.vccApp.JSCode)
-    }
+      let temScript = getJsTemData(this.formItemKey, this.formItem);
+
+      let jsCode = this.vccApp.JSCode.trim();
+      const JSCodeInfo = eval(`(function(){return ${jsCode};})()`);
+      const newJsCode = replaceKeyInfo(temScript, JSCodeInfo);
+      this.vccApp.saveJSCode({
+        JSCodeInfo: eval(`(function(){return ${newJsCode};})()`),
+        JSCode: newJsCode,
+      });
+    },
   },
 };
 </script>
