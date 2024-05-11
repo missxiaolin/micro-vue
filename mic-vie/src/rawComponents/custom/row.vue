@@ -12,26 +12,7 @@
 export default {
   data() {
     return {
-      formItem: [
-        {
-          label: "配置名称",
-          valueName: "id",
-          value: "",
-          type: "input",
-          rule: [
-            {
-              required: true,
-              message: "请输入配置名称",
-            },
-          ],
-          propsData: {
-            maxlength: 4,
-            integer: true,
-            clearable: true,
-            placeholder: "please input",
-          },
-        },
-      ],
+      formItem: [],
     };
   },
 };  </script>

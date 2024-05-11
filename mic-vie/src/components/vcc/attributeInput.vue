@@ -2,7 +2,7 @@
   <el-card class="attribute-container">
     <el-scrollbar height="calc(100vh - 130px)">
       <!-- <styleComponent /> -->
-      <lFormA v-if="componentName == 'l-form'" :localAttributes="localAttributes" />
+      <lFormA v-if="componentName == 'l-form'" v-model:localAttributes="localAttributes" @save="save" />
       <el-divider content-position="left">特殊处理</el-divider>
       <div style="text-align: center">
         <el-switch
@@ -267,6 +267,7 @@ export default {
           type: "success",
         });
       } catch (error) {
+        console.log(error)
         this.$message.error(error);
       }
     },
