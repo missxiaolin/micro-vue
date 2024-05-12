@@ -1,12 +1,16 @@
 <template>
   <div>
-    <l-form :form="formItem" :span="8"></l-form>
-    <div id="container-box" class="container" style="width: 100%;height: 500px;"></div>
+    <!-- <l-form :form="formItem" :span="8"></l-form> -->
+    <editor :height="'500px'" />
   </div>
 </template>
 
 <script>
+import editor from '../../components/editor/index.vue'
 export default {
+  components: {
+    editor
+  },
   
   data() {
     return {
@@ -73,11 +77,7 @@ export default {
     };
   },
   mounted() {
-    monaco.editor.create(document.getElementById('container-box'), {
-      value: "",
-      language: 'javascript',
-      theme: 'vs-dark', //官方自带三种主题vs, hc-black, or vs-dark
-    });
+    
   }
   
 };
