@@ -1,17 +1,19 @@
 <template>
   <div>
-    <!-- <l-form :form="formItem" :span="8"></l-form> -->
-    <editor :height="'500px'" />
+    <l-form :form="formItem" :span="8"></l-form>
+    <!-- <editor :height="'500px'" /> -->
+    <el-input>
+      <template #prepend>Http://</template>
+    </el-input>
   </div>
 </template>
 
 <script>
-import editor from '../../components/editor/index.vue'
+import editor from "../../components/editor/index.vue";
 export default {
   components: {
-    editor
+    editor,
   },
-  
   data() {
     return {
       formItem: [
@@ -27,58 +29,21 @@ export default {
             },
           ],
           propsData: {
+            onChange: this.change,
             maxlength: 4,
             integer: true,
             clearable: true,
             placeholder: "please input",
           },
-        },
-        {
-          label: "配置名称",
-          valueName: "ceshi",
-          value: "",
-          type: "select",
-          rule: [],
-          propsData: {
-            type: "number",
-            maxlength: 4,
-            integer: true,
-            clearable: true,
-            placeholder: "please input",
-          },
-        },
-        {
-          label: "配置状态",
-          valueName: "status",
-          value: "",
-          type: "select",
-          propsData: {
-            customValue: "id",
-            customLabel: "text",
-            placeholder: "Please Select",
-            clearable: true,
-          },
-          options: [
-  {
-    value: "Shanghai",
-    label: "Shanghai",
-    id: "1",
-    text: "Shanghai1",
-  },
-  {
-    value: "Beijing",
-    label: "Beijing",
-    id: "2",
-    text: "Beijing1",
-  },
-],
         },
       ],
     };
   },
-  mounted() {
-    
-  }
-  
+  mounted() {},
+  methods: {
+    change(e) {
+      console.log(e);
+    },
+  },
 };
 </script>

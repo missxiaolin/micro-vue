@@ -7,7 +7,7 @@ export default create({
   props: ["content", "modelValue"],
   setup(props, { slots, emit }) {
     const { type, propsData, options, value } = props.content;
-    const { customValue = "value", customLabel = 'label' } = propsData || {};
+    const { customValue = "value", customLabel = "label" } = propsData || {};
 
     // select 监听options变化，同步更新视图
     const contentComputed = computed(() => {
@@ -48,6 +48,7 @@ export default create({
 
             return _options;
           };
+
     return () => {
       if (!custom) return "";
       return h(
@@ -56,6 +57,7 @@ export default create({
           ...propsData,
           modelValue: props.modelValue,
           "onUpdate:modelValue": (value) => emit("update:modelValue", value),
+          
         },
         children
       );
