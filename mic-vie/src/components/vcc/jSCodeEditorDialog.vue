@@ -14,35 +14,13 @@
       mode="text/javascript"
     ></codeEditor>
 
-    <div
-      style="
-        padding: 10px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-      "
-    >
+    <div class="js-bottom">
       <div>
         <el-button type="primary" @click="onSave">确认修改</el-button>
-        <div v-if="error" style="color: red; font-size: 12px; margin-top: 5px">
+        <div v-if="error" class="error">
           请检查语法错误：{{ error }}
         </div>
       </div>
-
-      <!-- <div style="margin-left: 5px">
-        <el-link
-          href="javascript:void(0)"
-          target="_blank"
-        >
-          <el-icon>
-            <question-filled />
-          </el-icon>
-          帮助与说明
-        </el-link>
-        <div style="color: #6c6c6c; font-size: 12px; margin-top: 5px">
-          Tips: 建议看一下使用说明
-        </div>
-      </div> -->
     </div>
   </el-dialog>
 </template>
@@ -88,13 +66,6 @@ export default {
       example: `${example}`,
     };
   },
-  beforeCreate() {},
-  created() {},
-  beforeMount() {},
-  mounted() {},
-  beforeUpdate() {},
-  updated() {},
-  destroyed() {},
   methods: {
     updateLogicCode(newCode) {
       if (newCode) {
@@ -143,10 +114,21 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /*  在此自动生成 */
 
 :v-deep(.el-dialog__body) {
   padding: 0 30px !important;
+}
+.js-bottom {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
 }
 </style>
