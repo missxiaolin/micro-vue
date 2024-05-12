@@ -234,9 +234,18 @@ export default {
         );
         // 保留JS代码
         this.JSCode = JSCode;
-        if (this.$refs.codeEditor) {
+        const fn = () => {
+          if (!this.$refs.codeEditor) {
+            setTimeout(() => {
+              fn()
+            }, 20)
+            return
+          }
           this.$refs.codeEditor.updateLogicCode(JSCode);
         }
+
+        fn()
+        
         return JSCodeInfo;
       } catch (e) {
         console.warn(
@@ -393,6 +402,7 @@ export default {
         JSCodeInfo: eval(`(function(){return ${newJsCode};})()`),
         JSCode: newJsCode,
       });
+      this.$refs.codeEditor.updateLogicCode(newJsCode);
     },
 
     saveJSCode({ JSCodeInfo: code, JSCode }) {

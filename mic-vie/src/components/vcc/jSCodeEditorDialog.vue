@@ -16,9 +16,7 @@
     <div class="js-bottom">
       <div>
         <el-button type="primary" @click="onSave">确认修改</el-button>
-        <div v-if="error" class="error">
-          请检查语法错误：{{ error }}
-        </div>
+        <div v-if="error" class="error">请检查语法错误：{{ error }}</div>
       </div>
     </div>
   </el-dialog>
