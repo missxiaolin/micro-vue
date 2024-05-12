@@ -73,6 +73,10 @@ export const formArr = [
         name: "是否显示密码图标",
         key: "show-password",
         value: ""
+      }, {
+        name: "类型",
+        key: "type",
+        value: ""
       }
     ]
   },

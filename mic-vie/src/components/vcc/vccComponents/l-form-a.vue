@@ -214,15 +214,16 @@ export default {
             rule: [],
             propsData: this.popObj.propsData,
           };
-          if (this.popObj.rule == true) {
+          if (this.popObj.rule.isRequire == true) {
             obj.rule.push({
               required: true,
-              message: obj.rule.errorMessage,
+              message: this.popObj.rule.errorMessage,
             });
           }
           this.formItem.push(obj);
+          console.log('this.formItem', this.formItem)
           this.viewSaveJs();
-          // this.isShowFormAPop = false
+          this.isShowFormAPop = false
         } else {
           //   console.log("error submit!", fields);
         }
@@ -230,14 +231,7 @@ export default {
     },
     viewSaveJs() {
       let temScript = getJsTemData(this.formItemKey, this.formItem);
-
-      let jsCode = this.vccApp.JSCode.trim();
-      const JSCodeInfo = eval(`(function(){return ${jsCode};})()`);
-      const newJsCode = replaceKeyInfo(temScript, JSCodeInfo);
-      this.vccApp.saveJSCode({
-        JSCodeInfo: eval(`(function(){return ${newJsCode};})()`),
-        JSCode: newJsCode,
-      });
+      this.vccApp.viewSaveJs(temScript)
     },
   },
 };

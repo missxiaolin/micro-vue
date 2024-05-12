@@ -130,6 +130,7 @@ import { defineAsyncComponent } from "vue";
 // // 这个文件不可以进行懒加载，它会导致运行时不可点击的行为，具体原因未知
 import { MainPanelProvider } from "../libs/main-panel";
 import { initContainerForLine } from "@/utils/lineHelper";
+import { replaceKeyInfo } from "../utils/utils";
 import keymaster from "keymaster";
 
 export default {
@@ -379,6 +380,17 @@ export default {
     },
     undo() {
       this.mainPanelProvider.undo();
+    },
+
+    // 保存js data
+    viewSaveJs(temScript) {
+      let jsCode = this.JSCode.trim();
+      const JSCodeInfo = eval(`(function(){return ${jsCode};})()`);
+      const newJsCode = replaceKeyInfo(temScript, JSCodeInfo);
+      this.saveJSCode({
+        JSCodeInfo: eval(`(function(){return ${newJsCode};})()`),
+        JSCode: newJsCode,
+      });
     },
 
     saveJSCode({ JSCodeInfo: code, JSCode }) {
