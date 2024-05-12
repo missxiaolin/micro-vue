@@ -50,7 +50,7 @@ export default {
               }, 50);
               return;
             }
-            monaco.editor.create(document.getElementById("editor-container"), {
+            this.editor = monaco.editor.create(document.getElementById("editor-container"), {
               value: this.value,
               ...this.options,
             });
@@ -63,5 +63,12 @@ export default {
       }
     );
   },
+  methods: {
+    getEditorCode() {
+      let code = this.editor.getValue()
+      const excludeUnuseal = code.replace("export default ", "");
+      return excludeUnuseal
+    }
+  }
 };
 </script>

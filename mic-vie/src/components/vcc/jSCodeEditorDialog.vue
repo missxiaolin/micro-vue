@@ -8,10 +8,9 @@
     :center="true"
   >
     <codeEditor
-      style="max-height: 65vh"
+      :height="'65vh;'"
       ref="codeEditor"
-      :initCode="code"
-      mode="text/javascript"
+      :value="`export default ${code}`"
     ></codeEditor>
 
     <div class="js-bottom">
@@ -27,7 +26,7 @@
 
 <script>
 import dedent from "dedent";
-import codeEditor from "./codeEditor.vue";
+import codeEditor from "../editor/index.vue";
 
 import prettier from "prettier/standalone";
 import babel from "prettier/parser-babel";

@@ -83,6 +83,9 @@ export default {
   },
   methods: {
     init(form) {
+      if (!form || form.length == 0) {
+        return
+      }
       let ruleForm = this.ruleForm || {};
       let rulesArr = this.rules || {};
       form.forEach((item) => {
