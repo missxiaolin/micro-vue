@@ -1,35 +1,15 @@
 <template>
   <div>
     <l-form :form="formItem" :span="8"></l-form>
-    <el-radio-group v-model="radio">
-      <el-radio :label="3">Option A</el-radio>
-      <el-radio :label="6">Option B</el-radio>
-      <el-radio :label="9">Option C</el-radio>
-    </el-radio-group>
+    <div id="container-box" class="container" style="width: 100%;height: 500px;"></div>
   </div>
 </template>
 
 <script>
-const myOptions = [
-  {
-    value: "Shanghai",
-    label: "Shanghai",
-    id: "1",
-    text: "Shanghai1",
-  },
-  {
-    value: "Beijing",
-    label: "Beijing",
-    id: "2",
-    text: "Beijing1",
-  },
-];
-
 export default {
+  
   data() {
     return {
-      radio: 3,
-
       formItem: [
         {
           label: "配置名称",
@@ -74,10 +54,31 @@ export default {
             placeholder: "Please Select",
             clearable: true,
           },
-          options: myOptions,
+          options: [
+  {
+    value: "Shanghai",
+    label: "Shanghai",
+    id: "1",
+    text: "Shanghai1",
+  },
+  {
+    value: "Beijing",
+    label: "Beijing",
+    id: "2",
+    text: "Beijing1",
+  },
+],
         },
       ],
     };
   },
+  mounted() {
+    monaco.editor.create(document.getElementById('container-box'), {
+      value: "",
+      language: 'javascript',
+      theme: 'vs-dark', //官方自带三种主题vs, hc-black, or vs-dark
+    });
+  }
+  
 };
 </script>
