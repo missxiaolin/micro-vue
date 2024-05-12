@@ -140,7 +140,6 @@
 <script>
 import VNode from "../../lForm/vnodeComponent";
 import { formArr } from "./utils/index";
-import { replaceKeyInfo, getJsTemData } from "../../../utils/utils";
 export default {
   components: {
     VNode,
@@ -180,7 +179,7 @@ export default {
       event.stopPropagation();
     },
     selectBtn(index) {
-      let popObj = formArr[index];
+      let popObj = JSON.parse(JSON.stringify(formArr[index]));
       this.popObj = popObj;
       this.isShowFormAPop = true;
     },
@@ -221,17 +220,19 @@ export default {
             });
           }
           this.formItem.push(obj);
-          console.log('this.formItem', this.formItem)
           this.viewSaveJs();
-          this.isShowFormAPop = false
+          this.isShowFormAPop = false;
         } else {
           //   console.log("error submit!", fields);
         }
       });
     },
     viewSaveJs() {
-      let temScript = getJsTemData(this.formItemKey, this.formItem);
-      this.vccApp.viewSaveJs(temScript)
+      let data = {
+        key: this.formItemKey,
+        data: this.formItem,
+      };
+      this.vccApp.viewSaveJs(data, "");
     },
   },
 };

@@ -42,12 +42,7 @@ export default {
   data() {
     return {
       error: "",
-      code: dedent`
-    /**
-     *  请在此文本框贴入完整的Vue代码，并点击“开始解析”按钮。
-     *  目前仅支持简单的Vue文件。如果代码中包含其它组件，则不会正常展示，但依旧支持二次编辑。
-     */
-  `,
+      code: dedent``,
     };
   },
   beforeCreate() {},

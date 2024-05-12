@@ -1,4 +1,4 @@
-import { isArray } from "@vue/shared";
+import { isArray, isObject } from "@vue/shared";
 import stringifyObject from "@/libs/stringify-object";
 import merge from "lodash-es/merge";
 import prettier from "prettier/standalone.js";
@@ -144,15 +144,16 @@ export function replaceKeyInfo(dataTemp, externalJS) {
 }
 
 /**
- * @param {*} key 
- * @param {*} data 
+ * @param {*} d 
+ * @param {*} fn
  * @returns 
  */
-export function getJsTemData(key, data) {
+export function getJsTemData(d, fn = '') {
+  const data = (isArray(d.data) || isObject(d.data)) ? JSON.stringify(d.data) : d.data
   return `{
     data() {
       return {
-        ${key}: ${JSON.stringify(data)}
+        ${d.key}: ${data}
       }
     }
   };`
