@@ -57,7 +57,7 @@ export default create({
       // 兼容代码生成器
       for (let key in propsData) {
         if (propsData[key] && ['onInput'].indexOf(key) !== -1 && isString(propsData[key])) {
-          propsData[key] = new Function(propsData[key])(props.parentThis ? props.parentThis.$parent : {})
+          propsData[key] = new Function(propsData[key]).call({ vue: props.parentThis ? props.parentThis.$parent : {} }); // 将当前vue实例挂载到函数的作用域上
         }
       }
       return h(

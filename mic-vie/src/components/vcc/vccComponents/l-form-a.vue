@@ -172,9 +172,8 @@ import VNode from "../../lForm/vnodeComponent";
 import editor from "../../editor/index.vue";
 import { formArr } from "./utils/index";
 const codeFn = `return (e) => {
-    // self 是拿到当前页面vue实例
-    let self = arguments[0];
-    console.log(self);
+    // this.vue 就是vue的当前实例
+    console.log(e, this.vue);
 }
 `
 
