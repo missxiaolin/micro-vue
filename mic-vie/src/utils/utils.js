@@ -86,9 +86,10 @@ export function uuid(len, radix) {
 }
 
 export function replaceKeyInfo(dataTemp, externalJS) {
+  console.log(dataTemp)
   // 转化为对象
   const JSCodeInfo = eval(`(function(){return ${dataTemp}})()`);
-
+  
   // 合并外部脚本对象
   let externalData = {};
 
@@ -99,7 +100,14 @@ export function replaceKeyInfo(dataTemp, externalJS) {
   }
 
   // 生成新的data返回值
-  const newData = merge({}, JSCodeInfo.data(), externalData);
+  let newData = merge({}, externalData);
+  try {
+    for (let key in JSCodeInfo.data()) {
+      newData[key] = JSCodeInfo.data()[key]
+    }
+  } catch(e) {
+    
+  }
 
   const dataFunction = new Function(`return ${stringifyObject(newData)}`);
 
@@ -148,13 +156,18 @@ export function replaceKeyInfo(dataTemp, externalJS) {
  * @param {*} fn
  * @returns 
  */
-export function getJsTemData(d, fn = '') {
-  const data = (isArray(d.data) || isObject(d.data)) ? JSON.stringify(d.data) : d.data
+export function getJsTemData(d, fn = []) {
+  const data = JSON.stringify(d)
+  let f = ''
+  if (fn && fn.length > 0) {
+    f = fn.join(',');
+  }
   return `{
     data() {
-      return {
-        ${d.key}: ${data}
-      }
+      return ${data}
+    },
+    methods: {
+      ${f}
     }
   };`
 }

@@ -15,7 +15,7 @@
         </div> -->
       <div class="l-form-b" v-if="formItem.length > 0">
         <div v-for="(item, index) in formItem" :key="index" class="l-form-b-li">
-          <div class="icon-left">
+          <div class="icon-left" @click="removeItem(index)">
             <el-icon><RemoveFilled /></el-icon>
           </div>
           <div class="label">{{ item.label }}</div>
@@ -227,10 +227,16 @@ export default {
         }
       });
     },
+    removeItem(index) {
+      let array = this.formItem;
+      let indexToRemove = index;
+      array = array.slice(0, indexToRemove).concat(array.slice(indexToRemove + 1));
+      this.formItem = array;
+      this.viewSaveJs()
+    },
     viewSaveJs() {
-      let data = {
-        key: this.formItemKey,
-        data: this.formItem,
+      const data = {
+        [this.formItemKey]: JSON.parse(JSON.stringify(this.formItem)),
       };
       this.vccApp.viewSaveJs(data, "");
     },
@@ -260,6 +266,17 @@ export default {
       .icon-left {
         margin-top: 7px;
         margin-right: 4px;
+      }
+      .value {
+        height: 40px;
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        > div {
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
       }
       .icon-right {
         margin-top: 7px;

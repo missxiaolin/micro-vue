@@ -392,7 +392,7 @@ export default {
     },
 
     // 保存js data fn
-    viewSaveJs(d = {}, fn = '') {
+    viewSaveJs(d = {}, fn = []) {
       const temScript = getJsTemData(d, fn);
       
       let jsCode = this.JSCode.trim();
