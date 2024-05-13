@@ -1,13 +1,16 @@
-import { h, renderSlot, resolveComponent, watch, computed } from "vue";
+import { h, renderSlot, resolveComponent, watch, computed, getCurrentInstance } from "vue";
 import createComponent from "../../utils/create";
 import { deepClone, extUrl } from "../../utils/utils";
 const { create } = createComponent("Overlay");
+import { isString } from "@vue/shared";
 
 export default create({
-  props: ["content", "modelValue"],
+  props: ["content", "modelValue", "parentThis"],
   setup(props, { slots, emit }) {
-    const { type, propsData, options, value } = props.content;
+    const instance = getCurrentInstance();
+    const { type, propsData, options } = props.content;
     const { customValue = "value", customLabel = "label" } = propsData || {};
+
 
     // select 监听options变化，同步更新视图
     const contentComputed = computed(() => {
@@ -51,13 +54,18 @@ export default create({
 
     return () => {
       if (!custom) return "";
+      // 兼容代码生成器
+      for (let key in propsData) {
+        if (propsData[key] && ['onInput'].indexOf(key) !== -1 && isString(propsData[key])) {
+          propsData[key] = new Function(propsData[key])(props.parentThis ? props.parentThis.$parent : {})
+        }
+      }
       return h(
         custom,
         {
           ...propsData,
           modelValue: props.modelValue,
           "onUpdate:modelValue": (value) => emit("update:modelValue", value),
-          
         },
         children
       );

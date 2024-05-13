@@ -44,13 +44,17 @@
       </el-popover>
     </div>
     <!-- 表单添加 -->
-    <el-dialog v-model="isShowFormAPop" :title="`添加表单${popObj.name}`">
+    <el-dialog
+      v-model="isShowFormAPop"
+      :title="isAddFn ? '添加方法' : `添加表单${popObj.name}`"
+    >
       <el-form
         ref="ruleFormARef"
         :model="popObj"
         :rules="rules"
         label-width="auto"
         status-icon
+        v-if="!isAddFn"
       >
         <el-form-item label="名称" prop="label">
           <el-input v-model="popObj.label" />
@@ -82,7 +86,20 @@
               :label="item.name"
             >
               <div class="flex">
-                <el-input v-model="popObj.propsData[item.key]" />
+                <el-input
+                  v-if="item.type != 'function'"
+                  v-model="popObj.propsData[item.key]"
+                />
+                <el-input
+                  v-else
+                  type="textarea"
+                  :autosize="{ minRows: 2, maxRows: 4 }"
+                  v-model="popObj.propsData[item.key]"
+                  disabled
+                ></el-input>
+                <div class="fn-edit" v-if="item.type == 'function'" @click="editFn(item, popObj.propsData[item.key])">
+                  <el-icon><Edit /></el-icon>
+                </div>
                 <div class="icon-right" @click="deleteProps(item.key)">
                   <el-icon><RemoveFilled /></el-icon>
                 </div>
@@ -91,7 +108,7 @@
           </template>
         </template>
         <el-form-item>
-          <el-popover placement="right-start" trigger="hover">
+          <el-popover placement="right-start" trigger="hover" width="180px">
             <template #reference>
               <el-button type="primary" circle>
                 <el-icon><Plus /></el-icon>
@@ -133,16 +150,39 @@
           </div>
         </el-form-item>
       </el-form>
+      <div v-else class="fn-box">
+        <editor
+          :value="fnObj && fnObj.value ? fnObj.value : codeFn"
+          height="200px"
+          ref="codeEditor"
+        />
+        <div class="form-bottom mt20">
+          <el-button type="primary" @click="saveFn"
+            >添加</el-button
+          >
+          <el-button type="primary" @click="clockFn">返回</el-button>
+        </div>
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import VNode from "../../lForm/vnodeComponent";
+import editor from "../../editor/index.vue";
 import { formArr } from "./utils/index";
+const codeFn = `return (e) => {
+    // self 是拿到当前页面vue实例
+    let self = arguments[0];
+    console.log(self);
+}
+`
+
+
 export default {
   components: {
     VNode,
+    editor,
   },
   props: ["localAttributes"],
   inject: ["vccApp"],
@@ -150,6 +190,9 @@ export default {
     return {
       formArr,
       popObj: {},
+      isAddFn: false,
+      codeFn,
+      fnObj: {},
       rules: {
         label: [{ required: true, message: "请输入名称", trigger: "blur" }],
         valueName: [
@@ -184,7 +227,26 @@ export default {
       this.isShowFormAPop = true;
     },
     propsClick(item) {
+      // 添加方法
+      if (item.type === "function") {
+        this.fnObj = JSON.parse(JSON.stringify(item));
+        this.isAddFn = true;
+        return;
+      }
       this.popObj.propsData[item.key] = item.value || "";
+    },
+    clockFn() {
+      this.isAddFn = false;
+    },
+    editFn(item, value) {
+      this.fnObj = JSON.parse(JSON.stringify(item));
+      this.fnObj.value = value
+      this.isAddFn = true;
+    },
+    saveFn() {
+      const code = this.$refs.codeEditor.getEditorCode();
+      this.popObj.propsData[this.fnObj.key] = code;
+      this.isAddFn = false;
     },
     radioChage(v) {
       if (v) {
@@ -230,15 +292,18 @@ export default {
     removeItem(index) {
       let array = this.formItem;
       let indexToRemove = index;
-      array = array.slice(0, indexToRemove).concat(array.slice(indexToRemove + 1));
+      array = array
+        .slice(0, indexToRemove)
+        .concat(array.slice(indexToRemove + 1));
       this.formItem = array;
-      this.viewSaveJs()
+      this.viewSaveJs();
     },
-    viewSaveJs() {
+    viewSaveJs(fn = []) {
       const data = {
         [this.formItemKey]: JSON.parse(JSON.stringify(this.formItem)),
       };
-      this.vccApp.viewSaveJs(data, "");
+      console.log('data--------', data)
+      this.vccApp.viewSaveJs(data, fn);
     },
   },
 };
@@ -278,6 +343,7 @@ export default {
           top: 0;
         }
       }
+      
       .icon-right {
         margin-top: 7px;
         margin-left: 4px;
@@ -303,12 +369,13 @@ export default {
   flex-direction: row;
   justify-content: end;
 }
+
 .form-props-btn {
   display: flex;
   flex-direction: column;
   .el-button {
     margin-bottom: 5px;
-    width: 130px;
+    width: 160px;
     margin-left: 0px;
   }
   :deep(.el-button) {
@@ -320,6 +387,9 @@ export default {
   .icon-right {
     margin-left: 20px;
     margin-right: 20px;
+  }
+  .fn-edit {
+    margin-left: 10px;
   }
   :deep(.el-input) {
     flex: 1;

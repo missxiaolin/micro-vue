@@ -77,6 +77,31 @@ export const formArr = [
         name: "类型",
         key: "type",
         value: ""
+      }, {
+        name: "失去焦点时触发",
+        key: "onBlur",
+        value: '',
+        type: "function"
+      }, {
+        name: "获得焦点时触发",
+        key: "onFocus",
+        value: '',
+        type: "function"
+      }, {
+        name: "输入框失去焦点触发",
+        key: "onChange",
+        value: '',
+        type: "function"
+      }, {
+        name: "值改变时触发",
+        key: "onInput",
+        value: '',
+        type: "function"
+      }, {
+        name: "clearable属性清空触发",
+        key: "onClear",
+        value: '',
+        type: "function"
       }
     ]
   },

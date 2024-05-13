@@ -11,6 +11,7 @@
         <el-col :span="span" v-for="(item, index) in form" :key="index">
           <el-form-item :label="item.label" :prop="`${item.valueName}`">
             <VNode
+              :parentThis="this"
               :content="item"
               v-model="ruleForm[item.valueName]"
               @updateOptions="updateOptions(item, index)"

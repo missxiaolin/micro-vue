@@ -86,7 +86,6 @@ export function uuid(len, radix) {
 }
 
 export function replaceKeyInfo(dataTemp, externalJS) {
-  console.log(dataTemp)
   // 转化为对象
   const JSCodeInfo = eval(`(function(){return ${dataTemp}})()`);
   
@@ -106,7 +105,7 @@ export function replaceKeyInfo(dataTemp, externalJS) {
       newData[key] = JSCodeInfo.data()[key]
     }
   } catch(e) {
-    
+
   }
 
   const dataFunction = new Function(`return ${stringifyObject(newData)}`);
