@@ -3,5 +3,6 @@ export default [
     "onFocus",
     "onChange",
     "onInput",
-    "onClear"
+    "onClear",
+    "fetchSuggestions"
 ]

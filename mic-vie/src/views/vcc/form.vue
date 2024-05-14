@@ -18,24 +18,16 @@ export default {
     return {
       formItem: [
         {
-          label: "配置名称",
-          valueName: "id",
-          value: "",
-          type: "input",
-          rule: [
-            {
-              required: true,
-              message: "请输入配置名称",
+            label: "ceshi",
+            valueName: "c",
+            value: "",
+            type: "autocomplete",
+            rule: [],
+            propsData: {
+              fetchSuggestions:
+                "return (e) => {\n    // this.vue 就是vue的当前实例\n    console.log(e, this.vue);\n}\n",
             },
-          ],
-          propsData: {
-            onChange: this.change,
-            maxlength: 4,
-            integer: true,
-            clearable: true,
-            placeholder: "please input",
           },
-        },
       ],
     };
   },

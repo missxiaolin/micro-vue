@@ -22,7 +22,7 @@
     "css-scoped": "^1.0.0",
     "dedent": "^1.5.3",
     "ejs": "^3.1.6",
-    "element-plus": "2.3.8",
+    "element-plus": "^2.7.3",
     "escodegen": "^2.0.0",
     "espree": "^7.3.0",
     "eventemitter3": "^4.0.7",

@@ -2,17 +2,12 @@
   <div class="attribute-seeting-box">
     <el-divider content-position="left">自定义表单</el-divider>
     <div class="attribute-seeting-content">
-      <!-- <div class="label">
-            提交按钮：
-        </div> -->
       <!-- <div class="attribute-seeting-content-item">
-            <div class="label">
-                提交按钮：
-            </div>
-            <div class="attribute-seeting-content-item-content">
-                <el-input placeholder="请输入内容"></el-input>
-            </div>
-        </div> -->
+        <div class="label">提交按钮：</div>
+        <div class="attribute-seeting-content-item-content">
+          <el-input placeholder="请输入内容"></el-input>
+        </div>
+      </div> -->
       <div class="l-form-b" v-if="formItem.length > 0">
         <div v-for="(item, index) in formItem" :key="index" class="l-form-b-li">
           <div class="icon-left" @click="removeItem(index)">
@@ -96,7 +91,7 @@
                 <el-select
                   v-else-if="item.type == 'data'"
                   v-model="popObj.propsData[item.key]"
-                  style="width: 100%;"
+                  style="width: 100%"
                 >
                   <el-option
                     v-for="(v, i) in item.data"
@@ -238,8 +233,8 @@ export default {
     },
     // 修改表单项
     editForm(item) {
-      let form = JSON.parse(JSON.stringify(this.formArr))
-      let obj = form.find(obj => obj.type === item.type)
+      let form = JSON.parse(JSON.stringify(this.formArr));
+      let obj = form.find((obj) => obj.type === item.type);
       this.popObj = {
         ...obj,
         propsData: item.propsData,
@@ -250,8 +245,8 @@ export default {
           isRequire: item.rule.length > 0 ? item.rule[0].required : false,
           errorMessage: item.rule.length > 0 ? item.rule[0].message : false,
         },
-        propsData: item.propsData
-      }
+        propsData: item.propsData,
+      };
       this.isAddFn = false;
       this.isShowFormAPop = true;
     },
@@ -337,7 +332,7 @@ export default {
       const data = {
         [this.formItemKey]: JSON.parse(JSON.stringify(this.formItem)),
       };
-      console.log("data--------", data);
+      console.log("data--------", data, fn);
       this.vccApp.viewSaveJs(data, fn);
     },
   },
@@ -348,6 +343,9 @@ export default {
 .attribute-seeting-box {
   display: flex;
   flex-direction: column;
+  .attribute-seeting-content-item {
+    margin-bottom: 10px;
+  }
   .l-form-b {
     display: flex;
     flex-direction: column;

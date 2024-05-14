@@ -1,13 +1,58 @@
 export const formArr = [
-  // {
-  //   name: "自定补全输入框",
-  //   label: "",
-  //   valueName: "",
-  //   value: "",
-  //   type: "autocomplete",
-  //   rule: [],
-  //   propsData: [],
-  // },
+  {
+    name: "自定补全输入框",
+    label: "",
+    valueName: "",
+    value: "",
+    type: "autocomplete",
+    rule: {
+      isRequire: false,
+      errorMessage: ""
+    },
+    propsData: {
+
+    },
+    propsDataSelects: [
+      {
+        name: "占位文本",
+        key: "placeholder",
+        value: ""
+      }, {
+        name: "是否可清空",
+        key: "clearable",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: '是',
+            value: true
+          }, {
+            label: '否',
+            value: false
+          }
+        ]
+      }, {
+        name: "是否禁用",
+        key: "disabled",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: '是',
+            value: true
+          }, {
+            label: '否',
+            value: false
+          }
+        ]
+      }, {
+        name: "回调函数",
+        key: "fetchSuggestions",
+        value: '',
+        type: "function"
+      }
+    ]
+  },
   // {
   //   name: "级联选择器",
   //   label: "",
@@ -50,6 +95,20 @@ export const formArr = [
     },
     propsDataSelects: [
       {
+        name: "是否禁用",
+        key: "disabled",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: '是',
+            value: true
+          }, {
+            label: '否',
+            value: false
+          }
+        ]
+      }, {
         name: "最大长度",
         key: "maxlength",
         value: ""

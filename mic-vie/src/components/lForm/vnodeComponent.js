@@ -3,6 +3,7 @@ import createComponent from "../../utils/create";
 import { deepClone, extUrl } from "../../utils/utils";
 const { create } = createComponent("Overlay");
 import { isString } from "@vue/shared";
+import fcs from './util'
 
 export default create({
   props: ["content", "modelValue", "parentThis"],
@@ -56,7 +57,7 @@ export default create({
       if (!custom) return "";
       // 兼容代码生成器
       for (let key in propsData) {
-        if (propsData[key] && ['onInput'].indexOf(key) !== -1 && isString(propsData[key])) {
+        if (propsData[key] && fcs.indexOf(key) !== -1 && isString(propsData[key])) {
           propsData[key] = new Function(propsData[key]).call({ vue: props.parentThis ? props.parentThis.$parent : {} }); // 将当前vue实例挂载到函数的作用域上
         }
       }
