@@ -364,10 +364,13 @@ export default {
       flex-wrap: nowrap;
       margin-bottom: 5px;
       .label {
-        width: 70px;
+        width: 50px;
         margin-right: 10px;
         line-height: 30px;
         text-align: right;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       .icon-left {
         margin-top: 7px;
@@ -377,7 +380,7 @@ export default {
         height: 40px;
         flex: 1;
         position: relative;
-        overflow: hidden;
+        overflow: auto;
         > div {
           position: absolute;
           left: 0;

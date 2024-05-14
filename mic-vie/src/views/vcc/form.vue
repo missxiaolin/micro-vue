@@ -18,17 +18,22 @@ export default {
     return {
       formItem: [
         {
-          label: "ceshi",
-          valueName: "ce",
+          label: "状态类型",
+          valueName: "statusType",
           value: "",
-          type: "date-picker",
-          rule: [],
-          propsData: {
-            placeholder: "请输入当前日期",
-            type: "datetimerange",
-            format: "YYYY-MM-DD HH:mm:ss",
-            'value-format': "YYYY-MM-DD HH:mm:ss"
-          },
+          options: [
+            {
+              value: "1",
+              label: "表单1",
+            },
+            {
+              value: "2",
+              label: "表单2",
+            },
+          ],
+          // type: 'select'
+          // type: "checkbox-group",
+          type: 'radio-group'
         },
       ],
     };

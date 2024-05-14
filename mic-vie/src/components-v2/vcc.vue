@@ -573,6 +573,7 @@ export default {
 }
 
 #mountedEle {
+  width: 94%;
   border: 1px dashed rgb(126, 126, 128);
   border-radius: 10px;
   margin: 20px;

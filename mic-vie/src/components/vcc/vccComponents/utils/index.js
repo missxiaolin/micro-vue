@@ -202,7 +202,7 @@ export const formArr = [
         ],
       },
       {
-        name: "更改日期触发",
+        name: "确认选定的值时触发",
         key: "onChange",
         value: "",
         type: "function",
@@ -370,15 +370,91 @@ export const formArr = [
       },
     ],
   },
-  // {
-  //   name: "数字输入框",
-  //   label: "",
-  //   valueName: "",
-  //   value: "",
-  //   type: "input-number",
-  //   rule: [],
-  //   propsData: [],
-  // },
+  {
+    name: "数字输入框",
+    label: "",
+    valueName: "",
+    value: "",
+    type: "date-picker",
+    rule: {
+      isRequire: false,
+      errorMessage: "",
+    },
+    propsData: {},
+    propsDataSelects: [
+      {
+        name: "占位文本",
+        key: "placeholder",
+        value: "",
+      },
+      {
+        name: "最小值",
+        key: "min",
+        value: "",
+      },
+      {
+        name: "最大值",
+        key: "max",
+        value: "",
+      },
+      {
+        name: "计数器步长",
+        key: "step",
+        value: "",
+      },
+      {
+        name: "是否禁用",
+        key: "disabled",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "是否使用控制按钮",
+        key: "disabled",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "绑定值被改变时触发",
+        key: "onChange",
+        value: "",
+        type: "function",
+      },
+      {
+        name: "失去焦点时触发",
+        key: "onBlur",
+        value: "",
+        type: "function",
+      },
+      {
+        name: "获得焦点时触发",
+        key: "onFocus",
+        value: "",
+        type: "function",
+      },
+    ],
+  },
+
   // {
   //   name: "单选按钮",
   //   label: "",
@@ -397,13 +473,244 @@ export const formArr = [
   //   rule: [],
   //   propsData: [],
   // },
-  // {
-  //   name: "时间选择",
-  //   label: "",
-  //   valueName: "",
-  //   value: "",
-  //   type: "time-select",
-  //   rule: [],
-  //   propsData: [],
-  // },
+  {
+    name: "时间选择器",
+    label: "",
+    valueName: "",
+    value: "",
+    type: "time-picker",
+    rule: {
+      isRequire: false,
+      errorMessage: "",
+    },
+    propsData: {},
+    propsDataSelects: [
+      {
+        name: "占位文本",
+        key: "placeholder",
+        value: "",
+      },
+      {
+        name: "是否禁用",
+        key: "disabled",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "文本框是否可输入",
+        key: "editable",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "是否可清空",
+        key: "clearable",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "是否为时间范围选择",
+        key: "is-range",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "输入框中的格式",
+        key: "format",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "时:分:秒",
+            value: "HH:mm:ss",
+          },
+        ],
+      },
+      {
+        name: "绑定值的格式",
+        key: "value-format",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "时:分:秒",
+            value: "HH:mm:ss",
+          },
+        ],
+      },
+      {
+        name: "绑定值被改变时触发",
+        key: "onChange",
+        value: "",
+        type: "function",
+      },
+      {
+        name: "失去焦点时触发",
+        key: "onBlur",
+        value: "",
+        type: "function",
+      },
+      {
+        name: "获得焦点时触发",
+        key: "onFocus",
+        value: "",
+        type: "function",
+      },
+    ],
+  },
+  {
+    name: "时间选择",
+    label: "",
+    valueName: "",
+    value: "",
+    type: "time-select",
+    rule: {
+      isRequire: false,
+      errorMessage: "",
+    },
+    propsData: {},
+    propsDataSelects: [
+      {
+        name: "占位文本",
+        key: "placeholder",
+        value: "",
+      },
+      {
+        name: "开始时间",
+        key: "start",
+        value: "",
+      },
+      {
+        name: "结束时间",
+        key: "end",
+        value: "",
+      },
+      {
+        name: "间隔时间",
+        key: "step",
+        value: "",
+      },
+      {
+        name: "原生属性",
+        key: "name",
+        value: "",
+      },
+      {
+        name: "最早时间点",
+        key: "min-time",
+        value: "",
+      },
+      {
+        name: "最晚时间点",
+        key: "max-time",
+        value: "",
+      },
+      {
+        name: "是否禁用",
+        key: "disabled",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "文本框是否可输入",
+        key: "editable",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "是否可清空",
+        key: "clearable",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "绑定值被改变时触发",
+        key: "onChange",
+        value: "",
+        type: "function",
+      },
+      {
+        name: "失去焦点时触发",
+        key: "onBlur",
+        value: "",
+        type: "function",
+      },
+      {
+        name: "获得焦点时触发",
+        key: "onFocus",
+        value: "",
+        type: "function",
+      },
+    ],
+  },
 ];

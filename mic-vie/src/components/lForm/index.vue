@@ -136,7 +136,7 @@ export default {
     flex: 1;
   }
   :deep(.el-col) {
-    padding-left: 20px;
+    padding-right: 20px;
   }
   .form-bottom-box {
     width: 100%;
