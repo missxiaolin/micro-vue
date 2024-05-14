@@ -106,7 +106,8 @@ export default {
       if (!el) return;
       await el.validate((valid, fields) => {
         if (valid) {
-          this.$emit("success", this.ruleForm);
+          console.log(this.ruleForm);
+          // this.$emit("success", this.ruleForm);
         } else {
           //   console.log("error submit!", fields);
         }

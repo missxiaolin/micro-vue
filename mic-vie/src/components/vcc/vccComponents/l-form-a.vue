@@ -261,6 +261,7 @@ export default {
     },
     // 修改表单项
     editForm(item, index) {
+      console.log(item)
       this.editIndex = index
       let form = JSON.parse(JSON.stringify(this.formArr));
       let obj = form.find((obj) => obj.type === item.type);
@@ -277,7 +278,7 @@ export default {
         options: item.options || [],
         rule: {
           isRequire: item.rule.length > 0 ? item.rule[0].required : false,
-          errorMessage: item.rule.length > 0 ? item.rule[0].message : false,
+          errorMessage: item.rule.length > 0 ? item.rule[0].message : '',
         },
         propsData: item.propsData,
       }
@@ -369,7 +370,7 @@ export default {
           if (['checkbox-group', 'radio-group', 'select'].indexOf(this.popObj.type) > -1) {
             obj.options = this.popObj.options || []
           }
-          if (this.editIndex) {
+          if (this.editIndex === 0 || this.editIndex) {
             this.formItem[this.editIndex] = obj;
           } else {
             this.formItem.push(obj);

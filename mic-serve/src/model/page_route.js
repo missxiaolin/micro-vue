@@ -12,6 +12,7 @@ const STATUS_ENUM = {
   1: "待发布",
   2: "发布中",
   3: "完成",
+  4: '草稿'
 };
 
 function getTableName() {
