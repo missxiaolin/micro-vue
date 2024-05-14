@@ -64,19 +64,62 @@ export const formArr = [
       }, {
         name: "是否可清空",
         key: "clearable",
-        value: "false"
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: '是',
+            value: true
+          }, {
+            label: '否',
+            value: false
+          }
+        ]
       }, {
         name: "是否显示统计字数",
         key: "show-word-limit",
-        value: ""
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: '是',
+            value: true
+          }, {
+            label: '否',
+            value: false
+          }
+        ]
       }, {
         name: "是否显示密码图标",
         key: "show-password",
-        value: ""
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: '是',
+            value: true
+          }, {
+            label: '否',
+            value: false
+          }
+        ]
       }, {
         name: "类型",
         key: "type",
-        value: ""
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: '文本',
+            value: 'text'
+          }, {
+            label: '多行文本',
+            value: 'textarea'
+          }, {
+            label: '密码',
+            value: 'password'
+          }
+        ]
       }, {
         name: "失去焦点时触发",
         key: "onBlur",

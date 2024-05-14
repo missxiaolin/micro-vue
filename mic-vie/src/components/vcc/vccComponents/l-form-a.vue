@@ -56,11 +56,14 @@
         status-icon
         v-if="!isAddFn"
       >
-        <el-form-item label="名称" prop="label">
+        <el-form-item label="字段名称" prop="label">
           <el-input v-model="popObj.label" />
         </el-form-item>
-        <el-form-item label="绑定数据字段" prop="valueName">
-          <el-input v-model="popObj.valueName" />
+        <el-form-item label="字段名" prop="valueName">
+          <el-input
+            v-model="popObj.valueName"
+            placeholder="请输入用于后端解析的英文字段名"
+          />
         </el-form-item>
         <el-form-item label="默认值" prop="value">
           <el-input v-model="popObj.value" />
@@ -87,9 +90,21 @@
             >
               <div class="flex">
                 <el-input
-                  v-if="item.type != 'function'"
+                  v-if="item.type != 'function' && item.type != 'data'"
                   v-model="popObj.propsData[item.key]"
                 />
+                <el-select
+                  v-else-if="item.type == 'data'"
+                  v-model="popObj.propsData[item.key]"
+                  style="width: 100%;"
+                >
+                  <el-option
+                    v-for="(v, i) in item.data"
+                    :key="i"
+                    :label="v.label"
+                    :value="v.value"
+                  />
+                </el-select>
                 <el-input
                   v-else
                   type="textarea"
@@ -97,7 +112,11 @@
                   v-model="popObj.propsData[item.key]"
                   disabled
                 ></el-input>
-                <div class="fn-edit" v-if="item.type == 'function'" @click="editFn(item, popObj.propsData[item.key])">
+                <div
+                  class="fn-edit"
+                  v-if="item.type == 'function'"
+                  @click="editFn(item, popObj.propsData[item.key])"
+                >
                   <el-icon><Edit /></el-icon>
                 </div>
                 <div class="icon-right" @click="deleteProps(item.key)">
@@ -157,9 +176,7 @@
           ref="codeEditor"
         />
         <div class="form-bottom mt20">
-          <el-button type="primary" @click="saveFn"
-            >添加</el-button
-          >
+          <el-button type="primary" @click="saveFn">添加</el-button>
           <el-button type="primary" @click="clockFn">返回</el-button>
         </div>
       </div>
@@ -175,8 +192,7 @@ const codeFn = `return (e) => {
     // this.vue 就是vue的当前实例
     console.log(e, this.vue);
 }
-`
-
+`;
 
 export default {
   components: {
@@ -223,6 +239,7 @@ export default {
     selectBtn(index) {
       let popObj = JSON.parse(JSON.stringify(formArr[index]));
       this.popObj = popObj;
+      this.isAddFn = false;
       this.isShowFormAPop = true;
     },
     propsClick(item) {
@@ -239,7 +256,7 @@ export default {
     },
     editFn(item, value) {
       this.fnObj = JSON.parse(JSON.stringify(item));
-      this.fnObj.value = value
+      this.fnObj.value = value;
       this.isAddFn = true;
     },
     saveFn() {
@@ -301,7 +318,7 @@ export default {
       const data = {
         [this.formItemKey]: JSON.parse(JSON.stringify(this.formItem)),
       };
-      console.log('data--------', data)
+      console.log("data--------", data);
       this.vccApp.viewSaveJs(data, fn);
     },
   },
@@ -342,7 +359,7 @@ export default {
           top: 0;
         }
       }
-      
+
       .icon-right {
         margin-top: 7px;
         margin-left: 4px;
@@ -389,6 +406,10 @@ export default {
   }
   .fn-edit {
     margin-left: 10px;
+  }
+  :deep(.el-select) {
+    width: 100%;
+    flex: 1;
   }
   :deep(.el-input) {
     flex: 1;
