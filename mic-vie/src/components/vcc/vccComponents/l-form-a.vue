@@ -22,7 +22,7 @@
           <div class="value">
             <VNode :content="item" />
           </div>
-          <div class="icon-right">
+          <div class="icon-right" @click="editForm(item)">
             <el-icon><Edit /></el-icon>
           </div>
         </div>
@@ -236,6 +236,25 @@ export default {
     formSelectBtn(event) {
       event.stopPropagation();
     },
+    // 修改表单项
+    editForm(item) {
+      let form = JSON.parse(JSON.stringify(this.formArr))
+      let obj = form.find(obj => obj.type === item.type)
+      this.popObj = {
+        ...obj,
+        propsData: item.propsData,
+        label: item.label,
+        valueName: item.valueName,
+        value: item.value,
+        rule: {
+          isRequire: item.rule.length > 0 ? item.rule[0].required : false,
+          errorMessage: item.rule.length > 0 ? item.rule[0].message : false,
+        },
+        propsData: item.propsData
+      }
+      this.isAddFn = false;
+      this.isShowFormAPop = true;
+    },
     selectBtn(index) {
       let popObj = JSON.parse(JSON.stringify(formArr[index]));
       this.popObj = popObj;
@@ -362,7 +381,7 @@ export default {
 
       .icon-right {
         margin-top: 7px;
-        margin-left: 4px;
+        margin-left: 10px;
       }
     }
   }
