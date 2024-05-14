@@ -56,24 +56,53 @@ export const formArr = [
       },
     ],
   },
-  // {
-  //   name: "级联选择器",
-  //   label: "",
-  //   valueName: "",
-  //   value: "",
-  //   type: "cascader",
-  //   rule: [],
-  //   propsData: [],
-  // },
-  // {
-  //   name: "多选框",
-  //   label: "",
-  //   valueName: "",
-  //   value: "",
-  //   type: "checkbox-group",
-  //   rule: [],
-  //   propsData: [],
-  // },
+  {
+    name: "多选框",
+    label: "",
+    valueName: "",
+    value: "",
+    type: "checkbox-group",
+    options: [],
+    rule: {
+      isRequire: false,
+      errorMessage: "",
+    },
+    propsData: {},
+    propsDataSelects: [
+      {
+        name: "勾选最小数量",
+        key: "min",
+        value: "",
+      },
+      {
+        name: "勾选最大数量",
+        key: "max",
+        value: "",
+      },
+      {
+        name: "是否禁用",
+        key: "disabled",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "绑定值变化时触发",
+        key: "onChange",
+        value: "",
+        type: "function",
+      },
+    ],
+  },
   {
     name: "日期选择器",
     label: "",
@@ -454,25 +483,133 @@ export const formArr = [
       },
     ],
   },
-
-  // {
-  //   name: "单选按钮",
-  //   label: "",
-  //   valueName: "",
-  //   value: "",
-  //   type: "radio-group",
-  //   rule: [],
-  //   propsData: [],
-  // },
-  // {
-  //   name: "下拉选择器",
-  //   label: "",
-  //   valueName: "",
-  //   value: "",
-  //   type: "select",
-  //   rule: [],
-  //   propsData: [],
-  // },
+  {
+    name: "单选按钮",
+    label: "",
+    valueName: "",
+    value: "",
+    type: "radio-group",
+    options: [],
+    rule: {
+      isRequire: false,
+      errorMessage: "",
+    },
+    propsData: {},
+    propsDataSelects: [
+      {
+        name: "是否禁用",
+        key: "disabled",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      },
+      {
+        name: "绑定值变化时触发",
+        key: "onChange",
+        value: "",
+        type: "function",
+      },
+    ],
+  },
+  {
+    name: "下拉选择器",
+    label: "",
+    valueName: "",
+    value: "",
+    type: "select",
+    options: [],
+    rule: {
+      isRequire: false,
+      errorMessage: "",
+    },
+    propsData: {},
+    propsDataSelects: [
+      {
+        name: "占位文本",
+        key: "placeholder",
+        value: "",
+      }, {
+        name: "是否禁用",
+        key: "disabled",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      }, {
+        name: "是否多选",
+        key: "multiple",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      }, {
+        name: "是否可清空",
+        key: "clearable",
+        value: "",
+        type: "data",
+        data: [
+          {
+            label: "是",
+            value: true,
+          },
+          {
+            label: "否",
+            value: false,
+          },
+        ],
+      }, {
+        name: "绑定值变化时触发",
+        key: "onChange",
+        value: "",
+        type: "function",
+      }, {
+        name: "多选时移除触发",
+        key: "remove-tag",
+        value: "",
+        type: "function",
+      }, {
+        name: "点击清空按钮时触发",
+        key: "onClear",
+        value: "",
+        type: "function",
+      }, {
+        name: "失去焦点时触发",
+        key: "onBlur",
+        value: "",
+        type: "function",
+      }, {
+        name: "获得焦点时触发",
+        key: "onFocus",
+        value: "",
+        type: "function",
+      }
+    ],
+  },
   {
     name: "时间选择器",
     label: "",

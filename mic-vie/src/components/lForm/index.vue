@@ -103,7 +103,6 @@ export default {
     },
     async submitForm() {
       const el = this.$refs[this.ref];
-      console.log(el);
       if (!el) return;
       await el.validate((valid, fields) => {
         if (valid) {

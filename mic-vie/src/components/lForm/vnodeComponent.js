@@ -65,17 +65,20 @@ export default create({
           _options = options.map((ele, index) => {
             const targetLabel = ele[customLabel];
             const extedLabel = extUrl(customLabel, ele);
-            return h(Option, {
-              key: index,
-              label: extedLabel || targetLabel,
-              value: ele[customValue],
-            });
+            return h(
+              Option,
+              {
+                key: index,
+                label: ele[customValue],
+              },
+              extedLabel || targetLabel
+            );
           });
         }
 
         return _options;
-      }
-    } else if (type === 'radio-group') {
+      };
+    } else if (type === "radio-group") {
       children = () => {
         let _options = renderSlot(slots, "default");
 
@@ -84,18 +87,21 @@ export default create({
           _options = options.map((ele, index) => {
             const targetLabel = ele[customLabel];
             const extedLabel = extUrl(customLabel, ele);
-            return h(Option, {
-              key: index,
-              label: extedLabel || targetLabel,
-              value: ele[customValue],
-            });
+            return h(
+              Option,
+              {
+                key: index,
+                label: ele[customValue],
+              },
+              extedLabel || targetLabel
+            );
           });
         }
 
         return _options;
-      }
+      };
     }
-    
+
     return () => {
       if (!custom) return "";
       // 兼容代码生成器

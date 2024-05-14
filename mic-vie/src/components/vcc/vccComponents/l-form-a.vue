@@ -51,19 +51,19 @@
         status-icon
         v-if="!isAddFn"
       >
-        <el-form-item label="字段名称" prop="label">
+        <el-form-item label="字段名称：" prop="label">
           <el-input v-model="popObj.label" />
         </el-form-item>
-        <el-form-item label="字段名" prop="valueName">
+        <el-form-item label="字段名：" prop="valueName">
           <el-input
             v-model="popObj.valueName"
             placeholder="请输入用于后端解析的英文字段名"
           />
         </el-form-item>
-        <el-form-item label="默认值" prop="value">
-          <el-input v-model="popObj.value" />
+        <el-form-item label="默认值：" prop="value">
+          <el-input v-model="popObj.value" :placeholder="'请输入绑定默认值多选框按照,隔开'" />
         </el-form-item>
-        <el-form-item label="是否必填" prop="popObj.rule.isRequire">
+        <el-form-item label="是否必填：" prop="popObj.rule.isRequire">
           <el-radio-group v-model="popObj.rule.isRequire" @change="radioChage">
             <el-radio :label="false">不必填</el-radio>
             <el-radio :label="true">必填</el-radio>
@@ -71,17 +71,44 @@
         </el-form-item>
         <el-form-item
           v-if="popObj.rule.isRequire"
-          label="必填提示"
+          label="必填提示："
           prop="rule.errorMessage"
         >
           <el-input v-model="popObj.rule.errorMessage" />
+        </el-form-item>
+        <el-form-item label="数据：" v-if="['checkbox-group', 'radio-group', 'select'].indexOf(popObj.type) > -1" class="form-options-content">
+          <div v-for="(item, index) in popObj.options" :key="index" class="form-options-box">
+            <ul>
+              <li>
+                <div class="optionn-label">名称：</div>
+                <div class="optionn-value">
+                  <el-input v-model="item.label" />
+                </div>
+                <div class="icon-right"></div>
+              </li>
+              <li>
+                <div class="optionn-label">绑定字段：</div>
+                <div class="optionn-value">
+                  <el-input v-model="item.value" />
+                </div>
+                <div class="icon-right" @click="deleteOption(index)">
+                  <el-icon><RemoveFilled /></el-icon>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div style="width: 100%;">
+            <el-button type="primary" circle @click="addOption">
+              <el-icon><Plus /></el-icon>
+            </el-button>
+          </div>
         </el-form-item>
         <template v-if="Object.keys(popObj.propsData).length > 0">
           <template v-for="(item, index) in popObj.propsDataSelects">
             <el-form-item
               v-if="Object.keys(popObj.propsData).indexOf(`${item.key}`) > -1"
               :key="index"
-              :label="item.name"
+              :label="`${item.name}：`"
             >
               <div class="flex">
                 <el-input
@@ -237,18 +264,30 @@ export default {
       this.editIndex = index
       let form = JSON.parse(JSON.stringify(this.formArr));
       let obj = form.find((obj) => obj.type === item.type);
-      this.popObj = {
+      if (!obj) {
+        this.$message.error("该控件无法编辑");
+        return
+      }
+      let newObj = {
         ...obj,
         propsData: item.propsData,
         label: item.label,
         valueName: item.valueName,
         value: item.value,
+        options: item.options || [],
         rule: {
           isRequire: item.rule.length > 0 ? item.rule[0].required : false,
           errorMessage: item.rule.length > 0 ? item.rule[0].message : false,
         },
         propsData: item.propsData,
-      };
+      }
+      // 多选框value 单独处理一下
+      if (['checkbox-group'].indexOf(this.popObj.type) > -1) {
+        newObj.value = item.value && item.value.length > 0 ? item.value.join(',') : '';
+      }
+
+      this.popObj = newObj;
+      
       this.isAddFn = false;
       this.isShowFormAPop = true;
     },
@@ -295,6 +334,15 @@ export default {
     deleteProps(key) {
       delete this.popObj.propsData[key];
     },
+    addOption() {
+      this.popObj.options.push({
+        label: '',
+        value: '',
+      })
+    },
+    deleteOption(key) {
+      this.popObj.options.splice(key, 1)
+    },
     async submitForm(formEl) {
       const el = this.$refs[formEl];
       if (!el) return;
@@ -313,6 +361,13 @@ export default {
               required: true,
               message: this.popObj.rule.errorMessage,
             });
+          }
+          // 多选框value 单独处理一下
+          if (['checkbox-group'].indexOf(this.popObj.type) > -1) {
+            obj.value = this.popObj.value ? this.popObj.value.split(',') : [];
+          }
+          if (['checkbox-group', 'radio-group', 'select'].indexOf(this.popObj.type) > -1) {
+            obj.options = this.popObj.options || []
           }
           if (this.editIndex) {
             this.formItem[this.editIndex] = obj;
@@ -441,6 +496,39 @@ export default {
   }
   :deep(.el-input) {
     flex: 1;
+  }
+}
+.form-options-content {
+  :deep(.el-form-item__content) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.form-options-box {
+  display: flex;
+  flex-direction: column;
+  ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    li {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 5px;
+      .optionn-label {
+        white-space: nowrap;
+        margin-right: 8px;
+      }
+      &:nth-child(2) {
+        .optionn-label {
+          white-space: nowrap;
+          margin-left: 8px;
+        }
+      }
+      .icon-right {
+        margin-left: 20px;
+      }
+    }
   }
 }
 </style>

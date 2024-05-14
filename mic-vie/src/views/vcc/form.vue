@@ -2,9 +2,9 @@
   <div>
     <l-form :form="formItem" :span="8"></l-form>
     <!-- <editor :height="'500px'" /> -->
-    <el-input>
+    <!-- <el-input>
       <template #prepend>Http://</template>
-    </el-input>
+    </el-input> -->
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
         {
           label: "状态类型",
           valueName: "statusType",
-          value: "",
+          value: [],
           options: [
             {
               value: "1",
@@ -31,10 +31,28 @@ export default {
               label: "表单2",
             },
           ],
-          // type: 'select'
+          type: 'select'
           // type: "checkbox-group",
-          type: 'radio-group'
+          // type: "radio-group",
         },
+        // {
+        //   label: "爱好",
+        //   valueName: "ah",
+        //   value: "1",
+        //   type: "radio-group",
+        //   rule: [],
+        //   propsData: {},
+        //   options: [
+        //     {
+        //       label: "篮球",
+        //       value: "1",
+        //     },
+        //     {
+        //       label: "足球",
+        //       value: "2",
+        //     },
+        //   ],
+        // },
       ],
     };
   },
