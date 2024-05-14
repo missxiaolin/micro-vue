@@ -18,16 +18,18 @@ export default {
     return {
       formItem: [
         {
-            label: "ceshi",
-            valueName: "c",
-            value: "",
-            type: "autocomplete",
-            rule: [],
-            propsData: {
-              fetchSuggestions:
-                "return (e) => {\n    // this.vue 就是vue的当前实例\n    console.log(e, this.vue);\n}\n",
-            },
+          label: "ceshi",
+          valueName: "ce",
+          value: "",
+          type: "date-picker",
+          rule: [],
+          propsData: {
+            placeholder: "请输入当前日期",
+            type: "datetimerange",
+            format: "YYYY-MM-DD HH:mm:ss",
+            'value-format': "YYYY-MM-DD HH:mm:ss"
           },
+        },
       ],
     };
   },

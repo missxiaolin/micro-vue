@@ -4,5 +4,6 @@ export default [
     "onChange",
     "onInput",
     "onClear",
-    "fetchSuggestions"
+    "fetchSuggestions",
+    "calendar-change"
 ]

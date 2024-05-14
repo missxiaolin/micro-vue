@@ -17,7 +17,7 @@
           <div class="value">
             <VNode :content="item" />
           </div>
-          <div class="icon-right" @click="editForm(item)">
+          <div class="icon-right" @click="editForm(item, index)">
             <el-icon><Edit /></el-icon>
           </div>
         </div>
@@ -199,6 +199,7 @@ export default {
   data() {
     return {
       formArr,
+      editIndex: '',
       popObj: {},
       isAddFn: false,
       codeFn,
@@ -232,7 +233,8 @@ export default {
       event.stopPropagation();
     },
     // 修改表单项
-    editForm(item) {
+    editForm(item, index) {
+      this.editIndex = index
       let form = JSON.parse(JSON.stringify(this.formArr));
       let obj = form.find((obj) => obj.type === item.type);
       this.popObj = {
@@ -251,6 +253,7 @@ export default {
       this.isShowFormAPop = true;
     },
     selectBtn(index) {
+      this.editIndex = ''
       let popObj = JSON.parse(JSON.stringify(formArr[index]));
       this.popObj = popObj;
       this.isAddFn = false;
@@ -311,7 +314,12 @@ export default {
               message: this.popObj.rule.errorMessage,
             });
           }
-          this.formItem.push(obj);
+          if (this.editIndex) {
+            this.formItem[this.editIndex] = obj;
+          } else {
+            this.formItem.push(obj);
+          }
+          
           this.viewSaveJs();
           this.isShowFormAPop = false;
         } else {
