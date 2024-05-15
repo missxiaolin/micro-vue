@@ -2,7 +2,7 @@
   <el-card class="attribute-container">
     <el-scrollbar height="calc(100vh - 130px)">
       <!-- <styleComponent /> -->
-      <lFormA v-if="componentName == 'l-form'" v-model:localAttributes="localAttributes" @save="save" />
+      <lFormA v-if="componentName == 'l-form'" v-model:localAttributes="localAttributes" @childSave="childSave" />
       <el-divider content-position="left">特殊处理</el-divider>
       <div style="text-align: center">
         <el-switch
@@ -239,7 +239,20 @@ export default {
     createNew() {
       this.localAttributes.push({ key: "", value: "" });
     },
-    save() {
+    childSave(key, value) {
+      let check = false;
+      this.localAttributes.forEach((item) => {
+        if (item.key == key) {
+          item.value = value;
+          check = true
+        }
+      });
+      if (!check) {
+        this.localAttributes.push({ key, value });
+      }
+      this.save(false)
+    },
+    save(isShowNotify = true) {
       try {
         let resultList = [];
         if (!this.editMode) {
@@ -259,13 +272,15 @@ export default {
         }
 
         this.$emit("save", { resultList, lc_id: this.rawInfoID });
-
-        this.$notify({
-          title: "提示",
-          message: "代码已更新",
-          position: "bottom-right",
-          type: "success",
-        });
+        if (isShowNotify) {
+          this.$notify({
+            title: "提示",
+            message: "代码已更新",
+            position: "bottom-right",
+            type: "success",
+          });
+        }
+        
       } catch (error) {
         console.log(error)
         this.$message.error(error);

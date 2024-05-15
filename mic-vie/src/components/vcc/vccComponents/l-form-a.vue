@@ -2,12 +2,12 @@
   <div class="attribute-seeting-box">
     <el-divider content-position="left">自定义表单</el-divider>
     <div class="attribute-seeting-content">
-      <!-- <div class="attribute-seeting-content-item">
+      <div class="attribute-seeting-content-item">
         <div class="label">提交按钮：</div>
         <div class="attribute-seeting-content-item-content">
-          <el-input placeholder="请输入内容"></el-input>
+          <el-input placeholder="请输入提交按钮文案" v-model="formSaveBtn" @input="inputFormSaveBtn"></el-input>
         </div>
-      </div> -->
+      </div>
       <div class="l-form-b" v-if="formItem.length > 0">
         <div v-for="(item, index) in formItem" :key="index" class="l-form-b-li">
           <div class="icon-left" @click="removeItem(index)">
@@ -225,6 +225,7 @@ export default {
   inject: ["vccApp"],
   data() {
     return {
+      formSaveBtn: '保存',
       formArr,
       editIndex: '',
       popObj: {},
@@ -247,11 +248,17 @@ export default {
     this.init(this.localAttributes);
   },
   methods: {
+    inputFormSaveBtn(e) {
+      this.$emit("childSave", ":formSaveBtn", `'${e}'`)
+    },
     init(localAttributes) {
       localAttributes.forEach((item) => {
         if (item.key == ":form") {
           this.formItem = this.jsCode.data()[item.value] || [];
           this.formItemKey = item.value;
+        }
+        if (item.key == ":formSaveBtn") {
+          this.formSaveBtn = item.value ? item.value.replace(/['']/g, '') : "保存";
         }
       });
     },
@@ -261,7 +268,6 @@ export default {
     },
     // 修改表单项
     editForm(item, index) {
-      console.log(item)
       this.editIndex = index
       let form = JSON.parse(JSON.stringify(this.formArr));
       let obj = form.find((obj) => obj.type === item.type);
