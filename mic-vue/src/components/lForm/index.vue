@@ -1,9 +1,6 @@
 <template>
   <div class="form-container">
     <el-form
-      :ref="ref"
-      :model="ruleForm"
-      :rules="rules"
       :label-width="labelWidth"
       :disabled="disabled"
     >
@@ -13,7 +10,8 @@
             <VNode
               :parentThis="this"
               :content="item"
-              v-model="ruleForm[item.valueName]"
+              :isEscapeFn="true"
+              v-model="item.value"
               @updateOptions="updateOptions(item, index)"
             />
           </el-form-item>
@@ -24,7 +22,7 @@
           <el-button type="primary" @click="submitForm">
             {{ formSaveBtn }}
           </el-button>
-          <el-button @click="resetForm">重置</el-button>
+          <el-button @click="goBack">取消</el-button>
         </div>
       </el-form-item>
     </el-form>
@@ -33,7 +31,6 @@
 
 <script>
 import VNode from "./vnodeComponent";
-import { uuid } from "../../utils/utils";
 
 export default {
   components: {
@@ -69,49 +66,32 @@ export default {
   },
   data() {
     return {
-      ref: uuid(16, 16),
-      ruleForm: {},
-      rules: {},
     };
   },
   mounted() {
-    this.init(this.form);
   },
   watch: {
-    form(v) {
-      this.init(v);
-    },
+    
   },
   methods: {
-    init(form) {
-      if (!form || form.length == 0) {
-        return
-      }
-      let ruleForm = this.ruleForm || {};
-      let rulesArr = this.rules || {};
-      form.forEach((item) => {
-        ruleForm[item.valueName] = item.value;
-        rulesArr[item.valueName] = item.rule;
-      });
-      this.ruleForm = ruleForm;
-      this.rules = rulesArr;
-    },
-    resetForm() {
-      const el = this.$refs[this.ref];
-      if (!el) return;
-      el.resetFields();
+    goBack() {
+      this.$router.go(-1);
     },
     async submitForm() {
-      const el = this.$refs[this.ref];
-      if (!el) return;
-      await el.validate((valid, fields) => {
-        if (valid) {
-          console.log(this.ruleForm);
-          // this.$emit("success", this.ruleForm);
-        } else {
-          //   console.log("error submit!", fields);
+      let checkForm = false
+      let from = {}
+      for (let i = 0; i < this.form.length; i++) {
+        if (this.form[i].rule && this.form[i].rule.isRequire && (this.form[i].value === null || this.form[i].value === undefined || this.form[i].value === '')) {
+          this.$message(this.form[i].rule.errorMessage)
+          checkForm = true
+          break
         }
-      });
+        from[this.form[i].valueName] = this.form[i].value
+      }
+      if (checkForm) {
+        return
+      }
+      this.$emit("success", from);
     },
     updateOptions(item, index) {
       const { propsData = {}, options = [] } = item;

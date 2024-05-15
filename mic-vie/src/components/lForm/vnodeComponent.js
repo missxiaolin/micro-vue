@@ -13,11 +13,12 @@ import { isString } from "@vue/shared";
 import fcs from "./util";
 
 export default create({
-  props: ["content", "modelValue", "parentThis"],
+  props: ["content", "modelValue", "parentThis", "isEscapeFn"],
   setup(props, { slots, emit }) {
     const instance = getCurrentInstance();
     const { type, propsData, options } = props.content;
     const { customValue = "value", customLabel = "label" } = propsData || {};
+    const isEscapeFn = props.isEscapeFn
 
     // select 监听options变化，同步更新视图
     const contentComputed = computed(() => {
@@ -109,7 +110,8 @@ export default create({
         if (
           propsData[key] &&
           fcs.indexOf(key) !== -1 &&
-          isString(propsData[key])
+          isString(propsData[key]) &&
+          isEscapeFn
         ) {
           propsData[key] = new Function(propsData[key]).call({
             vue: props.parentThis ? props.parentThis.$parent : {},

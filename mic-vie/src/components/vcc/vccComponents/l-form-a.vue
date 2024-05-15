@@ -15,7 +15,7 @@
           </div>
           <div class="label">{{ item.label }}</div>
           <div class="value">
-            <VNode :content="item" />
+            <VNode :content="item" :isEscapeFn="false" />
           </div>
           <div class="icon-right" @click="editForm(item, index)">
             <el-icon><Edit /></el-icon>
@@ -354,15 +354,9 @@ export default {
             valueName: this.popObj.valueName,
             value: this.popObj.value,
             type: this.popObj.type,
-            rule: [],
+            rule: this.popObj.rule,
             propsData: this.popObj.propsData,
           };
-          if (this.popObj.rule.isRequire == true) {
-            obj.rule.push({
-              required: true,
-              message: this.popObj.rule.errorMessage,
-            });
-          }
           // 多选框value 单独处理一下
           if (['checkbox-group'].indexOf(this.popObj.type) > -1) {
             obj.value = this.popObj.value ? this.popObj.value.split(',') : [];
