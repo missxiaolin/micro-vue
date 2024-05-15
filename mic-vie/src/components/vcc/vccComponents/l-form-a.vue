@@ -61,7 +61,10 @@
           />
         </el-form-item>
         <el-form-item label="默认值：" prop="value">
-          <el-input v-model="popObj.value" :placeholder="'请输入绑定默认值多选框按照,隔开'" />
+          <el-input
+            v-model="popObj.value"
+            :placeholder="'请输入绑定默认值多选框按照,隔开'"
+          />
         </el-form-item>
         <el-form-item label="是否必填：" prop="popObj.rule.isRequire">
           <el-radio-group v-model="popObj.rule.isRequire" @change="radioChage">
@@ -76,8 +79,19 @@
         >
           <el-input v-model="popObj.rule.errorMessage" />
         </el-form-item>
-        <el-form-item label="数据：" v-if="['checkbox-group', 'radio-group', 'select'].indexOf(popObj.type) > -1" class="form-options-content">
-          <div v-for="(item, index) in popObj.options" :key="index" class="form-options-box">
+        <el-form-item
+          label="数据："
+          v-if="
+            ['checkbox-group', 'radio-group', 'select'].indexOf(popObj.type) >
+            -1
+          "
+          class="form-options-content"
+        >
+          <div
+            v-for="(item, index) in popObj.options"
+            :key="index"
+            class="form-options-box"
+          >
             <ul>
               <li>
                 <div class="optionn-label">名称：</div>
@@ -97,7 +111,7 @@
               </li>
             </ul>
           </div>
-          <div style="width: 100%;">
+          <div style="width: 100%">
             <el-button type="primary" circle @click="addOption">
               <el-icon><Plus /></el-icon>
             </el-button>
@@ -210,11 +224,13 @@
 import VNode from "../../lForm/vnodeComponent";
 import editor from "../../editor/index.vue";
 import { formArr } from "./utils/index";
-const codeFn = `return (e) => {
-    // this.vue 就是vue的当前实例
-    console.log(e, this.vue);
+import fns from '../../lForm/util'
+const codeFn = `function changeName(e) {
+      console.log(this)
 }
 `;
+
+request: () => {}
 
 export default {
   components: {
@@ -226,7 +242,7 @@ export default {
   data() {
     return {
       formArr,
-      editIndex: '',
+      editIndex: "",
       popObj: {},
       isAddFn: false,
       codeFn,
@@ -244,6 +260,7 @@ export default {
   },
   mounted() {
     this.jsCode = this.vccApp.mainPanelProvider.getComponentOptions();
+    
     this.init(this.localAttributes);
   },
   methods: {
@@ -261,14 +278,33 @@ export default {
     },
     // 修改表单项
     editForm(item, index) {
-      console.log(item)
-      this.editIndex = index
+      this.editIndex = index;
       let form = JSON.parse(JSON.stringify(this.formArr));
       let obj = form.find((obj) => obj.type === item.type);
+      for (let key in item.propsData) {
+            if (fns.indexOf(key) > -1) {
+              let value = item.propsData[key];
+              let fn = this.jsCode.methods[value]
+              if (fn) {
+                item.propsData[key] = fn.toString()
+              }
+              
+              // const codeString = this.popObj.propsData[key];
+              // // 提取函数名
+              // const functionNameMatch = codeString.match(/(\w+):/)[1];
+              // const functionName = functionNameMatch.trim();
+              // // 提取函数体
+              // const functionBodyMatch = codeString.replace(new RegExp(`${functionName}:\\s*`), '');
+              // const functionBody = functionBodyMatch.trim();
+              // fnArr.push(`${functionName}: ${functionBody}`);
+              // this.popObj.propsData[key] = functionName
+            }
+          }
       if (!obj) {
         this.$message.error("该控件无法编辑");
-        return
+        return;
       }
+
       let newObj = {
         ...obj,
         propsData: item.propsData,
@@ -278,22 +314,23 @@ export default {
         options: item.options || [],
         rule: {
           isRequire: item.rule.length > 0 ? item.rule[0].required : false,
-          errorMessage: item.rule.length > 0 ? item.rule[0].message : '',
+          errorMessage: item.rule.length > 0 ? item.rule[0].message : "",
         },
         propsData: item.propsData,
-      }
+      };
       // 多选框value 单独处理一下
-      if (['checkbox-group'].indexOf(this.popObj.type) > -1) {
-        newObj.value = item.value && item.value.length > 0 ? item.value.join(',') : '';
+      if (["checkbox-group"].indexOf(this.popObj.type) > -1) {
+        newObj.value =
+          item.value && item.value.length > 0 ? item.value.join(",") : "";
       }
 
       this.popObj = newObj;
-      
+
       this.isAddFn = false;
       this.isShowFormAPop = true;
     },
     selectBtn(index) {
-      this.editIndex = ''
+      this.editIndex = "";
       let popObj = JSON.parse(JSON.stringify(formArr[index]));
       this.popObj = popObj;
       this.isAddFn = false;
@@ -337,18 +374,33 @@ export default {
     },
     addOption() {
       this.popObj.options.push({
-        label: '',
-        value: '',
-      })
+        label: "",
+        value: "",
+      });
     },
     deleteOption(key) {
-      this.popObj.options.splice(key, 1)
+      this.popObj.options.splice(key, 1);
     },
+    // 添加修改组件
     async submitForm(formEl) {
       const el = this.$refs[formEl];
       if (!el) return;
       await el.validate((valid, fields) => {
         if (valid) {
+          let fnArr = []
+          for (let key in this.popObj.propsData) {
+            if (fns.indexOf(key) > -1) {
+              const codeString = this.popObj.propsData[key];
+              // 提取函数名
+              const functionNameMatch = codeString.match(/function\s+(\w+)/)[1];
+              const functionName = functionNameMatch.trim();
+
+              // 提取函数体
+              const functionBody = codeString.replace(/^function\s*/, '');
+              fnArr.push(`${functionBody}`);
+              this.popObj.propsData[key] = functionName
+            }
+          }
           let obj = {
             label: this.popObj.label,
             valueName: this.popObj.valueName,
@@ -364,25 +416,30 @@ export default {
             });
           }
           // 多选框value 单独处理一下
-          if (['checkbox-group'].indexOf(this.popObj.type) > -1) {
-            obj.value = this.popObj.value ? this.popObj.value.split(',') : [];
+          if (["checkbox-group"].indexOf(this.popObj.type) > -1) {
+            obj.value = this.popObj.value ? this.popObj.value.split(",") : [];
           }
-          if (['checkbox-group', 'radio-group', 'select'].indexOf(this.popObj.type) > -1) {
-            obj.options = this.popObj.options || []
+          if (
+            ["checkbox-group", "radio-group", "select"].indexOf(
+              this.popObj.type
+            ) > -1
+          ) {
+            obj.options = this.popObj.options || [];
           }
           if (this.editIndex === 0 || this.editIndex) {
             this.formItem[this.editIndex] = obj;
           } else {
             this.formItem.push(obj);
           }
-          
-          this.viewSaveJs();
+
+          this.viewSaveJs(fnArr);
           this.isShowFormAPop = false;
         } else {
           //   console.log("error submit!", fields);
         }
       });
     },
+    // 删除组件
     removeItem(index) {
       let array = this.formItem;
       let indexToRemove = index;
@@ -392,6 +449,7 @@ export default {
       this.formItem = array;
       this.viewSaveJs();
     },
+    // 保存组件
     viewSaveJs(fn = []) {
       const data = {
         [this.formItemKey]: JSON.parse(JSON.stringify(this.formItem)),

@@ -16,7 +16,11 @@ export default create({
   props: ["content", "modelValue", "parentThis"],
   setup(props, { slots, emit }) {
     const instance = getCurrentInstance();
-    const { type, propsData, options } = props.content;
+    let { type, propsData, options } = props.content;
+    if (propsData) {
+      propsData = JSON.parse(JSON.stringify(propsData))
+    }
+    
     const { customValue = "value", customLabel = "label" } = propsData || {};
 
     // select 监听options变化，同步更新视图
@@ -111,9 +115,12 @@ export default create({
           fcs.indexOf(key) !== -1 &&
           isString(propsData[key])
         ) {
-          propsData[key] = new Function(propsData[key]).call({
-            vue: props.parentThis ? props.parentThis.$parent : {},
-          }); // 将当前vue实例挂载到函数的作用域上
+          let value = propsData[key]
+          propsData[key] = function(e) {
+            if (props.parentThis.$parent[value]) {
+              props.parentThis.$parent[value](e)
+            }
+          }
         }
       }
       return h(
