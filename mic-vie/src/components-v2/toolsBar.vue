@@ -19,11 +19,11 @@
           <el-link type="primary" @click="$emit('redo')">redo</el-link>
         </div>
       </el-col>
-      <el-col :span="3">
+      <!-- <el-col :span="3">
         <el-link type="primary" @click="onPreviewModeChange"
           >{{ previewMode ? "PC" : "Mobile" }}</el-link
         >
-      </el-col>
+      </el-col> -->
       <el-col :span="2">
         <div style="display: inline-block">
           <el-link

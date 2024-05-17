@@ -14,8 +14,13 @@ const projectList = RouterConfigBuilder.routerConfigBuilder('/adm/project/list',
     return projectController.projectList(req, res)
 }, true)
 
+const projectDetail = RouterConfigBuilder.routerConfigBuilder('/adm/project/detail', RouterConfigBuilder.METHOD_TYPE_POST, (req, res) => {
+    return projectController.detail(req, res)
+}, true)
+
 
 export default {
     ...projectSave,
-    ...projectList
+    ...projectList,
+    ...projectDetail
 }

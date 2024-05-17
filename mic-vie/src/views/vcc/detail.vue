@@ -72,6 +72,7 @@ export default {
       codeInfoEntity: {
         codeStructure: "",
         JSCode: ``,
+        mode: 1,
       },
       isShowVcc: false,
       formData: {

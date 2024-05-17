@@ -58,6 +58,7 @@ export default class Page extends Base {
     if (result.length == 0) {
       return this.send(res, result, false, "未找到该路由");
     }
+
     return this.send(res, result);
   }
 

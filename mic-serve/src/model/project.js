@@ -163,4 +163,24 @@ export default class ProjectModel {
 
     return res
   }
+
+  /**
+   * 获取详情
+   * @param {*} params 
+   * @returns 
+   */
+  async getPageDetail(params) {
+    console.log(params)
+    let tableName = getTableName();
+    let res = Knex.select("*")
+      .from(tableName)
+      .where("id", params.projectId);
+
+    res = await res.first().catch((e) => {
+      Logger.warn("查询失败, 错误原因 =>", e);
+      return [];
+    });
+
+    return res;
+  }
 }

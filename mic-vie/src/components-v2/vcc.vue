@@ -214,6 +214,7 @@ export default {
   },
   beforeMount() {},
   mounted() {
+    this.onPreviewModeChange(this.initCodeEntity.mode == 1 ? false : true)
     Promise.all([import("../map/load")]).then((res) => {
       this.$emit("onLoadFinish");
       this.init();
@@ -311,6 +312,9 @@ export default {
             ? this.initCodeEntity.codeStructure
             : this.getFakeData()
         );
+      
+        console.log(this.initCodeEntity)
+      
     },
 
     // 通知父组件

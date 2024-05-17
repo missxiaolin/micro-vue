@@ -54,4 +54,21 @@ export default class Project extends Base {
     result.count = await projectModel.getPagesCount(data);
     return this.send(res, result);
   }
+
+  /**
+   * 获取详情详情
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async detail(req, res) {
+    let data = req.body || {},
+      result = {};
+    result = await projectModel.getPageDetail(data);
+    if (result.length == 0) {
+      return this.send(res, result, false, "未找到该路由");
+    }
+
+    return this.send(res, result);
+  }
 }
