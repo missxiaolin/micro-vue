@@ -5,7 +5,11 @@
       <div class="attribute-seeting-content-item">
         <div class="label">提交按钮：</div>
         <div class="attribute-seeting-content-item-content">
-          <el-input placeholder="请输入提交按钮文案" v-model="formSaveBtn" @input="inputFormSaveBtn"></el-input>
+          <el-input
+            placeholder="请输入提交按钮文案"
+            v-model="formSaveBtn"
+            @input="inputFormSaveBtn"
+          ></el-input>
         </div>
       </div>
       <div class="l-form-b" v-if="formItem.length > 0">
@@ -17,9 +21,9 @@
           <div class="value">
             <VNode :content="item" :isEscapeFn="false" />
           </div>
-          <div class="icon-right" @click="editForm(item, index)">
-            <el-icon class="mr5"><Top /></el-icon>
-            <el-icon><Edit /></el-icon>
+          <div class="icon-right">
+            <el-icon class="mr5" @click="editP(index)"><Top /></el-icon>
+            <el-icon @click="editForm(item, index)"><Edit /></el-icon>
           </div>
         </div>
       </div>
@@ -62,7 +66,10 @@
           />
         </el-form-item>
         <el-form-item label="默认值：" prop="value">
-          <el-input v-model="popObj.value" :placeholder="'请输入绑定默认值多选框按照,隔开'" />
+          <el-input
+            v-model="popObj.value"
+            :placeholder="'请输入绑定默认值多选框按照,隔开'"
+          />
         </el-form-item>
         <el-form-item label="是否必填：" prop="popObj.rule.isRequire">
           <el-radio-group v-model="popObj.rule.isRequire" @change="radioChage">
@@ -77,8 +84,19 @@
         >
           <el-input v-model="popObj.rule.errorMessage" />
         </el-form-item>
-        <el-form-item label="数据：" v-if="['checkbox-group', 'radio-group', 'select'].indexOf(popObj.type) > -1" class="form-options-content">
-          <div v-for="(item, index) in popObj.options" :key="index" class="form-options-box">
+        <el-form-item
+          label="数据："
+          v-if="
+            ['checkbox-group', 'radio-group', 'select'].indexOf(popObj.type) >
+            -1
+          "
+          class="form-options-content"
+        >
+          <div
+            v-for="(item, index) in popObj.options"
+            :key="index"
+            class="form-options-box"
+          >
             <ul>
               <li>
                 <div class="optionn-label">名称：</div>
@@ -98,7 +116,7 @@
               </li>
             </ul>
           </div>
-          <div style="width: 100%;">
+          <div style="width: 100%">
             <el-button type="primary" circle @click="addOption">
               <el-icon><Plus /></el-icon>
             </el-button>
@@ -226,9 +244,9 @@ export default {
   inject: ["vccApp"],
   data() {
     return {
-      formSaveBtn: '保存',
+      formSaveBtn: "保存",
       formArr,
-      editIndex: '',
+      editIndex: "",
       popObj: {},
       isAddFn: false,
       codeFn,
@@ -250,7 +268,7 @@ export default {
   },
   methods: {
     inputFormSaveBtn(e) {
-      this.$emit("childSave", ":formSaveBtn", `'${e}'`)
+      this.$emit("childSave", ":formSaveBtn", `'${e}'`);
     },
     init(localAttributes) {
       localAttributes.forEach((item) => {
@@ -259,7 +277,9 @@ export default {
           this.formItemKey = item.value;
         }
         if (item.key == ":formSaveBtn") {
-          this.formSaveBtn = item.value ? item.value.replace(/['']/g, '') : "保存";
+          this.formSaveBtn = item.value
+            ? item.value.replace(/['']/g, "")
+            : "保存";
         }
       });
     },
@@ -269,12 +289,12 @@ export default {
     },
     // 修改表单项
     editForm(item, index) {
-      this.editIndex = index
+      this.editIndex = index;
       let form = JSON.parse(JSON.stringify(this.formArr));
       let obj = form.find((obj) => obj.type === item.type);
       if (!obj) {
         this.$message.error("该控件无法编辑");
-        return
+        return;
       }
       let newObj = {
         ...obj,
@@ -285,22 +305,23 @@ export default {
         options: item.options || [],
         rule: {
           isRequire: item.rule.length > 0 ? item.rule[0].required : false,
-          errorMessage: item.rule.length > 0 ? item.rule[0].message : '',
+          errorMessage: item.rule.length > 0 ? item.rule[0].message : "",
         },
         propsData: item.propsData,
-      }
+      };
       // 多选框value 单独处理一下
-      if (['checkbox-group'].indexOf(this.popObj.type) > -1) {
-        newObj.value = item.value && item.value.length > 0 ? item.value.join(',') : '';
+      if (["checkbox-group"].indexOf(this.popObj.type) > -1) {
+        newObj.value =
+          item.value && item.value.length > 0 ? item.value.join(",") : "";
       }
 
       this.popObj = newObj;
-      
+
       this.isAddFn = false;
       this.isShowFormAPop = true;
     },
     selectBtn(index) {
-      this.editIndex = ''
+      this.editIndex = "";
       let popObj = JSON.parse(JSON.stringify(formArr[index]));
       this.popObj = popObj;
       this.isAddFn = false;
@@ -344,12 +365,12 @@ export default {
     },
     addOption() {
       this.popObj.options.push({
-        label: '',
-        value: '',
-      })
+        label: "",
+        value: "",
+      });
     },
     deleteOption(key) {
-      this.popObj.options.splice(key, 1)
+      this.popObj.options.splice(key, 1);
     },
     async submitForm(formEl) {
       const el = this.$refs[formEl];
@@ -365,18 +386,22 @@ export default {
             propsData: this.popObj.propsData,
           };
           // 多选框value 单独处理一下
-          if (['checkbox-group'].indexOf(this.popObj.type) > -1) {
-            obj.value = this.popObj.value ? this.popObj.value.split(',') : [];
+          if (["checkbox-group"].indexOf(this.popObj.type) > -1) {
+            obj.value = this.popObj.value ? this.popObj.value.split(",") : [];
           }
-          if (['checkbox-group', 'radio-group', 'select'].indexOf(this.popObj.type) > -1) {
-            obj.options = this.popObj.options || []
+          if (
+            ["checkbox-group", "radio-group", "select"].indexOf(
+              this.popObj.type
+            ) > -1
+          ) {
+            obj.options = this.popObj.options || [];
           }
           if (this.editIndex === 0 || this.editIndex) {
             this.formItem[this.editIndex] = obj;
           } else {
             this.formItem.push(obj);
           }
-          
+
           this.viewSaveJs();
           this.isShowFormAPop = false;
         } else {
@@ -391,6 +416,16 @@ export default {
         .slice(0, indexToRemove)
         .concat(array.slice(indexToRemove + 1));
       this.formItem = array;
+      this.viewSaveJs();
+    },
+    editP(index) {
+      if (index == 0) {
+        return;
+      }
+      function swapByDestructuring(array, index1, index2) {
+        [array[index1], array[index2]] = [array[index2], array[index1]];
+      }
+      swapByDestructuring(this.formItem, index, index - 1);
       this.viewSaveJs();
     },
     viewSaveJs(fn = []) {
