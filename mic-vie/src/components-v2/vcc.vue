@@ -22,7 +22,7 @@
       </div>
       <!-- 属性设置 -->
       <attribute-input
-        v-show="isShowAttribute"
+        v-if="isShowAttribute"
         :JSCode="JSCode"
         :enableRemoveButton="true"
         class="attribute"
@@ -116,7 +116,6 @@
     <div class="cross-flag">
       <div class="x"></div>
     </div>
-
     <!-- 视图 -->
     <div id="fullScreen" v-if="!editMode">
       <div style="margin: 20px; font-weight: bold">按下ESC退出预览模式</div>
