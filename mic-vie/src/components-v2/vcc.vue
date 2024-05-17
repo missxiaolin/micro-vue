@@ -313,8 +313,6 @@ export default {
             : this.getFakeData()
         );
       
-        console.log(this.initCodeEntity)
-      
     },
 
     // 通知父组件

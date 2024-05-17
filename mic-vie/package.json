@@ -20,6 +20,7 @@
     "css": "^3.0.0",
     "css-scoped": "^1.0.0",
     "dedent": "^1.5.3",
+    "echarts": "^5.5.0",
     "ejs": "^3.1.6",
     "element-plus": "^2.7.3",
     "escodegen": "^2.0.0",
