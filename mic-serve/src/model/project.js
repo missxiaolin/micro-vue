@@ -174,7 +174,7 @@ export default class ProjectModel {
     let tableName = getTableName();
     let res = Knex.select("*")
       .from(tableName)
-      .where("id", params.projectId);
+      .where("id", params.id);
 
     res = await res.first().catch((e) => {
       Logger.warn("查询失败, 错误原因 =>", e);

@@ -42,6 +42,7 @@
 <script>
 import { pageRouteSave, pageRouteDetail } from "../../api/page";
 import { defineAsyncComponent } from "vue";
+import { projectDetail } from "../../api/project";
 // 以这样一段结构初始化VCC组件
 const initCodeStr =
   '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","style":"min-height: 100%;","lc_id":"container","__children":[]}}]}}';
@@ -103,22 +104,35 @@ export default {
         });
         return;
       }
+      let pRes = await projectDetail({
+        id: this.formData.project_id,
+      });
+      if (!pRes.success || pRes.model.length == 0) {
+        setTimeout(() => {
+          this.$router.push({
+            path: "/vcc/index",
+            query: {
+              projectId: this.$route.query.projectId,
+            },
+          });
+        }, 2000);
+        return false;
+      }
+      this.codeInfoEntity.mode = pRes.model.type;
       if (this.$route.query.id && this.$route.query.id != 0) {
         // 编辑
         let res = await pageRouteDetail({
           id: this.$route.query.id,
-          projectId: this.$route.query.projectId
+          projectId: this.$route.query.projectId,
         });
         if (!res.success || res.model.length == 0) {
           setTimeout(() => {
-            this.$router.push(
-              {
-                path: "/vcc/index",
-                query: {
-                  projectId: this.$route.query.projectId,
-                },
+            this.$router.push({
+              path: "/vcc/index",
+              query: {
+                projectId: this.$route.query.projectId,
               },
-            );
+            });
           }, 2000);
           return false;
         }
@@ -160,14 +174,14 @@ export default {
     },
     goVccIndex() {
       this.$router.push(
-          {
-            path: "/vcc/index",
-            query: {
-              projectId: this.formData.project_id,
-            },
+        {
+          path: "/vcc/index",
+          query: {
+            projectId: this.formData.project_id,
           },
-          1000
-        );
+        },
+        1000
+      );
     },
     async save(code) {
       let param = this.formData;

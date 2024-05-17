@@ -13,10 +13,27 @@ export function projectSave(data) {
   });
 }
 
-
+/**
+ * 列表
+ * @param {*} data 
+ * @returns 
+ */
 export function projectList(data) {
   return request({
     url: "/adm/project/list",
+    method: "post",
+    data,
+  });
+}
+
+/**
+ * 详情
+ * @param {*} data 
+ * @returns 
+ */
+export function projectDetail(data) {
+  return request({
+    url: "/adm/project/detail",
     method: "post",
     data,
   });
