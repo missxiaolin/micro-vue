@@ -369,6 +369,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.attribute-container {
+  :deep(.el-card__body) {
+    padding: 20px 0 20px 20px;
+  }
+  .el-scrollbar {
+    padding-right: 20px;
+  }
+}
 .container {
   padding: 10px;
   width: 50%;

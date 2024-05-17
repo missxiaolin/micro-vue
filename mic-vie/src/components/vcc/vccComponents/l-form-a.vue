@@ -18,6 +18,7 @@
             <VNode :content="item" :isEscapeFn="false" />
           </div>
           <div class="icon-right" @click="editForm(item, index)">
+            <el-icon class="mr5"><Top /></el-icon>
             <el-icon><Edit /></el-icon>
           </div>
         </div>
