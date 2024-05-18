@@ -280,8 +280,11 @@ export class MainPanelProvider {
       const [, , , , rawInfo] = data.split(getSplitTag());
 
       let newDropObj = JSON.parse(rawInfo);
+      if (newDropObj.div && newDropObj.div.class == 'column-li') {
+        newDropObj = newDropObj.div.__children[2].div.__children[0]
+      }
       
-      newDropObj = newDropObj.div.__children[2].div.__children[0]
+      
       if (isRawComponents(newDropObj)) {
         // 插入预设属性
         insertPresetAttribute(newDropObj);
