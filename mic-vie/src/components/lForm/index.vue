@@ -22,7 +22,7 @@
           <el-button type="primary" @click="submitForm">
             {{ formSaveBtn }}
           </el-button>
-          <el-button @click="goBack">取消</el-button>
+          <el-button @click="resetForm">重置</el-button>
         </div>
       </el-form-item>
     </el-form>
@@ -31,6 +31,7 @@
 
 <script>
 import VNode from "./vnodeComponent";
+import { cloneDeep } from 'lodash';
 
 export default {
   components: {
@@ -66,16 +67,20 @@ export default {
   },
   data() {
     return {
+      originalData: ''
     };
   },
   mounted() {
+    this.originalData = cloneDeep(this.form)
   },
   watch: {
     
   },
   methods: {
-    goBack() {
-      this.$router.go(-1);
+    resetForm() {
+      this.form.forEach((item, index) => {
+        item.value = this.originalData[index].value;
+      })
     },
     async submitForm() {
       let checkForm = false

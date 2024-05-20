@@ -1,6 +1,6 @@
 <template>
   <div>
-    <l-form v-model:form="formItem" :span="8"></l-form>
+    <l-form :form="formItem" :span="8"></l-form>
     <!-- <editor :height="'500px'" /> -->
     <!-- <el-input>
       <template #prepend>Http://</template>
@@ -17,58 +17,32 @@ export default {
   data() {
     return {
       formItem: [
-        {
-          label: "姓名",
-          valueName: "name",
-          value: "",
-          type: "input",
-          rule: {
-            isRequire: true,
-            errorMessage: "请输入姓名",
-          },
-          propsData: {
-            onInput:
-              "return(e)=>{\n this.vue.formItem[1].value = e; \n}\n",
-          },
-        }, {
-          label: "状态类型",
-          valueName: "statusType",
-          value: '',
-          options: [
-            {
-              value: "1",
-              label: "表单1",
+          {
+            label: "姓名",
+            valueName: "name",
+            value: "",
+            type: "input",
+            rule: {
+              isRequire: true,
+              errorMessage: "请输入姓名",
             },
-            {
-              value: "2",
-              label: "表单2",
+            propsData: {},
+          },
+          {
+            label: "密码",
+            valueName: "password",
+            value: "",
+            type: "input",
+            rule: {
+              isRequire: true,
+              errorMessage: "请输入密码",
             },
-          ],
-          type: 'select',
-          propsData: {
-          }
-          // type: "checkbox-group",
-          // type: "radio-group",
-        },
-        // {
-        //   label: "爱好",
-        //   valueName: "ah",
-        //   value: "1",
-        //   type: "radio-group",
-        //   rule: [],
-        //   propsData: {},
-        //   options: [
-        //     {
-        //       label: "篮球",
-        //       value: "1",
-        //     },
-        //     {
-        //       label: "足球",
-        //       value: "2",
-        //     },
-        //   ],
-        // },
-      ],
+            propsData: {
+              onInput:
+                "return(e)=>{\n//this.vue就是vue的当前实例\nconsole.log(e,this.vue);\n}\n",
+            },
+          },
+        ],
     };
   },
   mounted() {
