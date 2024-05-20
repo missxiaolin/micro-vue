@@ -2,7 +2,7 @@
   <el-card class="attribute-container">
     <el-scrollbar height="calc(100vh - 130px)">
       <styleComponent v-model:localAttributes="localAttributes" @childSave="childSave" />
-      <lFormA v-if="componentName == 'l-form'" v-model:localAttributes="localAttributes" @childSave="childSave" />
+      <lFormA v-if="componentName == 'l-form' || componentName == 'l-s-form'" :componentName="componentName" v-model:localAttributes="localAttributes" @childSave="childSave" />
       <el-divider content-position="left">特殊处理</el-divider>
       <div style="text-align: center">
         <el-switch

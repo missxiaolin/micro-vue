@@ -240,11 +240,27 @@ export default {
     VNode,
     editor,
   },
-  props: ["localAttributes"],
+  props: ["localAttributes", "componentName"],
   inject: ["vccApp"],
+  watch: {
+    componentName: {
+      handler(newValue) {
+        this.localAttributes.forEach((item) => {
+          if (item.key == ":formSaveBtn") {
+          this.formSaveBtn = item.value
+              ? item.value.replace(/['']/g, "")
+              : newValue == 'l-form' ? "保存" : '搜索';
+          } else {
+            this.formSaveBtn = newValue == 'l-form' ? "保存" : '搜索';
+          }
+        });
+      },
+      deep: true
+    }
+  },
   data() {
     return {
-      formSaveBtn: "保存",
+      formSaveBtn: this.componentName == 'l-form' ? "保存" : '查询',
       formArr,
       editIndex: "",
       popObj: {},
@@ -279,7 +295,7 @@ export default {
         if (item.key == ":formSaveBtn") {
           this.formSaveBtn = item.value
             ? item.value.replace(/['']/g, "")
-            : "保存";
+            : this.componentName == 'l-form' ? "保存" : '搜索';
         }
       });
     },
