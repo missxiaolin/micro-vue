@@ -1,6 +1,14 @@
 <template>
   <div>
-    <l-s-form :form="formItem" :span="8"></l-s-form>
+    <l-table
+      :data="tableData"
+      :columns="columns"
+      :page-size="pageSize"
+      :total="total"
+      @handleCurrentChange="handleCurrentChange"
+      lc_id="l/pSi+VFnx"
+    ></l-table>
+    <!-- <l-s-form :form="formItem" :span="8"></l-s-form> -->
     <!-- <editor :height="'500px'" /> -->
     <!-- <el-input>
       <template #prepend>Http://</template>
@@ -16,33 +24,10 @@ export default {
   },
   data() {
     return {
-      formItem: [
-          {
-            label: "姓名",
-            valueName: "name",
-            value: "",
-            type: "input",
-            rule: {
-              isRequire: true,
-              errorMessage: "请输入姓名",
-            },
-            propsData: {},
-          },
-          {
-            label: "密码",
-            valueName: "password",
-            value: "",
-            type: "input",
-            rule: {
-              isRequire: true,
-              errorMessage: "请输入密码",
-            },
-            propsData: {
-              onInput:
-                "return(e)=>{\n//this.vue就是vue的当前实例\nconsole.log(e,this.vue);\n}\n",
-            },
-          },
-        ],
+      tableData: [],
+      columns: [],
+      pageSize: 1,
+      total: 0,
     };
   },
   mounted() {
@@ -51,7 +36,7 @@ export default {
     // console.log(this.formItem[1])
   },
   methods: {
-    change(e) {
+    handleCurrentChange(e) {
       console.log(e);
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="content-body">
-    <el-table :data="data" style="width: 100%">
+    <el-table :data="data">
       <!-- 循环遍历生成表头 -->
       <template v-for="(col, index) in columns">
         <template v-if="!col.noEmptyValue">
