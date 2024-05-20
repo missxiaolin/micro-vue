@@ -1,6 +1,6 @@
 <template>
   <div>
-    <l-form :form="formItem" :span="8"></l-form>
+    <l-s-form :form="formItem" :span="8"></l-s-form>
     <!-- <editor :height="'500px'" /> -->
     <!-- <el-input>
       <template #prepend>Http://</template>
