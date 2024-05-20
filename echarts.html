@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Clone ECharts with getInstanceByDom</title>
+    <!-- 引入 ECharts 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="originalChart" style="width: 400px; height: 300px;"></div>
+    <!-- <div id="copiedChart" style="width: 400px; height: 300px;"></div> -->
+
+    <script>
+        // 原始图表配置
+        var originalChart = echarts.init(document.getElementById('originalChart'));
+        var originalOption = {
+            title: {
+                text: 'Original Chart'
+            },
+            xAxis: {
+                type: 'category',
+                data: ['A', 'B', 'C', 'D', 'E']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: [10, 20, 15, 25, 30],
+                type: 'bar'
+            }]
+        };
+
+        originalChart.setOption(originalOption);
+
+        // 克隆原始容器
+        var clonedNode = originalChart.getDom().cloneNode(true);
+
+        // 在克隆后的节点上初始化新的 ECharts 实例
+        var clonedChart = echarts.init(clonedNode);
+
+        clonedChart.setOption(originalOption)
+
+        // 将克隆的节点添加到文档中
+        document.body.appendChild(clonedNode);
+
+        // // 复制图表
+        // var copiedDiv = document.getElementById('originalChart').cloneNode(true);
+        // // document.body.appendChild(copiedDiv);
+
+        // // 重新初始化并渲染复制后的图表
+        // var copiedChart = echarts.getInstanceByDom(copiedDiv);
+        // copiedChart.setOption(originalOption);
+    </script>
+</body>
+
+</html>
