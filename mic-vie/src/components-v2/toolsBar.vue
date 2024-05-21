@@ -1,49 +1,70 @@
 <template>
   <div class="top-tools-bar">
-    <el-row :gutter="22">
-      <el-col :span="3">
-        <div class="edit">
-          <el-tooltip
-            class="item"
-            effect="dark"
-            content="ctrl + z"
-            placement="bottom-start"
-          >
-            <el-link
-              type="primary"
-              @click="$emit('undo')"
-              style="margin-right: 3px"
-              >undo</el-link
-            >
-          </el-tooltip>
-          <el-link type="primary" @click="$emit('redo')">redo</el-link>
-        </div>
-      </el-col>
-      <!-- <el-col :span="3">
-        <el-link type="primary" @click="onPreviewModeChange"
-          >{{ previewMode ? "PC" : "Mobile" }}</el-link
+    <ul>
+      <li>
+        <el-link
+          type="primary"
+          @click="$emit('undo')"
+          style="margin-right: 3px"
         >
-      </el-col> -->
-      <el-col :span="2">
-        <div style="display: inline-block">
-          <el-link
-            :type="editMode ? 'primary' : 'danger'"
-            @click="onEditModeChange"
-            >{{ editMode ? "视图" : "编辑" }}</el-link
-          >
-        </div>
-      </el-col>
-      <el-col :span="3">
-        <el-link type="primary" @click="$emit('structureVisible')"
-          >结构树</el-link
+          <svg-icon icon-class="undo" />
+        </el-link>
+        <el-link type="primary" @click="$emit('redo')" class="ml5">
+          <svg-icon icon-class="redo" />
+        </el-link>
+      </li>
+      <li>
+        <el-link
+          :type="editMode ? 'primary' : 'danger'"
+          @click="onEditModeChange"
         >
-      </el-col>
-    </el-row>
+          <el-icon class="mr5"><View v-if="editMode" /><Edit v-else /></el-icon
+          >{{ editMode ? "视图" : "编辑" }}
+        </el-link>
+      </li>
+      <li>
+        <el-link type="primary" @click="$emit('structureVisible')">
+          <el-icon class="mr5"><Guide /></el-icon>结构树
+        </el-link>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <el-link type="primary" @click="$emit('clear')">
+          <el-icon class="mr5"><Delete /></el-icon>
+          清空
+        </el-link>
+      </li>
+      <li>
+        <el-link type="primary" @click="$emit('showVueDialogVisible')">
+          <el-icon class="mr5"><Edit /></el-icon>
+          Vue 二次编辑
+        </el-link>
+      </li>
+      <li>
+        <el-link type="primary" @click="$emit('showJsDialogVisible')">
+          <el-icon class="mr5"><Edit /></el-icon>
+          编辑JS逻辑
+        </el-link>
+      </li>
+      <li>
+        <el-link type="primary" @click="$emit('showCodeDialogVisible')">
+          <el-icon class="mr5"><View /></el-icon>
+          查看实时代码
+        </el-link>
+      </li>
+      <li>
+        <el-link type="primary" @click="$emit('save')">
+          <el-icon class="mr5"><Document /></el-icon>
+          保存
+        </el-link>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import { ElNotification } from 'element-plus'
+import { ElNotification } from "element-plus";
 
 export default {
   props: [],
@@ -87,10 +108,10 @@ export default {
     },
     notification() {
       ElNotification({
-        message: '暂未开发',
-        type: 'warning',
-      })
-    }
+        message: "暂未开发",
+        type: "warning",
+      });
+    },
   },
   fillter: {},
 };
@@ -104,6 +125,16 @@ export default {
   color: #606266;
   border-radius: 0px;
   align-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  ul {
+    display: flex;
+    flex-direction: row;
+    li {
+      margin-right: 20px;
+    }
+  }
 }
 .edit {
   display: inline-block;

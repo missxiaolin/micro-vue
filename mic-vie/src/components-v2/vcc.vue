@@ -11,6 +11,11 @@
             @onEditModeChange="onEditModeChange"
             @redo="redo"
             @undo="undo"
+            @clear="clear"
+            @showJsDialogVisible="showJsDialogVisible"
+            @showVueDialogVisible="showVueDialogVisible"
+            @showCodeDialogVisible="showCodeDialogVisible"
+            @save="save"
             @structureVisible="structureVisible = true"
           ></tools-bar>
         <vueRuleTool
@@ -43,60 +48,6 @@
         :__rawVueInfo__="currentEditRawInfo"
       >
       </attribute-input>
-    </div>
-    <div class="copy">
-      <el-tooltip effect="dark" content="二次编辑" placement="top-start">
-        <div
-          class="round-icon icon-vue"
-          alt=""
-          @click="vueDialogVisible = true"
-        >
-          Vue
-        </div>
-      </el-tooltip>
-      <el-tooltip effect="dark" content="编辑JS逻辑" placement="top-start">
-        <div class="round-icon icon-js" alt="" @click="jsDialogVisible = true">
-          JS
-        </div>
-      </el-tooltip>
-
-      <el-tooltip effect="dark" content="查看实时代码" placement="top-start">
-        <div
-          class="round-icon icon-js"
-          alt=""
-          @click="codeDialogVisible = true"
-          style="padding: 5px"
-        >
-          <svg-icon
-            class="mt5"
-            :icon-class="'working-outline'"
-            :svgStyle="'width: 1.5em;height:1.5em;'"
-          />
-        </div>
-      </el-tooltip>
-      <el-popconfirm
-        confirmButtonText="确认"
-        cancelButtonText="点错了"
-        iconColor="red"
-        title="点我将清空所有编辑的内容, 确认吗?"
-        @confirm="clear"
-      >
-        <template #reference>
-          <div class="round-icon icon-js" style="padding-top: 12px">
-            <el-icon size="14"><Delete /></el-icon>
-          </div>
-        </template>
-      </el-popconfirm>
-      <el-tooltip effect="dark" content="保存" placement="top-start">
-        <div
-          class="round-icon icon-js"
-          alt=""
-          @click="save"
-          style="padding: 12px"
-        >
-          <el-icon><Document /></el-icon>
-        </div>
-      </el-tooltip>
     </div>
 
     <div>
@@ -439,6 +390,18 @@ export default {
       this.mainPanelProvider.render(codeEntity);
     },
 
+    showVueDialogVisible() {
+      this.vueDialogVisible = true
+    },
+
+    showJsDialogVisible() {
+      this.jsDialogVisible = true
+    },
+
+    showCodeDialogVisible() {
+      this.codeDialogVisible = true
+    },
+
     help() {
       // window.open("");
     },
@@ -516,13 +479,6 @@ export default {
   border: 1px solid var(--el-border-color-light);
 }
 
-.copy {
-  position: fixed;
-  right: 20px;
-  bottom: 30px;
-  display: flex;
-  line-height: 0;
-}
 
 .round-icon {
   background: #4dba87;
