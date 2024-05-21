@@ -61,6 +61,14 @@ export default {
   name: "VRuler",
   components: {},
   props: {
+    width: {
+      type: [String],
+      default: ""
+    },
+    height: {
+      type: [String],
+      default: ""
+    },
     position: {
       type: String,
       default: "relative",
@@ -132,13 +140,15 @@ export default {
   computed: {
     wrapperStyle() {
       return {
-        width: this.windowWidth + "px",
-        height: this.windowHeight + "px",
+        width: this.width ? this.width : this.windowWidth + "px",
+        height: this.height ? this.height : this.windowHeight + "px",
         position: this.position,
       };
     },
     contentStyle() {
       return {
+        width: this.width ? this.width : this.windowWidth + "px",
+        height: this.height ? this.height : this.windowHeight + "px",
         left: this.contentLayout.left + "px",
         top: this.contentLayout.top + "px",
         padding: this.left_top + "px 0px 0px " + this.left_top + "px",
@@ -396,7 +406,7 @@ export default {
   &-wrapper {
     left: 0;
     top: 0;
-    z-index: 999;
+    z-index: 20;
     overflow: hidden;
     user-select: none;
   }
@@ -410,7 +420,7 @@ export default {
     left: 0;
     top: 0;
     overflow: hidden;
-    z-index: 999;
+    z-index: 20;
   }
   &-h,
   &-v,
@@ -505,14 +515,14 @@ export default {
   }
   &-content {
     position: absolute;
-    z-index: 997;
+    z-index: 20;
   }
   &-content-mask {
     position: absolute;
     width: 100%;
     height: 100%;
     background: transparent;
-    z-index: 998;
+    z-index: 30;
   }
 }
 </style>

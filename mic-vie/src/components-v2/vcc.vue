@@ -5,24 +5,26 @@
         <raw-components></raw-components>
       </nav>
       <div class="vcc-main-container">
-        <!--顶部工具栏-->
+        <vueRuleTool :is-scale-revise="true" :parent="true" :width="'100%'" :height="'100%'">
+          <!--顶部工具栏-->
         <tools-bar
-          @onPreviewModeChange="onPreviewModeChange"
-          @onEditModeChange="onEditModeChange"
-          @redo="redo"
-          @undo="undo"
-          @structureVisible="structureVisible = true"
-        ></tools-bar>
-        <!-- 内容区域 -->
-        <div class="preview-container">
-          <div id="render-control-panel">
-            <!--这里不能放任何东西，执行时会被清空-->
+        @onPreviewModeChange="onPreviewModeChange"
+        @onEditModeChange="onEditModeChange"
+        @redo="redo"
+        @undo="undo"
+        @structureVisible="structureVisible = true"
+      ></tools-bar>
+          <!-- 内容区域 -->
+          <div class="preview-container">
+            <div id="render-control-panel">
+              <!--这里不能放任何东西，执行时会被清空-->
+            </div>
           </div>
-        </div>
+        </vueRuleTool>
       </div>
       <!-- 属性设置 -->
       <attribute-input
-        v-if="isShowAttribute"
+        :isShowAttribute="isShowAttribute"
         :JSCode="JSCode"
         :enableRemoveButton="true"
         class="attribute"
@@ -130,6 +132,7 @@ import { defineAsyncComponent } from "vue";
 import { MainPanelProvider } from "../libs/main-panel";
 import { initContainerForLine } from "@/utils/lineHelper";
 import { replaceKeyInfo, getJsTemData } from "../utils/utils";
+import vueRuleTool from '../components/vue-ruler-tool/vue-ruler-tool.vue'
 import keymaster from "keymaster";
 
 export default {
@@ -161,6 +164,7 @@ export default {
     vueEditor: defineAsyncComponent(() =>
       import("../components/vcc/vueCodeParseDialog.vue")
     ),
+    vueRuleTool,
   },
   data() {
     return {
@@ -351,6 +355,7 @@ export default {
 
     onPreviewModeChange(newValue) {
       const previewElem = document.querySelector("#render-control-panel");
+      console.log('previewElem', previewElem)
       if (newValue) {
         previewElem.style = "width:375px;";
       } else {
@@ -454,6 +459,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex: 1;
+  justify-content: start;
   background-color: var(--search-bg-color);
   overflow: hidden;
 }
@@ -464,16 +470,17 @@ export default {
 }
 
 .vcc-main-container {
-  width: 100%;
   flex: 1;
   margin: 0px 0px 0 0;
   display: flex;
   max-height: 100vh;
   flex-direction: column;
-  margin: 0 10px;
+  overflow: hidden;
+  margin: 0 10px 0 10px;
 }
 
 .attribute {
+  width: 300px;
   z-index: 2;
 }
 
@@ -490,7 +497,8 @@ export default {
 }
 
 .preview-container {
-  height: 0;
+  width: 100%;
+  height: 100%;
   flex-grow: 1;
   display: flex;
   justify-content: center;
