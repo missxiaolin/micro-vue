@@ -1,4 +1,4 @@
-import{d as dedent}from"./dedent-CSHlQ-s0.js";import{c as codeEditor}from"./index-DqtlhUVV.js";import{_ as _export_sfc,q as prettier,t as babel,r as resolveComponent,o as openBlock,f as createBlock,w as withCtx,b as createVNode,a as createBaseVNode,e as createTextVNode,c as createElementBlock,z as toDisplayString,h as createCommentVNode}from"./index-BjaaMBRI.js";const example=dedent`{
+import{d as dedent}from"./dedent-CSHlQ-s0.js";import{c as codeEditor}from"./index-CdzCDlSj.js";import{_ as _export_sfc,q as prettier,t as babel,r as resolveComponent,o as openBlock,f as createBlock,w as withCtx,b as createVNode,a as createBaseVNode,e as createTextVNode,c as createElementBlock,A as toDisplayString,h as createCommentVNode}from"./index-ChpQSgQz.js";const example=dedent`{
         data() {
           return {
   
