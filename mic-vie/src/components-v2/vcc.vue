@@ -18,6 +18,8 @@
           :parent="true"
           :width="'100%'"
           :height="'100%'"
+          :isScaleRevise="true"
+          ref="vueRuleTool"
         >
           
           <!-- 内容区域 -->
@@ -300,6 +302,9 @@ export default {
           if (this.$refs.codeStructure) {
             this.$refs.codeStructure.updateCode(codeRawVueInfo);
           }
+          if (this.$refs.vueRuleTool) {
+            this.$refs.vueRuleTool.regenerateScale();
+          }
           this.codeRawVueInfo = codeRawVueInfo;
 
           this.notifyParent();
@@ -358,7 +363,6 @@ export default {
 
     onPreviewModeChange(newValue) {
       const previewElem = document.querySelector("#render-control-panel");
-      console.log("previewElem", previewElem);
       if (newValue) {
         previewElem.style = "width:375px;";
       } else {
@@ -488,10 +492,10 @@ export default {
 }
 
 #render-control-panel {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   border-radius: 0px;
-  overflow: auto;
+  overflow: hidden;
   box-sizing: border-box;
   background-color: var(--search-bg-color);
 
@@ -501,7 +505,7 @@ export default {
 
 .preview-container {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   flex-grow: 1;
   display: flex;
   justify-content: center;

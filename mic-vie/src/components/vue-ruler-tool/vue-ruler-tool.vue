@@ -2,9 +2,10 @@
   <div
     :style="wrapperStyle"
     class="vue-ruler-wrapper"
+    ref="vueRulerWrapper"
     onselectstart="return false;"
   >
-    <section v-show="rulerToggle">
+    <session v-show="rulerToggle">
       <div
         ref="horizontalRuler"
         class="vue-ruler-h"
@@ -47,7 +48,7 @@
         :class="`vue-ruler-ref-line-${item.type}`"
         @mousedown="handleDragLine(item)"
       ></div>
-    </section>
+    </session>
     <div ref="content" class="vue-ruler-content" :style="contentStyle">
       <slot />
     </div>
@@ -135,6 +136,7 @@ export default {
         r: 82,
       }, // 快捷键参数
       rulerToggle: true, // 标尺辅助线显示开关
+      time: null
     };
   },
   computed: {
@@ -208,12 +210,28 @@ export default {
         ? this.dragHorizontalLine(id)
         : this.dragVerticalLine(id);
     },
+    regenerateScale() {
+      this.time && clearTimeout(this.time)
+      this.time = setTimeout(() => {
+        // 根据内容部分进行刻度修正
+        let content = this.$refs.vueRulerWrapper;
+        this.xScale = []
+        this.yScale = []
+        this.$refs.verticalRuler.style.height = "100%";
+        this.getCalc(this.xScale, content.scrollWidth);
+        this.getCalc(this.yScale, content.scrollHeight);
+        console.log('content.scrollHeight', content.scrollHeight)
+        this.$refs.verticalRuler.style.height = content.scrollHeight + "px";
+      }, 200)
+      
+    },
     box() {
       if (this.isScaleRevise) {
         // 根据内容部分进行刻度修正
         const content = this.$refs.content;
         const contentLeft = content.offsetLeft;
         const contentTop = content.offsetTop;
+        
 
         this.getCalcRevise(this.xScale, contentLeft);
         this.getCalcRevise(this.yScale, contentTop);
@@ -524,5 +542,9 @@ export default {
     background: transparent;
     z-index: 30;
   }
+}
+.vue-ruler-wrapper {
+  overflow: auto;
+  overflow-x: hidden;
 }
 </style>
