@@ -57,6 +57,18 @@ const jsTem = `
   },
 }
 `;
+
+function startsWithSlash(rule, value, callback) {
+  const regex = /^\//;
+  if (value === '') {
+    callback(new Error('请输入路由路径'))
+  } else if (!regex.test(value)) {
+    callback(new Error("路由路径必须/开头"))
+  } else {
+    callback()
+  }
+}
+
 export default {
   components: {
     vcc: defineAsyncComponent(() => import("../../components-v2/vcc.vue")),
@@ -68,7 +80,11 @@ export default {
         route_name: [
           { required: true, message: "请输入路由名称", trigger: "blur" },
         ],
-        path: [{ required: true, message: "请输入路由路径", trigger: "blur" }],
+
+        path: [
+          { required: true, message: "请输入路由路径", trigger: "blur" },
+          { validator: startsWithSlash, trigger: "blur" }
+        ],
       },
       codeInfoEntity: {
         codeStructure: "",
