@@ -5,15 +5,21 @@
         <raw-components></raw-components>
       </nav>
       <div class="vcc-main-container">
-        <vueRuleTool :is-scale-revise="true" :parent="true" :width="'100%'" :height="'100%'">
-          <!--顶部工具栏-->
-        <tools-bar
-        @onPreviewModeChange="onPreviewModeChange"
-        @onEditModeChange="onEditModeChange"
-        @redo="redo"
-        @undo="undo"
-        @structureVisible="structureVisible = true"
-      ></tools-bar>
+        <!--顶部工具栏-->
+          <tools-bar
+            @onPreviewModeChange="onPreviewModeChange"
+            @onEditModeChange="onEditModeChange"
+            @redo="redo"
+            @undo="undo"
+            @structureVisible="structureVisible = true"
+          ></tools-bar>
+        <vueRuleTool
+          :is-scale-revise="true"
+          :parent="true"
+          :width="'100%'"
+          :height="'100%'"
+        >
+          
           <!-- 内容区域 -->
           <div class="preview-container">
             <div id="render-control-panel">
@@ -36,7 +42,6 @@
       >
       </attribute-input>
     </div>
-
     <div class="copy">
       <el-tooltip effect="dark" content="二次编辑" placement="top-start">
         <div
@@ -132,7 +137,7 @@ import { defineAsyncComponent } from "vue";
 import { MainPanelProvider } from "../libs/main-panel";
 import { initContainerForLine } from "@/utils/lineHelper";
 import { replaceKeyInfo, getJsTemData } from "../utils/utils";
-import vueRuleTool from '../components/vue-ruler-tool/vue-ruler-tool.vue'
+import vueRuleTool from "../components/vue-ruler-tool/vue-ruler-tool.vue";
 import keymaster from "keymaster";
 
 export default {
@@ -210,15 +215,15 @@ export default {
   beforeCreate() {},
   provide() {
     return {
-      'vccApp': this
-    }
+      vccApp: this,
+    };
   },
   created() {
     this.mainPanelProvider = new MainPanelProvider();
   },
   beforeMount() {},
   mounted() {
-    this.onPreviewModeChange(this.initCodeEntity.mode == 1 ? false : true)
+    this.onPreviewModeChange(this.initCodeEntity.mode == 1 ? false : true);
     Promise.all([import("../map/load")]).then((res) => {
       this.$emit("onLoadFinish");
       this.init();
@@ -231,7 +236,6 @@ export default {
   destroyed() {},
   methods: {
     convertLogicCode(JSCode) {
-      
       try {
         const JSCodeInfo = eval(
           `(function(){return ${JSCode.replace(/\s+/g, "")}})()`
@@ -241,15 +245,15 @@ export default {
         const fn = () => {
           if (!this.$refs.codeEditor) {
             setTimeout(() => {
-              fn()
-            }, 20)
-            return
+              fn();
+            }, 20);
+            return;
           }
           this.$refs.codeEditor.updateLogicCode(JSCode);
-        }
+        };
 
-        fn()
-        
+        fn();
+
         return JSCodeInfo;
       } catch (e) {
         console.warn(
@@ -316,7 +320,6 @@ export default {
             ? this.initCodeEntity.codeStructure
             : this.getFakeData()
         );
-      
     },
 
     // 通知父组件
@@ -355,7 +358,7 @@ export default {
 
     onPreviewModeChange(newValue) {
       const previewElem = document.querySelector("#render-control-panel");
-      console.log('previewElem', previewElem)
+      console.log("previewElem", previewElem);
       if (newValue) {
         previewElem.style = "width:375px;";
       } else {
@@ -400,7 +403,7 @@ export default {
     // 保存js data fn
     viewSaveJs(d = {}, fn = []) {
       const temScript = getJsTemData(d, fn);
-      
+
       let jsCode = this.JSCode.trim();
       const JSCodeInfo = eval(`(function(){return ${jsCode};})()`);
       const newJsCode = replaceKeyInfo(temScript, JSCodeInfo);

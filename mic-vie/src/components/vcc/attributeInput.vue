@@ -1,6 +1,13 @@
 <template>
   <el-card class="attribute-container">
-    <el-scrollbar height="calc(100vh - 130px)">
+    <div v-if="!isShowAttribute" class="attribute-empty">
+      <el-empty description="还没有数据哦">
+        <template #default>
+          赶快拖拽组件来生成你的H5页面吧～
+        </template>
+      </el-empty>
+    </div>
+    <el-scrollbar height="calc(100vh - 130px)" v-else>
       <styleComponent v-model:localAttributes="localAttributes" @childSave="childSave" />
       <lFormA v-if="componentName == 'l-form' || componentName == 'l-s-form'" :componentName="componentName" v-model:localAttributes="localAttributes" @childSave="childSave" />
       <el-divider content-position="left">特殊处理</el-divider>
@@ -159,7 +166,7 @@ export default {
     styleComponent,
     lFormA
   },
-  props: ["__rawVueInfo__", "enableRemoveButton", "shortcutInitMode", "JSCode"], // __rawVueInfo__为当前编辑的原始代码对象, shortcutInitMode快捷键的初始化方式
+  props: ["__rawVueInfo__", "enableRemoveButton", "shortcutInitMode", "JSCode", "isShowAttribute"], // __rawVueInfo__为当前编辑的原始代码对象, shortcutInitMode快捷键的初始化方式
   data: function () {
     return {
       input: "",
@@ -369,6 +376,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.attribute-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .attribute-container {
   :deep(.el-card__body) {
     padding: 20px 0 20px 20px;
