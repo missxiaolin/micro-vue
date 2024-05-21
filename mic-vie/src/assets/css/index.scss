@@ -407,36 +407,34 @@ $layout-height: 50px;
   position: relative;
   padding-top: 10px;
   padding-left: 3px;
-  width: 200px;
+  width: 100%;
   .column-li {
-    width: 90px;
-    height: 110px;
+    width: 115px;
+    height: 35px;
     border: 2px solid hsla(0,0%,62%,.24);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-bottom: 8px;
     overflow: hidden;
     position: relative;
+    justify-content: space-between;
+    padding: 0 5px 0 5px;
     &:nth-child(even) {
       margin-left: 8px;
     }
     .title {
-      width: 86px;
-      height: 20px;
-      line-height: 20px;
+      line-height: 35px;
       text-align: center;
       background-color: var(--search-bg-color);
       color: var(--el-text-color-primary);
-      position: absolute;
-      left: 0;
-      bottom: 2px;
     }
     .li-img {
-      width: 100%;
+      width: 20px;
+      height: 20px;
+      margin-top: 5px;
       &.max-img {
-        width: 70%;
-        margin: 0 auto;
-        margin-top: 10px;
+        width: 20px;
+        height: 20px;
       }
     }
     .li-mark-content {

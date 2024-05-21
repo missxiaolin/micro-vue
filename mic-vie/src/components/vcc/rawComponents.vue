@@ -1,23 +1,20 @@
 <template>
-  <div class="row-container">
-    <div class="icon-box" @click="clickDarrow">
-      <el-icon size="20">
-        <DArrowRight v-if="isExpand" />
-        <DArrowLeft v-else />
-      </el-icon>
-    </div>
-    <el-tabs tab-position="left" class="left-tabs">
-      <el-tab-pane
-        v-for="(item, index) in iconArray"
-        :key="index"
-        :label="item.labelName"
-      >
-        <keep-alive>
-          <component :is="item.componentName" @mounted="onMouted"></component>
-        </keep-alive>
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+  <el-card class="row-container">
+    <el-scrollbar height="calc(100vh - 130px)" class="row-container-scrollbar">
+      <el-collapse>
+        <el-collapse-item
+          v-for="(item, index) in iconArray"
+          :key="index"
+          :title="item.labelName"
+          :name="item.labelName"
+        >
+          <keep-alive>
+            <component :is="item.componentName" @mounted="onMouted"></component>
+          </keep-alive>
+        </el-collapse-item>
+      </el-collapse>
+    </el-scrollbar>
+  </el-card>
 </template>
 
 <script>
@@ -95,26 +92,23 @@ export default {
       //   };
       // }
     },
-    clickDarrow() {
-      let dom = document.getElementsByClassName("row-container")[0];
-      let width = this.isExpand ? "120" : "330";
-      dom.animate({ width: `${width}px` }, 500, "linear");
-      setTimeout(() => {
-        dom.style.width = `${width}px`;
-        this.isExpand = !this.isExpand;
-      }, 470);
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .row-container {
-  width: 330px;
+  width: 300px;
   display: flex;
   height: 100%;
-  padding-right: 20px;
   position: relative;
+  .row-container-scrollbar {
+    padding-right: 20px;
+  }
+  :deep(.el-card__body) {
+    width: 100%;
+    padding-right: 0;
+  }
   .left-tabs {
     position: relative;
   }
