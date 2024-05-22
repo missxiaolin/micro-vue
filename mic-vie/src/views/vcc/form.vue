@@ -18,6 +18,7 @@
 
 <script>
 import editor from "../../components/editor/index.vue";
+import { mCss } from "../../utils/css";
 export default {
   components: {
     editor,
@@ -31,6 +32,32 @@ export default {
     };
   },
   mounted() {
+    const css1 = `
+.my-class {
+    width: auto; height: auto; color: inherit; background-color: #7E1313; 
+}
+.a {
+    width: auto;
+}
+`;
+
+    // 样式字符串2
+    const css2 = `
+.my-class {
+    width: auto; height: auto; color: inherit; background-color: #C58383; 
+}
+.b {
+    width: auto;
+    height: auto;
+}
+`;
+    mCss(css1, css2).then((res) => {
+      // console.log(res);
+      const extractedClass = res
+        .match(/\.my-class {([\s\S]*?)}/)[1]
+        .replace(/\s+/g, " ");
+      console.log(extractedClass);
+    });
     // this.formItem[1].value = "1";
     // this.formItem[1].propsData.disabled = true;
     // console.log(this.formItem[1])

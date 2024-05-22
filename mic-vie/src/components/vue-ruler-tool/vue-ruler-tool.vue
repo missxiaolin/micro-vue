@@ -220,7 +220,6 @@ export default {
         this.$refs.verticalRuler.style.height = "100%";
         this.getCalc(this.xScale, content.scrollWidth);
         this.getCalc(this.yScale, content.scrollHeight);
-        console.log('content.scrollHeight', content.scrollHeight)
         this.$refs.verticalRuler.style.height = content.scrollHeight + "px";
       }, 200)
       

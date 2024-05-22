@@ -12,7 +12,10 @@
           class="attribute-seeting-content-item-content"
           v-if="item.type === 'input'"
         >
-          <el-input v-model="item.value" @change="codeStyleAttributes"></el-input>
+          <el-input
+            v-model="item.value"
+            @change="codeStyleAttributes"
+          ></el-input>
         </div>
         <div
           class="attribute-seeting-content-item-content"
@@ -31,30 +34,36 @@
 </template>
 
 <script>
+import { mCss } from "../../../utils/css";
+
 const initStyleData = [
   {
     name: "宽度",
     key: "width",
     type: "input",
     value: "",
+    defaultValue: "auto",
   },
   {
     name: "高度",
     key: "height",
     type: "input",
     value: "",
+    defaultValue: "auto",
   },
   {
     name: "字体颜色",
     key: "color",
     type: "color",
     value: "",
+    defaultValue: "inherit",
   },
   {
     name: "背景颜色",
     key: "background-color",
     type: "color",
     value: "",
+    defaultValue: "inherit",
   },
 ];
 
@@ -67,7 +76,7 @@ export default {
     };
   },
   mounted() {
-    this.styleData = JSON.parse(JSON.stringify(initStyleData))
+    this.styleData = JSON.parse(JSON.stringify(initStyleData));
     this.init(this.localAttributes);
   },
   watch: {
@@ -80,7 +89,7 @@ export default {
     // },
     localAttributes: {
       handler(v) {
-        this.styleData = JSON.parse(JSON.stringify(initStyleData))
+        this.styleData = JSON.parse(JSON.stringify(initStyleData));
         this.init(v);
       },
       deep: true,
@@ -120,41 +129,42 @@ export default {
       return styleObject;
     },
     codeStyleAttributes() {
-      const data = this.styleData
-      console.log(data)
+      const data = this.styleData;
       let str = "";
       data.forEach((item) => {
         if (item.value) {
           str = str + `${item.key}: ${item.value}; `;
+        } else {
+          str = str + `${item.key}: ${item.defaultValue}; `;
         }
       });
-      let newStyle = this.mergeStyles(this.styleCode, str);
-      console.log('newStyle', newStyle)
-      if (newStyle) {
-        this.$emit("childSave", "style", `${newStyle}`);
-      }
+      this.mergeStyles(this.styleCode, str, (newStyle) => {
+        if (newStyle) {
+          this.$emit("childSave", "style", `${newStyle}`);
+        }
+      });
     },
     // 合并style
-    mergeStyles(style1, style2) {
-      const styles1 = style1.split(";").filter(Boolean);
-      const styles2 = style2.split(";").filter(Boolean);
-
-      for (let i = 0; i < styles2.length; i++) {
-        const [key, value] = styles2[i].split(":");
-        if (key && value) {
-          const keyLower = key.trim().toLowerCase();
-          const existingIndex = styles1.findIndex((s) =>
-            s.toLowerCase().startsWith(keyLower + ":")
-          );
-          if (existingIndex !== -1) {
-            styles1[existingIndex] = `${key}: ${value}`;
-          } else {
-            styles1.push(styles2[i]);
-          }
-        }
+    mergeStyles(style1, style2, cal) {
+      if (!style1) {
+        cal(style2);
       }
-
-      return styles1.join("; ");
+      const css1 = `
+        .my-class {
+          ${style1}
+        }
+      `;
+      const css2 = `
+        .my-class {
+          ${style2}
+        }
+      `;
+      mCss(css1, css2).then((res) => {
+        const extractedClass = res
+          .match(/\.my-class {([\s\S]*?)}/)[1]
+          .replace(/\s+/g, " ");
+        cal(extractedClass);
+      });
     },
     clickProp(event) {
       event.stopPropagation();
