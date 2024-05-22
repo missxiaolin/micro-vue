@@ -12,13 +12,18 @@
           class="attribute-seeting-content-item-content"
           v-if="item.type === 'input'"
         >
-          <el-input v-model="item.value"></el-input>
+          <el-input v-model="item.value" @change="codeStyleAttributes"></el-input>
         </div>
         <div
           class="attribute-seeting-content-item-content"
           v-if="item.type === 'color'"
         >
-          <el-color-picker v-model="item.value" @click="clickProp" class="aa"></el-color-picker>
+          <el-color-picker
+            v-model="item.value"
+            popper-class="vcc-color-dropdown"
+            @change="codeStyleAttributes"
+            @click="clickProp"
+          ></el-color-picker>
         </div>
       </div>
     </div>
@@ -26,52 +31,57 @@
 </template>
 
 <script>
+const initStyleData = [
+  {
+    name: "宽度",
+    key: "width",
+    type: "input",
+    value: "",
+  },
+  {
+    name: "高度",
+    key: "height",
+    type: "input",
+    value: "",
+  },
+  {
+    name: "字体颜色",
+    key: "color",
+    type: "color",
+    value: "",
+  },
+  {
+    name: "背景颜色",
+    key: "background-color",
+    type: "color",
+    value: "",
+  },
+];
+
 export default {
   props: ["localAttributes"],
   data() {
     return {
-      styleData: [
-        {
-          name: "宽度",
-          key: "width",
-          type: "input",
-          value: "",
-        },
-        {
-          name: "高度",
-          key: "height",
-          type: "input",
-          value: "",
-        },
-        {
-          name: "字体颜色",
-          key: "color",
-          type: "color",
-          value: "",
-        },
-        {
-          name: "背景颜色",
-          key: "background-color",
-          type: "color",
-          value: "",
-        },
-      ],
+      styleData: [],
       styleCode: "",
     };
   },
   mounted() {
+    this.styleData = JSON.parse(JSON.stringify(initStyleData))
     this.init(this.localAttributes);
-    const colorDropdowns = document.getElementsByClassName('el-color-dropdown')
-    colorDropdowns.forEach(dom => {
-        dom.addEventListener("click", (e) => {
-            e.stopPropagation();
-        })
-    })
   },
   watch: {
-    styleData: {
+    // styleData: {
+    //   handler(v) {
+    //     console.log('styleData', v)
+    //     this.codeStyleAttributes(v);
+    //   },
+    //   deep: true,
+    // },
+    localAttributes: {
       handler(v) {
-        this.codeStyleAttributes(v);
+        this.styleData = JSON.parse(JSON.stringify(initStyleData))
+        this.init(v);
       },
       deep: true,
     },
@@ -109,7 +119,9 @@ export default {
 
       return styleObject;
     },
-    codeStyleAttributes(data) {
+    codeStyleAttributes() {
+      const data = this.styleData
+      console.log(data)
       let str = "";
       data.forEach((item) => {
         if (item.value) {
@@ -117,7 +129,10 @@ export default {
         }
       });
       let newStyle = this.mergeStyles(this.styleCode, str);
-      this.$emit("childSave", "style", `${newStyle}`);
+      console.log('newStyle', newStyle)
+      if (newStyle) {
+        this.$emit("childSave", "style", `${newStyle}`);
+      }
     },
     // 合并style
     mergeStyles(style1, style2) {

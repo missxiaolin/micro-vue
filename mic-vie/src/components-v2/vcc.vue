@@ -234,8 +234,10 @@ export default {
         .onRootElementMounted((rootElement) => {
           document
             .getElementsByTagName("body")[0]
-            .addEventListener("click", () => {
-              this.mainPanelProvider.clearElementSelect();
+            .addEventListener("click", (e) => {
+              if (e.target.className != 'el-color-svpanel') {
+                this.mainPanelProvider.clearElementSelect();
+              }
             });
 
           // 只针对根div做事件监听

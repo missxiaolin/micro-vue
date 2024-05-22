@@ -153,7 +153,6 @@ export default class ProjectModel {
   }
 
   async getTypeAll(data) {
-    console.log(data)
     let tableName = getTableName();
     let res = await Knex.select("*")
       .where('type', data.type)
