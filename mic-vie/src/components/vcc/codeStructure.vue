@@ -18,11 +18,11 @@
             <nested-draggable :data="treeData" />
           </div>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" style="height: 100%; overflow:auto;">
           <attribute-input
             ref="attributeInput"
+            :isShowAttribute="currentEditRawInfo"
             :enableRemoveButton="true"
-            v-if="currentEditRawInfo"
             @save="onSaveAttr"
             shortcutInitMode="auto"
             @remove="onRemove"
@@ -53,6 +53,7 @@ export default {
 
   data() {
     return {
+      isShowAttribute: false,
       // 在此自动生成
       treeData: [],
     };
