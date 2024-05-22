@@ -152,6 +152,16 @@ export default class ProjectModel {
     return res[0].projectCount;
   }
 
+  async getTypeAll(data) {
+    console.log(data)
+    let tableName = getTableName();
+    let res = await Knex.select("*")
+      .where('type', data.type)
+      .from(tableName)
+
+    return res
+  }
+
   /**
    * 获取所有项目
    * @returns 

@@ -48,7 +48,7 @@ export default class Index extends Base {
     let data = req.body || {},
       result = colums;
     let arr = [];
-    let projectList = await projectModel.getAll()
+    let projectList = await projectModel.getTypeAll(data)
     projectList.forEach(item => {
       let obj = {
         path: item.id,
