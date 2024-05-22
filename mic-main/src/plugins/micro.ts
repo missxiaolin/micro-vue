@@ -1,6 +1,7 @@
 import microApp from '@micro-zoe/micro-app'
 import router from '@/router'
 import { getDomain } from '@/utils/cache/cookies'
+import { loadScript } from '@/utils/loadScript'
 
 
 function isPushLogin(data: any) {
@@ -10,6 +11,12 @@ function isPushLogin(data: any) {
 }
 
 microApp.addDataListener('micro-vie', (data: any) => {
+  if (data.scriptUrl) {
+    loadScript(data.scriptUrl, data.name, async () => {
+      return true
+    })
+    return
+  }
   isPushLogin(data)
 })
 

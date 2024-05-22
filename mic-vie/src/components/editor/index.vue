@@ -42,7 +42,11 @@ export default {
       "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/loader.js",
       "monaco-editor",
       async () => {
-        loadScript("/edit.js", "monaco-editor-config", async () => {
+        let url = `${window.location.origin}/vie/edit.js`
+        if (process.env.NODE_ENV === 'development') {
+          url = '/edit.js'
+        }
+        loadScript(url, "monaco-editor-config", async () => {
           const fn = () => {
             if (!window.monaco) {
               setTimeout(() => {
