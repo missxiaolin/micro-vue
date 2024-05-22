@@ -53,7 +53,6 @@ export default {
 
   data() {
     return {
-      isShowAttribute: false,
       // 在此自动生成
       treeData: [],
     };
