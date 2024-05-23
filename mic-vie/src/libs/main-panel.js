@@ -44,6 +44,7 @@ export class MainPanelProvider {
     this.redoStack = [];
 
     this.externalJS = {};
+    this.customCss = ""
 
     this.componentOptions = {}
   }
@@ -168,6 +169,15 @@ export class MainPanelProvider {
 
   saveJSCodeOnly(code) {
     this.externalJS = code || {};
+    return this;
+  }
+
+  saveCssCode(code) {
+    
+  }
+
+  saveCssCodeOnly(code) {
+    this.customCss = code || ""
     return this;
   }
 

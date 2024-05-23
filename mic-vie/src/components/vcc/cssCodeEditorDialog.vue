@@ -16,7 +16,7 @@
 
     <div class="js-bottom">
       <div>
-        <el-button type="primary" @click="onSave">确认修改</el-button>
+        <el-button type="primary" @click="onSave">保存</el-button>
         <div v-if="error" class="error">请检查语法错误：{{ error }}</div>
       </div>
     </div>
@@ -32,7 +32,7 @@ import babel from "prettier/parser-babel";
 
 export default {
   props: ["cssCodeDialogVisible"],
-  emits: ["saveJSCode", "update:cssCodeDialogVisible"],
+  emits: ["saveCssCode", "update:cssCodeDialogVisible"],
   components: {
     codeEditor,
   },
@@ -46,35 +46,15 @@ export default {
   },
   methods: {
     updateLogicCode(newCode) {
-      if (newCode) {
-        const pre = "const a = ";
-        this.code = prettier
-          .format(pre + newCode, {
-            plugins: [babel],
-          })
-          .replace(pre, "");
-      }
+      this.code = newCode || ""
     },
     handleClose() {
       this.$emit("update:cssCodeDialogVisible", false);
     },
     onSave() {
-      // const code = this.$refs.codeEditor.getEditorCode();
-      // // 去掉注释
-      // const temp = code.replace(/.+\*\/\s*/gs, "").replace(/\s+/g, "");
-      // try {
-      //   // 转换为对象
-      //   const JSCodeInfo = eval(`(function(){return ${temp}})()`);
-      //   this.$emit("saveJSCode", {
-      //     JSCodeInfo,
-      //     JSCode: temp,
-      //   });
-      //   this.handleClose();
-      //   this.error = "";
-      // } catch (error) {
-      //   console.warn(error);
-      //   this.error = error;
-      // }
+      const code = this.$refs.codeEditor.getEditorCode();
+      this.$emit('saveCssCode', code);
+      this.$emit("update:cssCodeDialogVisible", false);
     },
   },
   watch: {},

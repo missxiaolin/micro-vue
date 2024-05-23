@@ -1,9 +1,10 @@
 <template>
-  <div class="editor-container" id="editor-container" :style="style"></div>
+  <div class="editor-container" :id="uuid" :style="style"></div>
 </template>
 
 <script>
 import { loadScript } from "../../utils/loadScript";
+import { uuid } from '../../utils/utils'
 export default {
   props: {
     value: {
@@ -39,6 +40,7 @@ export default {
   data() {
     return {
       style: "",
+      uuid: uuid(10),
     };
   },
   mounted() {
@@ -58,7 +60,7 @@ export default {
               }, 50);
               return;
             }
-            this.editor = monaco.editor.create(document.getElementById("editor-container"), {
+            this.editor = monaco.editor.create(document.getElementById(`${this.uuid}`), {
               ...this.options,
               value: this.value,
               language: this.language

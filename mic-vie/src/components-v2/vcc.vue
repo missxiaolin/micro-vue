@@ -96,6 +96,7 @@ import { MainPanelProvider } from "../libs/main-panel";
 import { initContainerForLine } from "@/utils/lineHelper";
 import { replaceKeyInfo, getJsTemData } from "../utils/utils";
 import vueRuleTool from "../components/vue-ruler-tool/vue-ruler-tool.vue";
+import cssCodeEditor from "../components/vcc/cssCodeEditorDialog.vue"
 import keymaster from "keymaster";
 
 export default {
@@ -124,9 +125,7 @@ export default {
     codeEditor: defineAsyncComponent(() =>
       import("../components/vcc/jsCodeEditorDialog.vue")
     ),
-    cssCodeEditor: defineAsyncComponent(() =>
-      import("../components/vcc/cssCodeEditorDialog.vue")
-    ),
+    cssCodeEditor,
     vueEditor: defineAsyncComponent(() =>
       import("../components/vcc/vueCodeParseDialog.vue")
     ),
@@ -146,6 +145,7 @@ export default {
 
       codeRawVueInfo: null,
       JSCode: "",
+      customCss: "",
 
       isShowAttribute: false,
     };
@@ -162,14 +162,23 @@ export default {
       }
     },
     initCodeEntity(newVal) {
+      // js
       if (newVal.JSCode) {
         this.mainPanelProvider.saveJSCodeOnly(
           this.convertLogicCode(newVal.JSCode)
         );
       }
 
+      // html
       if (newVal.codeStructure) {
         this.mainPanelProvider.render(newVal.codeStructure);
+      }
+
+      // css
+      if (newVal.css) {
+        this.mainPanelProvider.saveCssCodeOnly(
+          this.convertCssLogicCode(newVal.css)
+        );
       }
     },
   },
@@ -224,6 +233,13 @@ export default {
       }
     },
 
+    // 保存css
+    convertCssLogicCode(code) {
+      this.$refs.cssCodeEditor.updateLogicCode(code);
+      this.customCss = code;
+      return code;
+    },
+
     initShortcut() {
       keymaster("⌘+z, ctrl+z", () => {
         this.undo();
@@ -275,6 +291,11 @@ export default {
         .onSelectElement((rawInfo) => {
           this.currentEditRawInfo = rawInfo;
         })
+        .saveCssCodeOnly(
+          this.convertCssLogicCode(
+            this.initCodeEntity.css ? this.initCodeEntity.css : ""
+          )
+        )
         .saveJSCodeOnly(
           this.convertLogicCode(
             this.initCodeEntity.JSCode ? this.initCodeEntity.JSCode : ""
@@ -292,6 +313,7 @@ export default {
       this.$emit("updateCodeEntity", {
         codeRawVueInfo: this.codeRawVueInfo,
         JSCode: this.JSCode,
+        css: this.customCss
       });
     },
 
@@ -385,6 +407,12 @@ export default {
       this.notifyParent();
     },
 
+    saveCssCode(code) {
+      this.mainPanelProvider.saveCssCode(code);
+      this.customCss = code;
+      this.notifyParent();
+    },
+
     /**
      * 二级编辑解析
      */
@@ -413,10 +441,6 @@ export default {
 
     showCssDialogVisible() {
       this.cssDialogVisible = true;
-    },
-
-    saveCssCode() {
-
     },
 
     help() {
