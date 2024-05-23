@@ -4,6 +4,7 @@ import merge from "lodash-es/merge";
 import cloneDeep from "lodash-es/cloneDeep";
 import prettier from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
+import { mCss } from './m-css'
 
 // 导出组件模板文件
 
@@ -75,10 +76,10 @@ function replaceMethods(template, set, options) {
 }
 
 // 从模板中替换样式
-function replaceStyles(template, set, options) {
+const replaceStyles = async (template, set, options, customCss = '') => {
   return template.replace(
     "/** $stylesTemplate */",
-    convertStyles(set, options)
+    await mCss(convertStyles(set, options), customCss)
   );
 }
 
@@ -537,6 +538,8 @@ export class CodeGenerator {
     this.dataSet = new Set();
 
     this.externalJS = {};
+
+    this.customCss = ""
   }
 
   clearDataSet() {
@@ -551,6 +554,14 @@ export class CodeGenerator {
    */
   setExternalJS(JSCodeInfo) {
     this.externalJS = cloneDeep(JSCodeInfo);
+  }
+
+  /**
+   * 设置外部css
+   * @param {*} cssCode 
+   */
+  setExternalCss(cssCode) {
+    this.customCss = cssCode
   }
 
   /**
@@ -582,7 +593,7 @@ export class CodeGenerator {
   }
 
   // 将所有需要替换的内容通过装饰器逐步替换
-  replaceKeyInfo() {
+  async replaceKeyInfo() {
     // 将对象转换为html并替换
     const templateTemp = replaceHtmlTemplate(getVueTemplate(), this.jsonObj);
 
@@ -655,7 +666,7 @@ export class CodeGenerator {
     const JSTemp = templateTemp.replace("// $script", excludeUnuseal);
 
     // 生成class
-    const styleTemp = replaceStyles(JSTemp, this.classSet, this.options);
+    const styleTemp = await replaceStyles(JSTemp, this.classSet, this.options, this.customCss);
     return styleTemp;
   }
 

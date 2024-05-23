@@ -58,7 +58,7 @@ export class MainPanelProvider {
    * 对内渲染
    * @param {*} rawDataStructure
    */
-  _render(rawDataStructure) {
+  async _render(rawDataStructure) {
     this._rawDataStructure = rawDataStructure;
     // 对外只提供副本，防止外面污染内部
     const codeStructureCopy = cloneDeep(rawDataStructure);
@@ -69,7 +69,7 @@ export class MainPanelProvider {
 
     // 生成原始代码
     // console.log('rawDataStructure----->', rawDataStructure)
-    let code = this.codeGenerator.outputVueCodeWithJsonObj(rawDataStructure);
+    let code = await this.codeGenerator.outputVueCodeWithJsonObj(rawDataStructure);
     // console.log('code', code)
 
     // 将xxx: () => {} 转换为xxx(){}
@@ -155,6 +155,7 @@ export class MainPanelProvider {
   initCodeGenerator() {
     this.codeGenerator = createNewCodeGenerator();
     this.codeGenerator.setExternalJS(this.externalJS);
+    this.codeGenerator.setExternalCss(this.customCss);
   }
 
   getControlPanelRoot() {
@@ -173,7 +174,9 @@ export class MainPanelProvider {
   }
 
   saveCssCode(code) {
-    
+    this.saveCssCodeOnly(code);
+    this.codeGenerator && this.codeGenerator.setExternalCss(code);
+    this.reRender();
   }
 
   saveCssCodeOnly(code) {
