@@ -90,6 +90,7 @@ export default {
         codeStructure: "",
         JSCode: ``,
         mode: 1,
+        css: ''
       },
       isShowVcc: false,
       formData: {
@@ -98,6 +99,7 @@ export default {
         route_name: "",
         path: "",
         tem_json: "",
+        css: '',
         script_json: "",
       },
     };
@@ -155,18 +157,20 @@ export default {
         this.formData = res.model;
         this.codeInfoEntity.codeStructure = JSON.parse(res.model.tem_json);
         this.codeInfoEntity.JSCode = res.model.script_json;
+        this.codeInfoEntity.css = res.model.css;
       } else {
         // 创建
         this.codeInfoEntity.codeStructure = JSON.parse(initCodeStr);
         this.codeInfoEntity.JSCode = jsTem;
+        his.codeInfoEntity.css = '';
         this.formData.tem_json = initCodeStr;
         this.formData.script_json = jsTem;
       }
       this.isShowBaseForm = true;
-      // this.isShowVcc = true;
-      // this.isShowBaseForm = false;
+      this.isShowVcc = true;
+      this.isShowBaseForm = false;
     },
-    onCodeUpdate({ codeRawVueInfo, JSCode }) {
+    onCodeUpdate({ codeRawVueInfo, JSCode, css }) {
       // 编辑后新的代码结构
       // codeRawVueInfo为template对象表示结构
       // JSCode为显式输入的JS逻辑
@@ -174,6 +178,7 @@ export default {
       this.formData.tem_json = JSON.stringify(codeRawVueInfo);
       // console.log('JSCode', JSCode)
       this.formData.script_json = JSCode;
+      this.formData.css = css
     },
     onLoadFinish() {},
     async submitForm(formEl) {

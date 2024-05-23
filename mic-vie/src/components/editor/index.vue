@@ -18,6 +18,10 @@ export default {
       type: String,
       default: "100vh",
     },
+    language: {
+      type: String,
+      default: "javascript",
+    },
     options: {
       type: Object,
       default: () => {
@@ -55,8 +59,9 @@ export default {
               return;
             }
             this.editor = monaco.editor.create(document.getElementById("editor-container"), {
-              value: this.value,
               ...this.options,
+              value: this.value,
+              language: this.language
             });
             this.style = `width: ${this.width};height: ${this.height};`;
           };

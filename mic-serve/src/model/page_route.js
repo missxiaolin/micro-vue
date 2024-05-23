@@ -28,6 +28,7 @@ export default class PageRoute {
       "tem_json",
       "script_json",
       "page_html",
+      "css",
       "create_time",
       "update_time",
     ];
@@ -155,6 +156,7 @@ export default class PageRoute {
       "route_name",
       "path",
       "tem_json",
+      "css",
       "script_json",
       "page_html",
       "status"

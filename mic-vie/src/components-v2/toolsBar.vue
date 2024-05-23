@@ -42,6 +42,12 @@
         </el-link>
       </li>
       <li>
+        <el-link type="primary" @click="$emit('showCssDialogVisible')">
+          <el-icon class="mr5"><Edit /></el-icon>
+          编辑Css
+        </el-link>
+      </li>
+      <li>
         <el-link type="primary" @click="$emit('showJsDialogVisible')">
           <el-icon class="mr5"><Edit /></el-icon>
           编辑JS逻辑

@@ -6,18 +6,19 @@
       </nav>
       <div class="vcc-main-container">
         <!--顶部工具栏-->
-          <tools-bar
-            @onPreviewModeChange="onPreviewModeChange"
-            @onEditModeChange="onEditModeChange"
-            @redo="redo"
-            @undo="undo"
-            @clear="clear"
-            @showJsDialogVisible="showJsDialogVisible"
-            @showVueDialogVisible="showVueDialogVisible"
-            @showCodeDialogVisible="showCodeDialogVisible"
-            @save="save"
-            @structureVisible="structureVisible = true"
-          ></tools-bar>
+        <tools-bar
+          @onPreviewModeChange="onPreviewModeChange"
+          @onEditModeChange="onEditModeChange"
+          @redo="redo"
+          @undo="undo"
+          @clear="clear"
+          @showJsDialogVisible="showJsDialogVisible"
+          @showCssDialogVisible="showCssDialogVisible"
+          @showVueDialogVisible="showVueDialogVisible"
+          @showCodeDialogVisible="showCodeDialogVisible"
+          @save="save"
+          @structureVisible="structureVisible = true"
+        ></tools-bar>
         <vueRuleTool
           :is-scale-revise="true"
           :parent="true"
@@ -26,7 +27,6 @@
           :isScaleRevise="true"
           ref="vueRuleTool"
         >
-          
           <!-- 内容区域 -->
           <div class="preview-container">
             <div id="render-control-panel">
@@ -67,6 +67,11 @@
         @saveJSCode="saveJSCode"
         ref="codeEditor"
       ></codeEditor>
+      <cssCodeEditor
+        v-model:cssCodeDialogVisible="cssDialogVisible"
+        @saveCssCode="saveCssCode"
+        ref="cssCodeEditor"
+      ></cssCodeEditor>
       <vueEditor
         v-model:vueDialogVisible="vueDialogVisible"
         @codeParseSucess="codeParseSucess"
@@ -117,7 +122,10 @@ export default {
       import("../components/vcc/codeStructure")
     ),
     codeEditor: defineAsyncComponent(() =>
-      import("../components/vcc/jSCodeEditorDialog.vue")
+      import("../components/vcc/jsCodeEditorDialog.vue")
+    ),
+    cssCodeEditor: defineAsyncComponent(() =>
+      import("../components/vcc/cssCodeEditorDialog.vue")
     ),
     vueEditor: defineAsyncComponent(() =>
       import("../components/vcc/vueCodeParseDialog.vue")
@@ -131,6 +139,7 @@ export default {
       codeDialogVisible: false,
       structureVisible: false,
       jsDialogVisible: false,
+      cssDialogVisible: false,
       vueDialogVisible: false,
 
       editMode: true,
@@ -391,15 +400,23 @@ export default {
     },
 
     showVueDialogVisible() {
-      this.vueDialogVisible = true
+      this.vueDialogVisible = true;
     },
 
     showJsDialogVisible() {
-      this.jsDialogVisible = true
+      this.jsDialogVisible = true;
     },
 
     showCodeDialogVisible() {
-      this.codeDialogVisible = true
+      this.codeDialogVisible = true;
+    },
+
+    showCssDialogVisible() {
+      this.cssDialogVisible = true;
+    },
+
+    saveCssCode() {
+
     },
 
     help() {
@@ -478,7 +495,6 @@ export default {
   background-size: 10px 10px;
   border: 1px solid var(--el-border-color-light);
 }
-
 
 .round-icon {
   background: #4dba87;
