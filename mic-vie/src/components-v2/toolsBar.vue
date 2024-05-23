@@ -1,7 +1,7 @@
 <template>
   <div class="top-tools-bar">
     <ul>
-      <li>
+      <!-- <li>
         <el-link
           type="primary"
           @click="$emit('undo')"
@@ -12,7 +12,7 @@
         <el-link type="primary" @click="$emit('redo')" class="ml5">
           <svg-icon icon-class="redo" />
         </el-link>
-      </li>
+      </li> -->
       <li>
         <el-link
           :type="editMode ? 'primary' : 'danger'"

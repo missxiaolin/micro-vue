@@ -2,6 +2,12 @@
   <div class="attribute-style-box">
     <el-divider content-position="left">样式处理</el-divider>
     <div class="attribute-seeting-content">
+      <div class="attribute-seeting-content-item">
+        <div class="label">类名：</div>
+        <div class="attribute-seeting-content-item-content">
+          <el-input v-model="className" @input="inputClassName"></el-input>
+        </div>
+      </div>
       <div
         class="attribute-seeting-content-item"
         v-for="(item, index) in styleData"
@@ -71,6 +77,7 @@ export default {
   props: ["localAttributes"],
   data() {
     return {
+      className: '',
       styleData: [],
       styleCode: "",
     };
@@ -101,6 +108,14 @@ export default {
       const styleObjects = localAttributes.filter(
         (item) => item.key === "style"
       );
+      const classNameValue = localAttributes.filter(
+        (item) => item.key === "class"
+      );
+      if (classNameValue && classNameValue.length > 0) {
+        this.className = classNameValue[0].value
+      } else {
+        this.className = ''
+      }
       if (!styleObjects || styleObjects.length == 0) {
         return;
       }
@@ -169,6 +184,10 @@ export default {
     clickProp(event) {
       event.stopPropagation();
     },
+
+    inputClassName(e) {
+      this.$emit("childSave", "class", `${e}`);
+    }
   },
 };
 </script>

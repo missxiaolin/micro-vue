@@ -1,12 +1,12 @@
 <template>
   <el-card class="row-container">
     <el-scrollbar height="calc(100vh - 130px)" class="row-container-scrollbar">
-      <el-collapse>
+      <el-collapse v-model="activeNames">
         <el-collapse-item
           v-for="(item, index) in iconArray"
           :key="index"
           :title="item.labelName"
-          :name="item.labelName"
+          :name="item.componentName"
         >
           <keep-alive>
             <component :is="item.componentName" @mounted="onMouted"></component>
@@ -34,6 +34,7 @@ export default {
   data() {
     return {
       isExpand: true,
+      activeNames: ['htmlRow', 'elBase', 'elForm', 'customRow'],
       iconArray: [
         {
           labelName: "html组件",
