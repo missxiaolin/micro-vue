@@ -167,8 +167,8 @@ export default {
         this.formData.script_json = jsTem;
       }
       this.isShowBaseForm = true;
-      // this.isShowVcc = true;
-      // this.isShowBaseForm = false;
+      this.isShowVcc = true;
+      this.isShowBaseForm = false;
     },
     onCodeUpdate({ codeRawVueInfo, JSCode, css }) {
       // 编辑后新的代码结构

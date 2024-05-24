@@ -7,11 +7,18 @@
     :before-close="handleClose"
     :center="true"
   >
-    <codeEditor
+    <!-- <codeEditor
       style="max-height: 65vh"
       ref="codeEditor"
       :initCode="code"
       mode="text/html"
+    ></codeEditor> -->
+    <codeEditor
+      v-if="vueDialogVisible"
+      :height="'65vh;'"
+      :language="'vue'"
+      ref="codeEditor"
+      :value="`${code}`"
     ></codeEditor>
 
     <div style="text-align: center; padding: 10px">
@@ -27,8 +34,7 @@
 </template>
 
 <script>
-import dedent from "dedent";
-import codeEditor from "./codeEditor.vue";
+import codeEditor from "../editor/index.vue";
 import { html2Json } from "../../libs/bundle-html2json-esm";
 import { ergodic, findAObject } from "../../utils/common";
 
@@ -42,19 +48,23 @@ export default {
   data() {
     return {
       error: "",
-      code: dedent``,
+      code: ''
     };
   },
   beforeCreate() {},
   created() {},
   beforeMount() {},
-  mounted() {},
+  mounted() {
+  },
   beforeUpdate() {},
   updated() {},
   destroyed() {},
   methods: {
     handleClose() {
       this.dialogVisible = false;
+    },
+    updateCode(code) {
+      this.code = code
     },
     async compile() {
       try {
