@@ -9,7 +9,7 @@
   >
     <codeEditor
       :height="'65vh;'"
-      :language="'css'"
+      :language="'scss'"
       ref="codeEditor"
       :value="`${code}`"
     ></codeEditor>

@@ -7,16 +7,10 @@
     :before-close="handleClose"
     :center="true"
   >
-    <!-- <codeEditor
-      style="max-height: 65vh"
-      ref="codeEditor"
-      :initCode="code"
-      mode="text/html"
-    ></codeEditor> -->
     <codeEditor
       v-if="vueDialogVisible"
       :height="'65vh;'"
-      :language="'vue'"
+      :language="'html'"
       ref="codeEditor"
       :value="`${code}`"
     ></codeEditor>
