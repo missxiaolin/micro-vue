@@ -42,14 +42,13 @@ export default {
   data() {
     return {
       error: "",
-      code: ''
+      code: "",
     };
   },
   beforeCreate() {},
   created() {},
   beforeMount() {},
-  mounted() {
-  },
+  mounted() {},
   beforeUpdate() {},
   updated() {},
   destroyed() {},
@@ -57,8 +56,16 @@ export default {
     handleClose() {
       this.dialogVisible = false;
     },
-    updateCode(code) {
-      this.code = code
+    async updateCode(code) {
+      const temp = code;
+      // 使用正则表达式提取<template>标签内容
+      const regex = /<template>([\s\S]*?)<\/template>/;
+      const match = temp.match(regex);
+      let templateContent = "";
+      if (match && match.length > 1) {
+        templateContent = match[1].trim(); // 提取内容并去除首尾空格
+      }
+      this.code = `<template>\n${templateContent}\n</template>`;
     },
     async compile() {
       try {
