@@ -57,15 +57,15 @@ export default {
       this.dialogVisible = false;
     },
     async updateCode(code) {
-      const temp = code;
-      // 使用正则表达式提取<template>标签内容
-      const regex = /<template>([\s\S]*?)<\/template>/;
-      const match = temp.match(regex);
-      let templateContent = "";
-      if (match && match.length > 1) {
-        templateContent = match[1].trim(); // 提取内容并去除首尾空格
-      }
-      this.code = `<template>\n${templateContent}\n</template>`;
+      // 创建DOMParser实例
+      const parser = new DOMParser();
+      // 解析HTML字符串
+      const doc = parser.parseFromString(code, 'text/html');
+      // 获取最外层的<template>标签
+      const templateElement = doc.querySelector('template');
+      // 提取并打印其内容
+      const templateContent = templateElement.outerHTML;
+      this.code = `${templateContent}`;
     },
     async compile() {
       try {
