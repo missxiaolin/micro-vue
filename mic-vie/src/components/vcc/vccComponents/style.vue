@@ -1,6 +1,5 @@
 <template>
   <div class="attribute-style-box">
-    <el-divider content-position="left">样式处理</el-divider>
     <div class="attribute-seeting-content">
       <div class="attribute-seeting-content-item">
         <div class="label">类名：</div>

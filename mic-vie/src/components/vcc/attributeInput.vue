@@ -2,153 +2,172 @@
   <el-card class="attribute-container">
     <div v-if="!isShowAttribute" class="attribute-empty">
       <el-empty description="还没有数据哦">
-        <template #default>
-          赶快拖拽组件来生成你的H5页面吧～
-        </template>
+        <template #default> 赶快拖拽组件来生成你的H5页面吧～ </template>
       </el-empty>
     </div>
     <el-scrollbar height="calc(100vh - 130px)" v-else>
-      <styleComponent v-model:localAttributes="localAttributes" @childSave="childSave" />
-      <lFormA v-if="componentName == 'l-form' || componentName == 'l-s-form'" :componentName="componentName" v-model:localAttributes="localAttributes" @childSave="childSave" />
-      <el-divider content-position="left">特殊处理</el-divider>
-      <div style="text-align: center">
-        <el-switch
-          v-model="editMode"
-          active-text="自由编辑"
-          inactive-text="约束编辑"
-          active-color="#13ce66"
-          inactive-color="#13ce66"
-        >
-        </el-switch>
-      </div>
-
-      <div style="margin-top: 20px">
-        <div name="1" v-show="!editMode">
-          <div>
-            <div
-              class="item"
-              v-for="(item, index) in localAttributes"
-              :key="index"
+      <el-tabs v-model="activeName">
+        <el-tab-pane label="样式" name="style">
+          <styleComponent
+            v-model:localAttributes="localAttributes"
+            @childSave="childSave"
+          />
+        </el-tab-pane>
+        <el-tab-pane label="自定义组件" name="custom">
+          <lFormA
+            v-if="componentName == 'l-form' || componentName == 'l-s-form'"
+            :componentName="componentName"
+            v-model:localAttributes="localAttributes"
+            @childSave="childSave"
+          />
+          <el-empty v-else description="该组件不支持设定"></el-empty>
+        </el-tab-pane>
+        <el-tab-pane label="高级" name="senior">
+          <div style="text-align: center">
+            <el-switch
+              v-model="editMode"
+              active-text="自由编辑"
+              inactive-text="约束编辑"
+              active-color="#13ce66"
+              inactive-color="#13ce66"
             >
-              <el-input
-                v-model="item.key"
-                :placeholder="'key' + index"
-                class="half-width"
-                type="textarea"
-                :autosize="{ minRows: 2, maxRows: 4 }"
-              ></el-input>
-              <div class="split">:</div>
-              <el-input
-                v-model="item.value"
-                type="textarea"
-                :placeholder="'value' + index"
-                class="half-width"
-                style="flex-grow: 4"
-                :autosize="{ minRows: 2, maxRows: 4 }"
-              ></el-input>
-              <el-icon style="margin-left: 5px" @click="deleteItem(index)"
-                ><Remove
-              /></el-icon>
-            </div>
+            </el-switch>
+          </div>
 
-            <div class="quick-add-root">
-              快速增加一些属性:
-              <div style="margin-top: 5px">
-                <transition name="el-zoom-in-center">
-                  <el-tag
-                    v-if="attributeKeys.indexOf('class') == -1"
-                    size="small"
-                    type="success"
-                    @click="onClassClick"
-                    effect="dark"
-                    class="tag"
-                    >Class
-                  </el-tag>
-                </transition>
-                <transition name="el-zoom-in-center">
-                  <el-tag
-                    v-if="attributeKeys.indexOf('@click') == -1"
-                    size="small"
-                    type="success"
-                    @click="onEventClick"
-                    effect="dark"
-                    class="tag"
-                    >点击事件</el-tag
-                  >
-                </transition>
-                <transition name="el-zoom-in-center">
-                  <el-tag
-                    v-if="!attributeKeys.includes('__text__')"
-                    size="small"
-                    type="success"
-                    @click="onTextClick"
-                    effect="dark"
-                    class="tag"
-                    >文本内容</el-tag
-                  >
-                </transition>
+          <div style="margin-top: 20px">
+            <div name="1" v-show="!editMode">
+              <div>
+                <div
+                  class="item"
+                  v-for="(item, index) in localAttributes"
+                  :key="index"
+                >
+                  <el-input
+                    v-model="item.key"
+                    :placeholder="'key' + index"
+                    class="half-width"
+                    type="textarea"
+                    :autosize="{ minRows: 2, maxRows: 4 }"
+                  ></el-input>
+                  <div class="split">:</div>
+                  <el-input
+                    v-model="item.value"
+                    type="textarea"
+                    :placeholder="'value' + index"
+                    class="half-width"
+                    style="flex-grow: 4"
+                    :autosize="{ minRows: 2, maxRows: 4 }"
+                  ></el-input>
+                  <el-icon style="margin-left: 5px" @click="deleteItem(index)"
+                    ><Remove
+                  /></el-icon>
+                </div>
+
+                <div class="quick-add-root">
+                  快速增加一些属性:
+                  <div style="margin-top: 5px">
+                    <transition name="el-zoom-in-center">
+                      <el-tag
+                        v-if="attributeKeys.indexOf('class') == -1"
+                        size="small"
+                        type="success"
+                        @click="onClassClick"
+                        effect="dark"
+                        class="tag"
+                        >Class
+                      </el-tag>
+                    </transition>
+                    <transition name="el-zoom-in-center">
+                      <el-tag
+                        v-if="attributeKeys.indexOf('@click') == -1"
+                        size="small"
+                        type="success"
+                        @click="onEventClick"
+                        effect="dark"
+                        class="tag"
+                        >点击事件</el-tag
+                      >
+                    </transition>
+                    <transition name="el-zoom-in-center">
+                      <el-tag
+                        v-if="!attributeKeys.includes('__text__')"
+                        size="small"
+                        type="success"
+                        @click="onTextClick"
+                        effect="dark"
+                        class="tag"
+                        >文本内容</el-tag
+                      >
+                    </transition>
+                  </div>
+                </div>
               </div>
             </div>
+            <div name="2" v-show="editMode">
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4 }"
+                placeholder="请输入属性, 以key: value的形式(冒号后要有空格)"
+                v-model="textAttributes"
+              >
+              </el-input>
+            </div>
           </div>
-        </div>
-        <div name="2" v-show="editMode">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 4 }"
-            placeholder="请输入属性, 以key: value的形式(冒号后要有空格)"
-            v-model="textAttributes"
-          >
-          </el-input>
-        </div>
-      </div>
 
-      <div style="margin-top: 10px; text-align: center">
-        <el-tooltip
-          class="item"
-          effect="dark"
-          content="新增属性 ctrl+a"
-          placement="bottom"
-        >
-          <el-button type="primary" class="center" @click="createNew" circle>
-            <el-icon><Plus /></el-icon>
-          </el-button>
-        </el-tooltip>
-        <el-tooltip
-          class="item"
-          effect="dark"
-          content="保存属性 ctrl+s"
-          placement="bottom"
-        >
-          <el-button type="success" class="center" @click="save" circle>
-            <el-icon><Refresh /></el-icon>
-          </el-button>
-        </el-tooltip>
-        <el-tooltip
-          v-if="enableRemoveButton"
-          class="item"
-          effect="dark"
-          content="移除该组件 ctrl+d"
-          placement="bottom"
-        >
-          <el-button type="danger" class="center" @click="remove" circle>
-            <el-icon><Delete /></el-icon>
-          </el-button>
-        </el-tooltip>
-        <el-tooltip
-          v-if="enableBroButton"
-          class="item"
-          effect="dark"
-          content="复制一个兄弟组件 ctrl+c"
-          placement="bottom"
-        >
-          <el-button type="primary" class="center" @click="copyBro" circle>
-            <el-icon><document-copy /></el-icon>
-          </el-button>
-        </el-tooltip>
-        <div style="text-algin: center">
-          <span class="shortcut-tip">支持快捷键操作</span>
-        </div>
-      </div>
+          <div style="margin-top: 10px; text-align: center">
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="新增属性 ctrl+a"
+              placement="bottom"
+            >
+              <el-button
+                type="primary"
+                class="center"
+                @click="createNew"
+                circle
+              >
+                <el-icon><Plus /></el-icon>
+              </el-button>
+            </el-tooltip>
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="保存属性 ctrl+s"
+              placement="bottom"
+            >
+              <el-button type="success" class="center" @click="save" circle>
+                <el-icon><Refresh /></el-icon>
+              </el-button>
+            </el-tooltip>
+            <el-tooltip
+              v-if="enableRemoveButton"
+              class="item"
+              effect="dark"
+              content="移除该组件 ctrl+d"
+              placement="bottom"
+            >
+              <el-button type="danger" class="center" @click="remove" circle>
+                <el-icon><Delete /></el-icon>
+              </el-button>
+            </el-tooltip>
+            <el-tooltip
+              v-if="enableBroButton"
+              class="item"
+              effect="dark"
+              content="复制一个兄弟组件 ctrl+c"
+              placement="bottom"
+            >
+              <el-button type="primary" class="center" @click="copyBro" circle>
+                <el-icon><document-copy /></el-icon>
+              </el-button>
+            </el-tooltip>
+            <div style="text-algin: center">
+              <span class="shortcut-tip">支持快捷键操作</span>
+            </div>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
     </el-scrollbar>
   </el-card>
 </template>
@@ -157,18 +176,25 @@
 import { getRawComponentKey, getRawComponentContent } from "@/utils/common";
 import { brotherEleEnum, copyBroCode } from "@/libs/bro-ele-config";
 import keymaster from "keymaster";
-import styleComponent from './vccComponents/style.vue'
-import lFormA from './vccComponents/l-form-a.vue'
+import styleComponent from "./vccComponents/style.vue";
+import lFormA from "./vccComponents/l-form-a.vue";
 import { store as _store } from "@/libs/store.js";
 
 export default {
   components: {
     styleComponent,
-    lFormA
+    lFormA,
   },
-  props: ["__rawVueInfo__", "enableRemoveButton", "shortcutInitMode", "JSCode", "isShowAttribute"], // __rawVueInfo__为当前编辑的原始代码对象, shortcutInitMode快捷键的初始化方式
+  props: [
+    "__rawVueInfo__",
+    "enableRemoveButton",
+    "shortcutInitMode",
+    "JSCode",
+    "isShowAttribute",
+  ], // __rawVueInfo__为当前编辑的原始代码对象, shortcutInitMode快捷键的初始化方式
   data: function () {
     return {
+      activeName: "style",
       input: "",
       localAttributes: [],
       enable: true,
@@ -251,13 +277,13 @@ export default {
       this.localAttributes.forEach((item) => {
         if (item.key == key) {
           item.value = value;
-          check = true
+          check = true;
         }
       });
       if (!check) {
         this.localAttributes.push({ key, value });
       }
-      this.save(false)
+      this.save(false);
     },
     save(isShowNotify = true) {
       try {
@@ -287,9 +313,8 @@ export default {
             type: "success",
           });
         }
-        
       } catch (error) {
-        console.log(error)
+        console.log(error);
         this.$message.error(error);
       }
     },

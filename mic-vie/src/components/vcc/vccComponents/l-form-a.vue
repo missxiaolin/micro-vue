@@ -1,6 +1,5 @@
 <template>
   <div class="attribute-seeting-box">
-    <el-divider content-position="left">自定义表单</el-divider>
     <div class="attribute-seeting-content">
       <div class="attribute-seeting-content-item">
         <div class="label">提交按钮：</div>
