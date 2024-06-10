@@ -27,7 +27,7 @@
             style="display: flex; flex-direction: column"
           >
             <el-radio label="vue">Vue</el-radio>
-            <el-radio label="html">单页Html</el-radio>
+            <!-- <el-radio label="html">单页Html</el-radio> -->
           </el-radio-group>
         </el-col>
 
