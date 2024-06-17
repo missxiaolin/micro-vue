@@ -98,7 +98,8 @@ import { initContainerForLine } from "@/utils/lineHelper";
 import { replaceKeyInfo, getJsTemData } from "../utils/utils";
 import vueRuleTool from "../components/vue-ruler-tool/vue-ruler-tool.vue";
 import cssCodeEditor from "../components/vcc/cssCodeEditorDialog.vue";
-import vueEditor from "../components/vcc/vueCodeParseDialog.vue"
+import vueEditor from "../components/vcc/vueCodeParseDialog.vue";
+import codeEditor from '../components/vcc/jSCodeEditorDialog.vue';
 import keymaster from "keymaster";
 
 export default {
@@ -124,9 +125,7 @@ export default {
     codeStructure: defineAsyncComponent(() =>
       import("../components/vcc/codeStructure")
     ),
-    codeEditor: defineAsyncComponent(() =>
-      import("../components/vcc/jsCodeEditorDialog.vue")
-    ),
+    codeEditor,
     cssCodeEditor,
     vueEditor,
     vueRuleTool,
