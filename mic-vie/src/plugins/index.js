@@ -7,6 +7,7 @@ import Pop from "@/components/pop/index.vue";
 import LForm from '@/components/lForm/index.vue';
 import SForm from '@/components/lForm/sForm.vue';
 import LEcharts from '@/components/echarts/index.vue';
+import LDatePicker from '../components/datePicker/index.vue';
 
 import "virtual:svg-icons-register";
 export function loadPlugins(app) {
@@ -19,5 +20,6 @@ export function loadPlugins(app) {
   app.component("l-pop", Pop);
   app.component("l-form", LForm);
   app.component("l-s-form", SForm);
-  app.component("l-echarts", LEcharts)
+  app.component("l-echarts", LEcharts);
+  app.component('l-date-picker', LDatePicker);
 }

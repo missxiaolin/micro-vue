@@ -1,13 +1,14 @@
 <template>
   <div>
-    <l-table
+    <!-- <l-table
       :data="tableData"
       :columns="columns"
       :page-size="pageSize"
       :total="total"
       @handleCurrentChange="handleCurrentChange"
       lc_id="l/pSi+VFnx"
-    ></l-table>
+    ></l-table> -->
+    <l-date-picker v-model="date" :teleported="true" />
     <!-- <l-s-form :form="formItem" :span="8"></l-s-form> -->
     <!-- <editor :height="'500px'" /> -->
     <!-- <el-input>
@@ -25,6 +26,7 @@ export default {
   },
   data() {
     return {
+      date: "",
       tableData: [],
       columns: [],
       pageSize: 1,
