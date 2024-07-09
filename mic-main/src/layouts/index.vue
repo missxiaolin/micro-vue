@@ -16,10 +16,8 @@
       <div :class="{ 'fixed-header': fixedHeader }" class="layout-header">
         <navigation-bar />
       </div>
-      <el-scrollbar :height="h">
-        <!-- 页面主体内容 -->
-        <appMain class="app-main" />
-      </el-scrollbar>
+      <!-- 页面主体内容 -->
+      <appMain class="app-main" />
     </div>
   </div>
 </template>
@@ -40,21 +38,9 @@ export default {
     appMain,
   },
   setup() {
-    const h = ref('100vh')
     useTheme();
     
-
-    const handleWindowResize = () => {
-      const innerHeight = window.innerHeight;
-      h.value = `${innerHeight - 50}px`
-    }
-
-    window.addEventListener('resize', handleWindowResize);
-
-    handleWindowResize()
-
     return {
-      h,
       showTagsView: true,
       fixedHeader: false,
     };
@@ -127,8 +113,6 @@ $transition-time: 0.35s;
 .app-main {
   width: 100% !important;
   min-height: calc(100vh - var(--v3-navigationbar-height));
-  position: relative;
-  overflow: auto !important;
 }
 
 .fixed-header + .app-main {
