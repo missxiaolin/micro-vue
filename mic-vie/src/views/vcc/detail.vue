@@ -162,7 +162,7 @@ export default {
         // 创建
         this.codeInfoEntity.codeStructure = JSON.parse(initCodeStr);
         this.codeInfoEntity.JSCode = jsTem;
-        his.codeInfoEntity.css = '';
+        this.codeInfoEntity.css = '';
         this.formData.tem_json = initCodeStr;
         this.formData.script_json = jsTem;
       }
