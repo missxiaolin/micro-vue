@@ -429,7 +429,12 @@ function isCDATA(name) {
 //formatting
 //indentation
 //\n after each closing or self closing tag
-
+// beforeCreate() {},
+// beforeMount() {},
+// beforeUpdate() {},
+//     updated() {},
+//     destroyed() {},
+// fillter: {},
 const scriptTemplate = `{
     props: [],
     components: {},
@@ -440,19 +445,14 @@ const scriptTemplate = `{
     },
     watch: {},
     computed: {},
-    beforeCreate() {},
     created() {},
-    beforeMount() {},
     mounted() {},
-    beforeUpdate() {},
-    updated() {},
-    destroyed() {},
     methods: {
       request() {
       },
       // $eventMethods
     },
-    fillter: {},
+    
   };`;
 
 function checkKeyword(value) {

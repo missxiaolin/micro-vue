@@ -27,6 +27,7 @@
             style="display: flex; flex-direction: column"
           >
             <el-radio label="vue">Vue</el-radio>
+            <el-radio label="vue3">Vue3 setup模式</el-radio>
             <!-- <el-radio label="html">单页Html</el-radio> -->
           </el-radio-group>
         </el-col>
@@ -109,6 +110,7 @@ import prettier from "prettier/standalone";
 import parserHtml from "prettier/parser-html";
 import copy from "copy-to-clipboard";
 import { saveAs } from "file-saver";
+import { toV3 } from '../../utils/toV3.js'
 
 import codeEditor from "./codeEditor.vue";
 import singleIndexOutput from "../../libs/singleIndexOutput.js";
@@ -192,6 +194,9 @@ export default {
       return this.outputMode === "vue";
     },
     outputCode() {
+      if (this.outputMode == 'vue3') {
+        return toV3(this.rawCode)
+      }
       return this.isVueMode ? this.prettyCode : this.singleIndex;
     },
 
