@@ -195,7 +195,7 @@ export default {
     },
     outputCode() {
       if (this.outputMode == 'vue3') {
-        return toV3(this.rawCode)
+        return this.v2ToV3
       }
       return this.isVueMode ? this.prettyCode : this.singleIndex;
     },
@@ -207,6 +207,17 @@ export default {
       set() {
         this.$emit("update:codeDialogVisible", false);
       },
+    },
+    v2ToV3() {
+      try {
+        return prettier.format(toV3(this.rawCode), {
+          parser: "html",
+          plugins: [parserHtml],
+          vueIndentScriptAndStyle: true,
+        });
+      } catch (error) {
+        return this.rawCode;
+      }
     },
 
     prettyCode() {

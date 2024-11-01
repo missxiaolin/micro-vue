@@ -44,11 +44,10 @@ export class MainPanelProvider {
     this.redoStack = [];
 
     this.externalJS = {};
-    this.customCss = ""
+    this.customCss = "";
 
-    this.componentOptions = {}
+    this.componentOptions = {};
   }
-
 
   getComponentOptions() {
     return this.componentOptions;
@@ -69,11 +68,14 @@ export class MainPanelProvider {
 
     // 生成原始代码
     // console.log('rawDataStructure----->', rawDataStructure)
-    let code = await this.codeGenerator.outputVueCodeWithJsonObj(rawDataStructure);
+    let code = await this.codeGenerator.outputVueCodeWithJsonObj(
+      rawDataStructure
+    );
     // console.log('code', code)
 
     // 将xxx: () => {} 转换为xxx(){}
-    code = code.replace(/:\s*\(([\w\s]*)\)\s*=>/g, "($1)");
+    // code = code.replace(/:\s*\(([\w\s]*)\)\s*=>/g, "($1)");
+    code = code.replace(/:\s*\(([\w\s,]*)\)\s*=>/g, "($1)");
 
     // 生成展示代码
     let codeForShow = code.replace(/\s{1}lc_id=".+?"/g, "");
@@ -91,7 +93,7 @@ export class MainPanelProvider {
 
     const componentOptions = new Function(`return ${newScript}`)();
     // 保存script代码
-    this.componentOptions = componentOptions
+    this.componentOptions = componentOptions;
 
     componentOptions.template = template.content;
 
@@ -180,7 +182,7 @@ export class MainPanelProvider {
   }
 
   saveCssCodeOnly(code) {
-    this.customCss = code || ""
+    this.customCss = code || "";
     return this;
   }
 
@@ -293,11 +295,10 @@ export class MainPanelProvider {
       const [, , , , rawInfo] = data.split(getSplitTag());
 
       let newDropObj = JSON.parse(rawInfo);
-      if (newDropObj.div && newDropObj.div.class == 'column-li') {
-        newDropObj = newDropObj.div.__children[2].div.__children[0]
+      if (newDropObj.div && newDropObj.div.class == "column-li") {
+        newDropObj = newDropObj.div.__children[2].div.__children[0];
       }
-      
-      
+
       if (isRawComponents(newDropObj)) {
         // 插入预设属性
         insertPresetAttribute(newDropObj);
