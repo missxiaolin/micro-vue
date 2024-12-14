@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       isExpand: true,
-      activeNames: ['htmlRow', 'elBase', 'elForm', 'customRow'],
+      activeNames: ["htmlRow", "elBase", "elForm", "customRow"],
       iconArray: [
         {
           labelName: "html组件",
